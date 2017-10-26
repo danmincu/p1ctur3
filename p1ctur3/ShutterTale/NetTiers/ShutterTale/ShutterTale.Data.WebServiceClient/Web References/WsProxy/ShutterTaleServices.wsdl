@@ -1,0 +1,2283 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://localhost/ShutterTale.NetTiers/" xmlns:s1="http://microsoft.com/wsdl/types/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://localhost/ShutterTale.NetTiers/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Exposes CRUD webmethods for the ShutterTaleServices Database.</wsdl:documentation>
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://localhost/ShutterTale.NetTiers/">
+      <s:import namespace="http://microsoft.com/wsdl/types/" />
+      <s:element name="MediaProvider_Delete">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="_id" type="s1:guid" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="MediaProvider_DeleteResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="MediaProvider_DeleteResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="MediaProvider_Find">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="whereClause" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="start" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="pageLength" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="MediaProvider_FindResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="MediaProvider_FindResult" type="tns:ArrayOfMedia" />
+            <s:element minOccurs="1" maxOccurs="1" name="count" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfMedia">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="Media" nillable="true" type="tns:Media" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="Media">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:MediaBase" />
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="MediaBase" abstract="true">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:EntityBase">
+            <s:sequence>
+              <s:element minOccurs="1" maxOccurs="1" name="OriginalId" type="s1:guid" />
+              <s:element minOccurs="1" maxOccurs="1" name="CaptureDateTime" nillable="true" type="s:dateTime" />
+              <s:element minOccurs="1" maxOccurs="1" name="FileDateTime" type="s:dateTime" />
+              <s:element minOccurs="1" maxOccurs="1" name="ImportDateTime" type="s:dateTime" />
+              <s:element minOccurs="1" maxOccurs="1" name="Location" nillable="true" />
+              <s:element minOccurs="1" maxOccurs="1" name="Pixelx" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="Pixely" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="Dpi" type="s:double" />
+              <s:element minOccurs="0" maxOccurs="1" name="ContentType" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="Make" nillable="true" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="Model" nillable="true" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="SoftwareVersion" nillable="true" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Origin" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="Size" type="s:int" />
+              <s:element minOccurs="0" maxOccurs="1" name="Quadkey18" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="MediaImage" type="tns:MediaImage" />
+              <s:element minOccurs="0" maxOccurs="1" name="MediaAudio" type="tns:MediaAudio" />
+              <s:element minOccurs="0" maxOccurs="1" name="PreviewsCollection" type="tns:ArrayOfPreviews" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="EntityBase" abstract="true">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:EntityBaseCore" />
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="EntityBaseCore" abstract="true">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="Id" type="s1:guid" />
+          <s:element minOccurs="0" maxOccurs="1" name="Tag" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="PreviewsBase" abstract="true">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:EntityBase">
+            <s:sequence>
+              <s:element minOccurs="1" maxOccurs="1" name="OriginalId" type="s1:guid" />
+              <s:element minOccurs="1" maxOccurs="1" name="Level0" nillable="true" type="s:base64Binary" />
+              <s:element minOccurs="1" maxOccurs="1" name="Level1" nillable="true" type="s:base64Binary" />
+              <s:element minOccurs="1" maxOccurs="1" name="Level2" nillable="true" type="s:base64Binary" />
+              <s:element minOccurs="1" maxOccurs="1" name="Level3" nillable="true" type="s:base64Binary" />
+              <s:element minOccurs="0" maxOccurs="1" name="PreviewType" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="MediumId" type="s1:guid" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="Previews">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:PreviewsBase" />
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="MediaVideoBase" abstract="true">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:EntityBase">
+            <s:sequence>
+              <s:element minOccurs="1" maxOccurs="1" name="VideoChannels" type="s:unsignedByte" />
+              <s:element minOccurs="0" maxOccurs="1" name="VideoCodec" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="OriginalId" type="s1:guid" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="TimeSpan" />
+      <s:complexType name="MediaVideo">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:MediaVideoBase" />
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="MediaAudioBase" abstract="true">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:EntityBase">
+            <s:sequence>
+              <s:element minOccurs="1" maxOccurs="1" name="AudioChannels" type="s:unsignedByte" />
+              <s:element minOccurs="0" maxOccurs="1" name="Duration" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="AudioCodec" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="OriginalId" type="s1:guid" />
+              <s:element minOccurs="0" maxOccurs="1" name="MediaVideo" type="tns:MediaVideo" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="MediaAudio">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:MediaAudioBase" />
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="MediaImageBase" abstract="true">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:EntityBase">
+            <s:sequence>
+              <s:element minOccurs="1" maxOccurs="1" name="Orientation" nillable="true" type="s:unsignedByte" />
+              <s:element minOccurs="1" maxOccurs="1" name="YcbCrPositioning" nillable="true" type="s:unsignedByte" />
+              <s:element minOccurs="1" maxOccurs="1" name="ExposureTime" nillable="true" type="s:double" />
+              <s:element minOccurs="1" maxOccurs="1" name="Fnumber" nillable="true" type="s:double" />
+              <s:element minOccurs="1" maxOccurs="1" name="ExposureProgram" nillable="true" type="s:unsignedByte" />
+              <s:element minOccurs="1" maxOccurs="1" name="IsoSpeedRatings" nillable="true" type="s:short" />
+              <s:element minOccurs="1" maxOccurs="1" name="ShutterSpeedValue" nillable="true" type="s:double" />
+              <s:element minOccurs="1" maxOccurs="1" name="ApertureValue" nillable="true" type="s:double" />
+              <s:element minOccurs="1" maxOccurs="1" name="MeteringMode" nillable="true" type="s:unsignedByte" />
+              <s:element minOccurs="1" maxOccurs="1" name="Flash" nillable="true" type="s:unsignedByte" />
+              <s:element minOccurs="1" maxOccurs="1" name="FocalLength" nillable="true" type="s:double" />
+              <s:element minOccurs="1" maxOccurs="1" name="FlashpixVersion" nillable="true" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="ColorSpace" nillable="true" type="s:unsignedByte" />
+              <s:element minOccurs="1" maxOccurs="1" name="SensingMethod" nillable="true" type="s:unsignedByte" />
+              <s:element minOccurs="1" maxOccurs="1" name="ExposureMode" nillable="true" type="s:unsignedByte" />
+              <s:element minOccurs="1" maxOccurs="1" name="WhiteBalance" nillable="true" type="s:unsignedByte" />
+              <s:element minOccurs="1" maxOccurs="1" name="SceneCaptureType" nillable="true" type="s:unsignedByte" />
+              <s:element minOccurs="1" maxOccurs="1" name="Sharpness" nillable="true" type="s:unsignedByte" />
+              <s:element minOccurs="1" maxOccurs="1" name="OriginalId" type="s1:guid" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="MediaImage">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:MediaImageBase" />
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="ArrayOfPreviews">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="Previews" nillable="true" type="tns:Previews" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="MediaProvider_GetAll">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="start" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="pageLength" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="MediaProvider_GetAllResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="MediaProvider_GetAllResult" type="tns:ArrayOfMedia" />
+            <s:element minOccurs="1" maxOccurs="1" name="count" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="MediaProvider_GetPaged">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="whereClause" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="orderBy" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="start" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="pageLength" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="MediaProvider_GetPagedResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="MediaProvider_GetPagedResult" type="tns:ArrayOfMedia" />
+            <s:element minOccurs="1" maxOccurs="1" name="count" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="MediaProvider_GetById">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="_id" type="s1:guid" />
+            <s:element minOccurs="1" maxOccurs="1" name="start" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="pageLength" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="MediaProvider_GetByIdResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="MediaProvider_GetByIdResult" type="tns:Media" />
+            <s:element minOccurs="1" maxOccurs="1" name="count" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="MediaProvider_Insert">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="entity" type="tns:Media" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="MediaProvider_InsertResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="MediaProvider_InsertResult" type="tns:Media" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="MediaProvider_BulkInsert">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="entityList" type="tns:ArrayOfMedia" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="MediaProvider_BulkInsertResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="MediaProvider_Update">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="entity" type="tns:Media" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="MediaProvider_UpdateResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="MediaProvider_UpdateResult" type="tns:Media" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="MediaImageProvider_Delete">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="_id" type="s1:guid" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="MediaImageProvider_DeleteResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="MediaImageProvider_DeleteResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="MediaImageProvider_Find">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="whereClause" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="start" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="pageLength" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfMediaImage">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="MediaImage" nillable="true" type="tns:MediaImage" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="MediaImageProvider_FindResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="MediaImageProvider_FindResult" type="tns:ArrayOfMediaImage" />
+            <s:element minOccurs="1" maxOccurs="1" name="count" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="MediaImageProvider_GetAll">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="start" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="pageLength" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="MediaImageProvider_GetAllResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="MediaImageProvider_GetAllResult" type="tns:ArrayOfMediaImage" />
+            <s:element minOccurs="1" maxOccurs="1" name="count" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="MediaImageProvider_GetPaged">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="whereClause" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="orderBy" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="start" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="pageLength" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="MediaImageProvider_GetPagedResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="MediaImageProvider_GetPagedResult" type="tns:ArrayOfMediaImage" />
+            <s:element minOccurs="1" maxOccurs="1" name="count" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="MediaImageProvider_GetById">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="_id" type="s1:guid" />
+            <s:element minOccurs="1" maxOccurs="1" name="start" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="pageLength" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="MediaImageProvider_GetByIdResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="MediaImageProvider_GetByIdResult" type="tns:MediaImage" />
+            <s:element minOccurs="1" maxOccurs="1" name="count" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="MediaImageProvider_Insert">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="entity" type="tns:MediaImage" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="MediaImageProvider_InsertResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="MediaImageProvider_InsertResult" type="tns:MediaImage" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="MediaImageProvider_BulkInsert">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="entityList" type="tns:ArrayOfMediaImage" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="MediaImageProvider_BulkInsertResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="MediaImageProvider_Update">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="entity" type="tns:MediaImage" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="MediaImageProvider_UpdateResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="MediaImageProvider_UpdateResult" type="tns:MediaImage" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="MediaVideoProvider_Delete">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="_id" type="s1:guid" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="MediaVideoProvider_DeleteResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="MediaVideoProvider_DeleteResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="MediaVideoProvider_Find">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="whereClause" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="start" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="pageLength" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfMediaVideo">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="MediaVideo" nillable="true" type="tns:MediaVideo" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="MediaVideoProvider_FindResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="MediaVideoProvider_FindResult" type="tns:ArrayOfMediaVideo" />
+            <s:element minOccurs="1" maxOccurs="1" name="count" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="MediaVideoProvider_GetAll">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="start" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="pageLength" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="MediaVideoProvider_GetAllResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="MediaVideoProvider_GetAllResult" type="tns:ArrayOfMediaVideo" />
+            <s:element minOccurs="1" maxOccurs="1" name="count" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="MediaVideoProvider_GetPaged">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="whereClause" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="orderBy" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="start" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="pageLength" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="MediaVideoProvider_GetPagedResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="MediaVideoProvider_GetPagedResult" type="tns:ArrayOfMediaVideo" />
+            <s:element minOccurs="1" maxOccurs="1" name="count" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="MediaVideoProvider_GetById">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="_id" type="s1:guid" />
+            <s:element minOccurs="1" maxOccurs="1" name="start" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="pageLength" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="MediaVideoProvider_GetByIdResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="MediaVideoProvider_GetByIdResult" type="tns:MediaVideo" />
+            <s:element minOccurs="1" maxOccurs="1" name="count" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="MediaVideoProvider_Insert">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="entity" type="tns:MediaVideo" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="MediaVideoProvider_InsertResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="MediaVideoProvider_InsertResult" type="tns:MediaVideo" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="MediaVideoProvider_BulkInsert">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="entityList" type="tns:ArrayOfMediaVideo" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="MediaVideoProvider_BulkInsertResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="MediaVideoProvider_Update">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="entity" type="tns:MediaVideo" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="MediaVideoProvider_UpdateResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="MediaVideoProvider_UpdateResult" type="tns:MediaVideo" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="MediaAudioProvider_Delete">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="_id" type="s1:guid" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="MediaAudioProvider_DeleteResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="MediaAudioProvider_DeleteResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="MediaAudioProvider_Find">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="whereClause" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="start" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="pageLength" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfMediaAudio">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="MediaAudio" nillable="true" type="tns:MediaAudio" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="MediaAudioProvider_FindResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="MediaAudioProvider_FindResult" type="tns:ArrayOfMediaAudio" />
+            <s:element minOccurs="1" maxOccurs="1" name="count" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="MediaAudioProvider_GetAll">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="start" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="pageLength" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="MediaAudioProvider_GetAllResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="MediaAudioProvider_GetAllResult" type="tns:ArrayOfMediaAudio" />
+            <s:element minOccurs="1" maxOccurs="1" name="count" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="MediaAudioProvider_GetPaged">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="whereClause" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="orderBy" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="start" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="pageLength" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="MediaAudioProvider_GetPagedResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="MediaAudioProvider_GetPagedResult" type="tns:ArrayOfMediaAudio" />
+            <s:element minOccurs="1" maxOccurs="1" name="count" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="MediaAudioProvider_GetById">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="_id" type="s1:guid" />
+            <s:element minOccurs="1" maxOccurs="1" name="start" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="pageLength" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="MediaAudioProvider_GetByIdResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="MediaAudioProvider_GetByIdResult" type="tns:MediaAudio" />
+            <s:element minOccurs="1" maxOccurs="1" name="count" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="MediaAudioProvider_Insert">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="entity" type="tns:MediaAudio" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="MediaAudioProvider_InsertResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="MediaAudioProvider_InsertResult" type="tns:MediaAudio" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="MediaAudioProvider_BulkInsert">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="entityList" type="tns:ArrayOfMediaAudio" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="MediaAudioProvider_BulkInsertResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="MediaAudioProvider_Update">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="entity" type="tns:MediaAudio" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="MediaAudioProvider_UpdateResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="MediaAudioProvider_UpdateResult" type="tns:MediaAudio" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="PreviewsProvider_Delete">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="_id" type="s1:guid" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="PreviewsProvider_DeleteResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="PreviewsProvider_DeleteResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="PreviewsProvider_Find">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="whereClause" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="start" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="pageLength" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="PreviewsProvider_FindResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="PreviewsProvider_FindResult" type="tns:ArrayOfPreviews" />
+            <s:element minOccurs="1" maxOccurs="1" name="count" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="PreviewsProvider_GetAll">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="start" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="pageLength" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="PreviewsProvider_GetAllResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="PreviewsProvider_GetAllResult" type="tns:ArrayOfPreviews" />
+            <s:element minOccurs="1" maxOccurs="1" name="count" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="PreviewsProvider_GetPaged">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="whereClause" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="orderBy" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="start" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="pageLength" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="PreviewsProvider_GetPagedResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="PreviewsProvider_GetPagedResult" type="tns:ArrayOfPreviews" />
+            <s:element minOccurs="1" maxOccurs="1" name="count" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="PreviewsProvider_GetByMediumId">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="_mediumId" type="s1:guid" />
+            <s:element minOccurs="1" maxOccurs="1" name="start" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="pageLength" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="PreviewsProvider_GetByMediumIdResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="PreviewsProvider_GetByMediumIdResult" type="tns:ArrayOfPreviews" />
+            <s:element minOccurs="1" maxOccurs="1" name="count" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="PreviewsProvider_GetById">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="_id" type="s1:guid" />
+            <s:element minOccurs="1" maxOccurs="1" name="start" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="pageLength" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="PreviewsProvider_GetByIdResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="PreviewsProvider_GetByIdResult" type="tns:Previews" />
+            <s:element minOccurs="1" maxOccurs="1" name="count" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="PreviewsProvider_Insert">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="entity" type="tns:Previews" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="PreviewsProvider_InsertResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="PreviewsProvider_InsertResult" type="tns:Previews" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="PreviewsProvider_BulkInsert">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="entityList" type="tns:ArrayOfPreviews" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="PreviewsProvider_BulkInsertResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="PreviewsProvider_Update">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="entity" type="tns:Previews" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="PreviewsProvider_UpdateResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="PreviewsProvider_UpdateResult" type="tns:Previews" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ExecuteNonQueryPs">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="storedProcedureName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="parameterValues" type="tns:ArrayOfAnyType" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfAnyType">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="anyType" nillable="true" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="ExecuteNonQueryPsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="ExecuteNonQueryPsResult" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ExecuteNonQueryQry">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="commandType" type="tns:CommandType" />
+            <s:element minOccurs="0" maxOccurs="1" name="commandText" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:simpleType name="CommandType">
+        <s:restriction base="s:string">
+          <s:enumeration value="Text" />
+          <s:enumeration value="StoredProcedure" />
+          <s:enumeration value="TableDirect" />
+        </s:restriction>
+      </s:simpleType>
+      <s:element name="ExecuteNonQueryQryResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="ExecuteNonQueryQryResult" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ExecuteDataSetPs">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="storedProcedureName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="parameterValues" type="tns:ArrayOfAnyType" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ExecuteDataSetPsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ExecuteDataSetPsResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema" />
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ExecuteDataSetQry">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="commandType" type="tns:CommandType" />
+            <s:element minOccurs="0" maxOccurs="1" name="commandText" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ExecuteDataSetQryResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ExecuteDataSetQryResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema" />
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ExecuteScalarPs">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="storedProcedureName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="parameterValues" type="tns:ArrayOfAnyType" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ExecuteScalarPsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ExecuteScalarPsResult" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ExecuteScalarQry">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="commandType" type="tns:CommandType" />
+            <s:element minOccurs="0" maxOccurs="1" name="commandText" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ExecuteScalarQryResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ExecuteScalarQryResult" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+    </s:schema>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://microsoft.com/wsdl/types/">
+      <s:simpleType name="guid">
+        <s:restriction base="s:string">
+          <s:pattern value="[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}" />
+        </s:restriction>
+      </s:simpleType>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="MediaProvider_DeleteSoapIn">
+    <wsdl:part name="parameters" element="tns:MediaProvider_Delete" />
+  </wsdl:message>
+  <wsdl:message name="MediaProvider_DeleteSoapOut">
+    <wsdl:part name="parameters" element="tns:MediaProvider_DeleteResponse" />
+  </wsdl:message>
+  <wsdl:message name="MediaProvider_FindSoapIn">
+    <wsdl:part name="parameters" element="tns:MediaProvider_Find" />
+  </wsdl:message>
+  <wsdl:message name="MediaProvider_FindSoapOut">
+    <wsdl:part name="parameters" element="tns:MediaProvider_FindResponse" />
+  </wsdl:message>
+  <wsdl:message name="MediaProvider_GetAllSoapIn">
+    <wsdl:part name="parameters" element="tns:MediaProvider_GetAll" />
+  </wsdl:message>
+  <wsdl:message name="MediaProvider_GetAllSoapOut">
+    <wsdl:part name="parameters" element="tns:MediaProvider_GetAllResponse" />
+  </wsdl:message>
+  <wsdl:message name="MediaProvider_GetPagedSoapIn">
+    <wsdl:part name="parameters" element="tns:MediaProvider_GetPaged" />
+  </wsdl:message>
+  <wsdl:message name="MediaProvider_GetPagedSoapOut">
+    <wsdl:part name="parameters" element="tns:MediaProvider_GetPagedResponse" />
+  </wsdl:message>
+  <wsdl:message name="MediaProvider_GetByIdSoapIn">
+    <wsdl:part name="parameters" element="tns:MediaProvider_GetById" />
+  </wsdl:message>
+  <wsdl:message name="MediaProvider_GetByIdSoapOut">
+    <wsdl:part name="parameters" element="tns:MediaProvider_GetByIdResponse" />
+  </wsdl:message>
+  <wsdl:message name="MediaProvider_InsertSoapIn">
+    <wsdl:part name="parameters" element="tns:MediaProvider_Insert" />
+  </wsdl:message>
+  <wsdl:message name="MediaProvider_InsertSoapOut">
+    <wsdl:part name="parameters" element="tns:MediaProvider_InsertResponse" />
+  </wsdl:message>
+  <wsdl:message name="MediaProvider_BulkInsertSoapIn">
+    <wsdl:part name="parameters" element="tns:MediaProvider_BulkInsert" />
+  </wsdl:message>
+  <wsdl:message name="MediaProvider_BulkInsertSoapOut">
+    <wsdl:part name="parameters" element="tns:MediaProvider_BulkInsertResponse" />
+  </wsdl:message>
+  <wsdl:message name="MediaProvider_UpdateSoapIn">
+    <wsdl:part name="parameters" element="tns:MediaProvider_Update" />
+  </wsdl:message>
+  <wsdl:message name="MediaProvider_UpdateSoapOut">
+    <wsdl:part name="parameters" element="tns:MediaProvider_UpdateResponse" />
+  </wsdl:message>
+  <wsdl:message name="MediaImageProvider_DeleteSoapIn">
+    <wsdl:part name="parameters" element="tns:MediaImageProvider_Delete" />
+  </wsdl:message>
+  <wsdl:message name="MediaImageProvider_DeleteSoapOut">
+    <wsdl:part name="parameters" element="tns:MediaImageProvider_DeleteResponse" />
+  </wsdl:message>
+  <wsdl:message name="MediaImageProvider_FindSoapIn">
+    <wsdl:part name="parameters" element="tns:MediaImageProvider_Find" />
+  </wsdl:message>
+  <wsdl:message name="MediaImageProvider_FindSoapOut">
+    <wsdl:part name="parameters" element="tns:MediaImageProvider_FindResponse" />
+  </wsdl:message>
+  <wsdl:message name="MediaImageProvider_GetAllSoapIn">
+    <wsdl:part name="parameters" element="tns:MediaImageProvider_GetAll" />
+  </wsdl:message>
+  <wsdl:message name="MediaImageProvider_GetAllSoapOut">
+    <wsdl:part name="parameters" element="tns:MediaImageProvider_GetAllResponse" />
+  </wsdl:message>
+  <wsdl:message name="MediaImageProvider_GetPagedSoapIn">
+    <wsdl:part name="parameters" element="tns:MediaImageProvider_GetPaged" />
+  </wsdl:message>
+  <wsdl:message name="MediaImageProvider_GetPagedSoapOut">
+    <wsdl:part name="parameters" element="tns:MediaImageProvider_GetPagedResponse" />
+  </wsdl:message>
+  <wsdl:message name="MediaImageProvider_GetByIdSoapIn">
+    <wsdl:part name="parameters" element="tns:MediaImageProvider_GetById" />
+  </wsdl:message>
+  <wsdl:message name="MediaImageProvider_GetByIdSoapOut">
+    <wsdl:part name="parameters" element="tns:MediaImageProvider_GetByIdResponse" />
+  </wsdl:message>
+  <wsdl:message name="MediaImageProvider_InsertSoapIn">
+    <wsdl:part name="parameters" element="tns:MediaImageProvider_Insert" />
+  </wsdl:message>
+  <wsdl:message name="MediaImageProvider_InsertSoapOut">
+    <wsdl:part name="parameters" element="tns:MediaImageProvider_InsertResponse" />
+  </wsdl:message>
+  <wsdl:message name="MediaImageProvider_BulkInsertSoapIn">
+    <wsdl:part name="parameters" element="tns:MediaImageProvider_BulkInsert" />
+  </wsdl:message>
+  <wsdl:message name="MediaImageProvider_BulkInsertSoapOut">
+    <wsdl:part name="parameters" element="tns:MediaImageProvider_BulkInsertResponse" />
+  </wsdl:message>
+  <wsdl:message name="MediaImageProvider_UpdateSoapIn">
+    <wsdl:part name="parameters" element="tns:MediaImageProvider_Update" />
+  </wsdl:message>
+  <wsdl:message name="MediaImageProvider_UpdateSoapOut">
+    <wsdl:part name="parameters" element="tns:MediaImageProvider_UpdateResponse" />
+  </wsdl:message>
+  <wsdl:message name="MediaVideoProvider_DeleteSoapIn">
+    <wsdl:part name="parameters" element="tns:MediaVideoProvider_Delete" />
+  </wsdl:message>
+  <wsdl:message name="MediaVideoProvider_DeleteSoapOut">
+    <wsdl:part name="parameters" element="tns:MediaVideoProvider_DeleteResponse" />
+  </wsdl:message>
+  <wsdl:message name="MediaVideoProvider_FindSoapIn">
+    <wsdl:part name="parameters" element="tns:MediaVideoProvider_Find" />
+  </wsdl:message>
+  <wsdl:message name="MediaVideoProvider_FindSoapOut">
+    <wsdl:part name="parameters" element="tns:MediaVideoProvider_FindResponse" />
+  </wsdl:message>
+  <wsdl:message name="MediaVideoProvider_GetAllSoapIn">
+    <wsdl:part name="parameters" element="tns:MediaVideoProvider_GetAll" />
+  </wsdl:message>
+  <wsdl:message name="MediaVideoProvider_GetAllSoapOut">
+    <wsdl:part name="parameters" element="tns:MediaVideoProvider_GetAllResponse" />
+  </wsdl:message>
+  <wsdl:message name="MediaVideoProvider_GetPagedSoapIn">
+    <wsdl:part name="parameters" element="tns:MediaVideoProvider_GetPaged" />
+  </wsdl:message>
+  <wsdl:message name="MediaVideoProvider_GetPagedSoapOut">
+    <wsdl:part name="parameters" element="tns:MediaVideoProvider_GetPagedResponse" />
+  </wsdl:message>
+  <wsdl:message name="MediaVideoProvider_GetByIdSoapIn">
+    <wsdl:part name="parameters" element="tns:MediaVideoProvider_GetById" />
+  </wsdl:message>
+  <wsdl:message name="MediaVideoProvider_GetByIdSoapOut">
+    <wsdl:part name="parameters" element="tns:MediaVideoProvider_GetByIdResponse" />
+  </wsdl:message>
+  <wsdl:message name="MediaVideoProvider_InsertSoapIn">
+    <wsdl:part name="parameters" element="tns:MediaVideoProvider_Insert" />
+  </wsdl:message>
+  <wsdl:message name="MediaVideoProvider_InsertSoapOut">
+    <wsdl:part name="parameters" element="tns:MediaVideoProvider_InsertResponse" />
+  </wsdl:message>
+  <wsdl:message name="MediaVideoProvider_BulkInsertSoapIn">
+    <wsdl:part name="parameters" element="tns:MediaVideoProvider_BulkInsert" />
+  </wsdl:message>
+  <wsdl:message name="MediaVideoProvider_BulkInsertSoapOut">
+    <wsdl:part name="parameters" element="tns:MediaVideoProvider_BulkInsertResponse" />
+  </wsdl:message>
+  <wsdl:message name="MediaVideoProvider_UpdateSoapIn">
+    <wsdl:part name="parameters" element="tns:MediaVideoProvider_Update" />
+  </wsdl:message>
+  <wsdl:message name="MediaVideoProvider_UpdateSoapOut">
+    <wsdl:part name="parameters" element="tns:MediaVideoProvider_UpdateResponse" />
+  </wsdl:message>
+  <wsdl:message name="MediaAudioProvider_DeleteSoapIn">
+    <wsdl:part name="parameters" element="tns:MediaAudioProvider_Delete" />
+  </wsdl:message>
+  <wsdl:message name="MediaAudioProvider_DeleteSoapOut">
+    <wsdl:part name="parameters" element="tns:MediaAudioProvider_DeleteResponse" />
+  </wsdl:message>
+  <wsdl:message name="MediaAudioProvider_FindSoapIn">
+    <wsdl:part name="parameters" element="tns:MediaAudioProvider_Find" />
+  </wsdl:message>
+  <wsdl:message name="MediaAudioProvider_FindSoapOut">
+    <wsdl:part name="parameters" element="tns:MediaAudioProvider_FindResponse" />
+  </wsdl:message>
+  <wsdl:message name="MediaAudioProvider_GetAllSoapIn">
+    <wsdl:part name="parameters" element="tns:MediaAudioProvider_GetAll" />
+  </wsdl:message>
+  <wsdl:message name="MediaAudioProvider_GetAllSoapOut">
+    <wsdl:part name="parameters" element="tns:MediaAudioProvider_GetAllResponse" />
+  </wsdl:message>
+  <wsdl:message name="MediaAudioProvider_GetPagedSoapIn">
+    <wsdl:part name="parameters" element="tns:MediaAudioProvider_GetPaged" />
+  </wsdl:message>
+  <wsdl:message name="MediaAudioProvider_GetPagedSoapOut">
+    <wsdl:part name="parameters" element="tns:MediaAudioProvider_GetPagedResponse" />
+  </wsdl:message>
+  <wsdl:message name="MediaAudioProvider_GetByIdSoapIn">
+    <wsdl:part name="parameters" element="tns:MediaAudioProvider_GetById" />
+  </wsdl:message>
+  <wsdl:message name="MediaAudioProvider_GetByIdSoapOut">
+    <wsdl:part name="parameters" element="tns:MediaAudioProvider_GetByIdResponse" />
+  </wsdl:message>
+  <wsdl:message name="MediaAudioProvider_InsertSoapIn">
+    <wsdl:part name="parameters" element="tns:MediaAudioProvider_Insert" />
+  </wsdl:message>
+  <wsdl:message name="MediaAudioProvider_InsertSoapOut">
+    <wsdl:part name="parameters" element="tns:MediaAudioProvider_InsertResponse" />
+  </wsdl:message>
+  <wsdl:message name="MediaAudioProvider_BulkInsertSoapIn">
+    <wsdl:part name="parameters" element="tns:MediaAudioProvider_BulkInsert" />
+  </wsdl:message>
+  <wsdl:message name="MediaAudioProvider_BulkInsertSoapOut">
+    <wsdl:part name="parameters" element="tns:MediaAudioProvider_BulkInsertResponse" />
+  </wsdl:message>
+  <wsdl:message name="MediaAudioProvider_UpdateSoapIn">
+    <wsdl:part name="parameters" element="tns:MediaAudioProvider_Update" />
+  </wsdl:message>
+  <wsdl:message name="MediaAudioProvider_UpdateSoapOut">
+    <wsdl:part name="parameters" element="tns:MediaAudioProvider_UpdateResponse" />
+  </wsdl:message>
+  <wsdl:message name="PreviewsProvider_DeleteSoapIn">
+    <wsdl:part name="parameters" element="tns:PreviewsProvider_Delete" />
+  </wsdl:message>
+  <wsdl:message name="PreviewsProvider_DeleteSoapOut">
+    <wsdl:part name="parameters" element="tns:PreviewsProvider_DeleteResponse" />
+  </wsdl:message>
+  <wsdl:message name="PreviewsProvider_FindSoapIn">
+    <wsdl:part name="parameters" element="tns:PreviewsProvider_Find" />
+  </wsdl:message>
+  <wsdl:message name="PreviewsProvider_FindSoapOut">
+    <wsdl:part name="parameters" element="tns:PreviewsProvider_FindResponse" />
+  </wsdl:message>
+  <wsdl:message name="PreviewsProvider_GetAllSoapIn">
+    <wsdl:part name="parameters" element="tns:PreviewsProvider_GetAll" />
+  </wsdl:message>
+  <wsdl:message name="PreviewsProvider_GetAllSoapOut">
+    <wsdl:part name="parameters" element="tns:PreviewsProvider_GetAllResponse" />
+  </wsdl:message>
+  <wsdl:message name="PreviewsProvider_GetPagedSoapIn">
+    <wsdl:part name="parameters" element="tns:PreviewsProvider_GetPaged" />
+  </wsdl:message>
+  <wsdl:message name="PreviewsProvider_GetPagedSoapOut">
+    <wsdl:part name="parameters" element="tns:PreviewsProvider_GetPagedResponse" />
+  </wsdl:message>
+  <wsdl:message name="PreviewsProvider_GetByMediumIdSoapIn">
+    <wsdl:part name="parameters" element="tns:PreviewsProvider_GetByMediumId" />
+  </wsdl:message>
+  <wsdl:message name="PreviewsProvider_GetByMediumIdSoapOut">
+    <wsdl:part name="parameters" element="tns:PreviewsProvider_GetByMediumIdResponse" />
+  </wsdl:message>
+  <wsdl:message name="PreviewsProvider_GetByIdSoapIn">
+    <wsdl:part name="parameters" element="tns:PreviewsProvider_GetById" />
+  </wsdl:message>
+  <wsdl:message name="PreviewsProvider_GetByIdSoapOut">
+    <wsdl:part name="parameters" element="tns:PreviewsProvider_GetByIdResponse" />
+  </wsdl:message>
+  <wsdl:message name="PreviewsProvider_InsertSoapIn">
+    <wsdl:part name="parameters" element="tns:PreviewsProvider_Insert" />
+  </wsdl:message>
+  <wsdl:message name="PreviewsProvider_InsertSoapOut">
+    <wsdl:part name="parameters" element="tns:PreviewsProvider_InsertResponse" />
+  </wsdl:message>
+  <wsdl:message name="PreviewsProvider_BulkInsertSoapIn">
+    <wsdl:part name="parameters" element="tns:PreviewsProvider_BulkInsert" />
+  </wsdl:message>
+  <wsdl:message name="PreviewsProvider_BulkInsertSoapOut">
+    <wsdl:part name="parameters" element="tns:PreviewsProvider_BulkInsertResponse" />
+  </wsdl:message>
+  <wsdl:message name="PreviewsProvider_UpdateSoapIn">
+    <wsdl:part name="parameters" element="tns:PreviewsProvider_Update" />
+  </wsdl:message>
+  <wsdl:message name="PreviewsProvider_UpdateSoapOut">
+    <wsdl:part name="parameters" element="tns:PreviewsProvider_UpdateResponse" />
+  </wsdl:message>
+  <wsdl:message name="ExecuteNonQueryPsSoapIn">
+    <wsdl:part name="parameters" element="tns:ExecuteNonQueryPs" />
+  </wsdl:message>
+  <wsdl:message name="ExecuteNonQueryPsSoapOut">
+    <wsdl:part name="parameters" element="tns:ExecuteNonQueryPsResponse" />
+  </wsdl:message>
+  <wsdl:message name="ExecuteNonQueryQrySoapIn">
+    <wsdl:part name="parameters" element="tns:ExecuteNonQueryQry" />
+  </wsdl:message>
+  <wsdl:message name="ExecuteNonQueryQrySoapOut">
+    <wsdl:part name="parameters" element="tns:ExecuteNonQueryQryResponse" />
+  </wsdl:message>
+  <wsdl:message name="ExecuteDataSetPsSoapIn">
+    <wsdl:part name="parameters" element="tns:ExecuteDataSetPs" />
+  </wsdl:message>
+  <wsdl:message name="ExecuteDataSetPsSoapOut">
+    <wsdl:part name="parameters" element="tns:ExecuteDataSetPsResponse" />
+  </wsdl:message>
+  <wsdl:message name="ExecuteDataSetQrySoapIn">
+    <wsdl:part name="parameters" element="tns:ExecuteDataSetQry" />
+  </wsdl:message>
+  <wsdl:message name="ExecuteDataSetQrySoapOut">
+    <wsdl:part name="parameters" element="tns:ExecuteDataSetQryResponse" />
+  </wsdl:message>
+  <wsdl:message name="ExecuteScalarPsSoapIn">
+    <wsdl:part name="parameters" element="tns:ExecuteScalarPs" />
+  </wsdl:message>
+  <wsdl:message name="ExecuteScalarPsSoapOut">
+    <wsdl:part name="parameters" element="tns:ExecuteScalarPsResponse" />
+  </wsdl:message>
+  <wsdl:message name="ExecuteScalarQrySoapIn">
+    <wsdl:part name="parameters" element="tns:ExecuteScalarQry" />
+  </wsdl:message>
+  <wsdl:message name="ExecuteScalarQrySoapOut">
+    <wsdl:part name="parameters" element="tns:ExecuteScalarQryResponse" />
+  </wsdl:message>
+  <wsdl:portType name="ShutterTaleServicesSoap">
+    <wsdl:operation name="MediaProvider_Delete">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Delete a row from the table Media.</wsdl:documentation>
+      <wsdl:input message="tns:MediaProvider_DeleteSoapIn" />
+      <wsdl:output message="tns:MediaProvider_DeleteSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="MediaProvider_Find">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Get rows from the table Media with additional query text.</wsdl:documentation>
+      <wsdl:input message="tns:MediaProvider_FindSoapIn" />
+      <wsdl:output message="tns:MediaProvider_FindSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="MediaProvider_GetAll">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Get all rows from the table Media.</wsdl:documentation>
+      <wsdl:input message="tns:MediaProvider_GetAllSoapIn" />
+      <wsdl:output message="tns:MediaProvider_GetAllSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="MediaProvider_GetPaged">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Get all rows from the table Media.</wsdl:documentation>
+      <wsdl:input message="tns:MediaProvider_GetPagedSoapIn" />
+      <wsdl:output message="tns:MediaProvider_GetPagedSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="MediaProvider_GetById">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Get rows from the table Media filtered by the column Id that is part of the PK_Media index.</wsdl:documentation>
+      <wsdl:input message="tns:MediaProvider_GetByIdSoapIn" />
+      <wsdl:output message="tns:MediaProvider_GetByIdSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="MediaProvider_Insert">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Inserts a row in the table Media.</wsdl:documentation>
+      <wsdl:input message="tns:MediaProvider_InsertSoapIn" />
+      <wsdl:output message="tns:MediaProvider_InsertSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="MediaProvider_BulkInsert">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Inserts a Bulk set of rows into the table Media.</wsdl:documentation>
+      <wsdl:input message="tns:MediaProvider_BulkInsertSoapIn" />
+      <wsdl:output message="tns:MediaProvider_BulkInsertSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="MediaProvider_Update">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Update a row in the table Media.</wsdl:documentation>
+      <wsdl:input message="tns:MediaProvider_UpdateSoapIn" />
+      <wsdl:output message="tns:MediaProvider_UpdateSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="MediaImageProvider_Delete">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Delete a row from the table Media_Image.</wsdl:documentation>
+      <wsdl:input message="tns:MediaImageProvider_DeleteSoapIn" />
+      <wsdl:output message="tns:MediaImageProvider_DeleteSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="MediaImageProvider_Find">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Get rows from the table Media_Image with additional query text.</wsdl:documentation>
+      <wsdl:input message="tns:MediaImageProvider_FindSoapIn" />
+      <wsdl:output message="tns:MediaImageProvider_FindSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="MediaImageProvider_GetAll">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Get all rows from the table Media_Image.</wsdl:documentation>
+      <wsdl:input message="tns:MediaImageProvider_GetAllSoapIn" />
+      <wsdl:output message="tns:MediaImageProvider_GetAllSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="MediaImageProvider_GetPaged">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Get all rows from the table Media_Image.</wsdl:documentation>
+      <wsdl:input message="tns:MediaImageProvider_GetPagedSoapIn" />
+      <wsdl:output message="tns:MediaImageProvider_GetPagedSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="MediaImageProvider_GetById">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Get rows from the table Media_Image filtered by the column Id that is part of the PK_Media_Image index.</wsdl:documentation>
+      <wsdl:input message="tns:MediaImageProvider_GetByIdSoapIn" />
+      <wsdl:output message="tns:MediaImageProvider_GetByIdSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="MediaImageProvider_Insert">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Inserts a row in the table Media_Image.</wsdl:documentation>
+      <wsdl:input message="tns:MediaImageProvider_InsertSoapIn" />
+      <wsdl:output message="tns:MediaImageProvider_InsertSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="MediaImageProvider_BulkInsert">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Inserts a Bulk set of rows into the table Media_Image.</wsdl:documentation>
+      <wsdl:input message="tns:MediaImageProvider_BulkInsertSoapIn" />
+      <wsdl:output message="tns:MediaImageProvider_BulkInsertSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="MediaImageProvider_Update">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Update a row in the table Media_Image.</wsdl:documentation>
+      <wsdl:input message="tns:MediaImageProvider_UpdateSoapIn" />
+      <wsdl:output message="tns:MediaImageProvider_UpdateSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="MediaVideoProvider_Delete">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Delete a row from the table Media_Video.</wsdl:documentation>
+      <wsdl:input message="tns:MediaVideoProvider_DeleteSoapIn" />
+      <wsdl:output message="tns:MediaVideoProvider_DeleteSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="MediaVideoProvider_Find">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Get rows from the table Media_Video with additional query text.</wsdl:documentation>
+      <wsdl:input message="tns:MediaVideoProvider_FindSoapIn" />
+      <wsdl:output message="tns:MediaVideoProvider_FindSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="MediaVideoProvider_GetAll">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Get all rows from the table Media_Video.</wsdl:documentation>
+      <wsdl:input message="tns:MediaVideoProvider_GetAllSoapIn" />
+      <wsdl:output message="tns:MediaVideoProvider_GetAllSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="MediaVideoProvider_GetPaged">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Get all rows from the table Media_Video.</wsdl:documentation>
+      <wsdl:input message="tns:MediaVideoProvider_GetPagedSoapIn" />
+      <wsdl:output message="tns:MediaVideoProvider_GetPagedSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="MediaVideoProvider_GetById">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Get rows from the table Media_Video filtered by the column Id that is part of the PK_Media_Video index.</wsdl:documentation>
+      <wsdl:input message="tns:MediaVideoProvider_GetByIdSoapIn" />
+      <wsdl:output message="tns:MediaVideoProvider_GetByIdSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="MediaVideoProvider_Insert">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Inserts a row in the table Media_Video.</wsdl:documentation>
+      <wsdl:input message="tns:MediaVideoProvider_InsertSoapIn" />
+      <wsdl:output message="tns:MediaVideoProvider_InsertSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="MediaVideoProvider_BulkInsert">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Inserts a Bulk set of rows into the table Media_Video.</wsdl:documentation>
+      <wsdl:input message="tns:MediaVideoProvider_BulkInsertSoapIn" />
+      <wsdl:output message="tns:MediaVideoProvider_BulkInsertSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="MediaVideoProvider_Update">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Update a row in the table Media_Video.</wsdl:documentation>
+      <wsdl:input message="tns:MediaVideoProvider_UpdateSoapIn" />
+      <wsdl:output message="tns:MediaVideoProvider_UpdateSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="MediaAudioProvider_Delete">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Delete a row from the table Media_Audio.</wsdl:documentation>
+      <wsdl:input message="tns:MediaAudioProvider_DeleteSoapIn" />
+      <wsdl:output message="tns:MediaAudioProvider_DeleteSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="MediaAudioProvider_Find">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Get rows from the table Media_Audio with additional query text.</wsdl:documentation>
+      <wsdl:input message="tns:MediaAudioProvider_FindSoapIn" />
+      <wsdl:output message="tns:MediaAudioProvider_FindSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="MediaAudioProvider_GetAll">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Get all rows from the table Media_Audio.</wsdl:documentation>
+      <wsdl:input message="tns:MediaAudioProvider_GetAllSoapIn" />
+      <wsdl:output message="tns:MediaAudioProvider_GetAllSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="MediaAudioProvider_GetPaged">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Get all rows from the table Media_Audio.</wsdl:documentation>
+      <wsdl:input message="tns:MediaAudioProvider_GetPagedSoapIn" />
+      <wsdl:output message="tns:MediaAudioProvider_GetPagedSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="MediaAudioProvider_GetById">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Get rows from the table Media_Audio filtered by the column Id that is part of the PK_Media_Audio index.</wsdl:documentation>
+      <wsdl:input message="tns:MediaAudioProvider_GetByIdSoapIn" />
+      <wsdl:output message="tns:MediaAudioProvider_GetByIdSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="MediaAudioProvider_Insert">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Inserts a row in the table Media_Audio.</wsdl:documentation>
+      <wsdl:input message="tns:MediaAudioProvider_InsertSoapIn" />
+      <wsdl:output message="tns:MediaAudioProvider_InsertSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="MediaAudioProvider_BulkInsert">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Inserts a Bulk set of rows into the table Media_Audio.</wsdl:documentation>
+      <wsdl:input message="tns:MediaAudioProvider_BulkInsertSoapIn" />
+      <wsdl:output message="tns:MediaAudioProvider_BulkInsertSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="MediaAudioProvider_Update">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Update a row in the table Media_Audio.</wsdl:documentation>
+      <wsdl:input message="tns:MediaAudioProvider_UpdateSoapIn" />
+      <wsdl:output message="tns:MediaAudioProvider_UpdateSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="PreviewsProvider_Delete">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Delete a row from the table Previews.</wsdl:documentation>
+      <wsdl:input message="tns:PreviewsProvider_DeleteSoapIn" />
+      <wsdl:output message="tns:PreviewsProvider_DeleteSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="PreviewsProvider_Find">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Get rows from the table Previews with additional query text.</wsdl:documentation>
+      <wsdl:input message="tns:PreviewsProvider_FindSoapIn" />
+      <wsdl:output message="tns:PreviewsProvider_FindSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="PreviewsProvider_GetAll">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Get all rows from the table Previews.</wsdl:documentation>
+      <wsdl:input message="tns:PreviewsProvider_GetAllSoapIn" />
+      <wsdl:output message="tns:PreviewsProvider_GetAllSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="PreviewsProvider_GetPaged">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Get all rows from the table Previews.</wsdl:documentation>
+      <wsdl:input message="tns:PreviewsProvider_GetPagedSoapIn" />
+      <wsdl:output message="tns:PreviewsProvider_GetPagedSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="PreviewsProvider_GetByMediumId">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Get rows from the table Previews filtered by the column MediumId that is part of the IX_FK_MediaPreview index.</wsdl:documentation>
+      <wsdl:input message="tns:PreviewsProvider_GetByMediumIdSoapIn" />
+      <wsdl:output message="tns:PreviewsProvider_GetByMediumIdSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="PreviewsProvider_GetById">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Get rows from the table Previews filtered by the column Id that is part of the PK_Previews index.</wsdl:documentation>
+      <wsdl:input message="tns:PreviewsProvider_GetByIdSoapIn" />
+      <wsdl:output message="tns:PreviewsProvider_GetByIdSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="PreviewsProvider_Insert">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Inserts a row in the table Previews.</wsdl:documentation>
+      <wsdl:input message="tns:PreviewsProvider_InsertSoapIn" />
+      <wsdl:output message="tns:PreviewsProvider_InsertSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="PreviewsProvider_BulkInsert">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Inserts a Bulk set of rows into the table Previews.</wsdl:documentation>
+      <wsdl:input message="tns:PreviewsProvider_BulkInsertSoapIn" />
+      <wsdl:output message="tns:PreviewsProvider_BulkInsertSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="PreviewsProvider_Update">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Update a row in the table Previews.</wsdl:documentation>
+      <wsdl:input message="tns:PreviewsProvider_UpdateSoapIn" />
+      <wsdl:output message="tns:PreviewsProvider_UpdateSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ExecuteNonQuery">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">This method wrap the ExecuteNonQuery method provided by the Enterprise Library Data Access Application Block.</wsdl:documentation>
+      <wsdl:input name="ExecuteNonQueryPs" message="tns:ExecuteNonQueryPsSoapIn" />
+      <wsdl:output name="ExecuteNonQueryPs" message="tns:ExecuteNonQueryPsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ExecuteNonQuery">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">This method wrap the ExecuteNonQuery method provided by the Enterprise Library Data Access Application Block.</wsdl:documentation>
+      <wsdl:input name="ExecuteNonQueryQry" message="tns:ExecuteNonQueryQrySoapIn" />
+      <wsdl:output name="ExecuteNonQueryQry" message="tns:ExecuteNonQueryQrySoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ExecuteDataSet">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">This method wrap the ExecuteDataSet method provided by the Enterprise Library Data Access Application Block.</wsdl:documentation>
+      <wsdl:input name="ExecuteDataSetPs" message="tns:ExecuteDataSetPsSoapIn" />
+      <wsdl:output name="ExecuteDataSetPs" message="tns:ExecuteDataSetPsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ExecuteDataSet">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">This method wrap the ExecuteDataSet method provided by the Enterprise Library Data Access Application Block.</wsdl:documentation>
+      <wsdl:input name="ExecuteDataSetQry" message="tns:ExecuteDataSetQrySoapIn" />
+      <wsdl:output name="ExecuteDataSetQry" message="tns:ExecuteDataSetQrySoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ExecuteScalar">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">This method wrap the ExecuteScalar method provided by the Enterprise Library Data Access Application Block.</wsdl:documentation>
+      <wsdl:input name="ExecuteScalarPs" message="tns:ExecuteScalarPsSoapIn" />
+      <wsdl:output name="ExecuteScalarPs" message="tns:ExecuteScalarPsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ExecuteScalar">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">This method wrap the ExecuteScalar method provided by the Enterprise Library Data Access Application Block.</wsdl:documentation>
+      <wsdl:input name="ExecuteScalarQry" message="tns:ExecuteScalarQrySoapIn" />
+      <wsdl:output name="ExecuteScalarQry" message="tns:ExecuteScalarQrySoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="ShutterTaleServicesSoap" type="tns:ShutterTaleServicesSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="MediaProvider_Delete">
+      <soap:operation soapAction="http://localhost/ShutterTale.NetTiers/MediaProvider_Delete" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MediaProvider_Find">
+      <soap:operation soapAction="http://localhost/ShutterTale.NetTiers/MediaProvider_Find" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MediaProvider_GetAll">
+      <soap:operation soapAction="http://localhost/ShutterTale.NetTiers/MediaProvider_GetAll" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MediaProvider_GetPaged">
+      <soap:operation soapAction="http://localhost/ShutterTale.NetTiers/MediaProvider_GetPaged" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MediaProvider_GetById">
+      <soap:operation soapAction="http://localhost/ShutterTale.NetTiers/MediaProvider_GetById" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MediaProvider_Insert">
+      <soap:operation soapAction="http://localhost/ShutterTale.NetTiers/MediaProvider_Insert" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MediaProvider_BulkInsert">
+      <soap:operation soapAction="http://localhost/ShutterTale.NetTiers/MediaProvider_BulkInsert" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MediaProvider_Update">
+      <soap:operation soapAction="http://localhost/ShutterTale.NetTiers/MediaProvider_Update" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MediaImageProvider_Delete">
+      <soap:operation soapAction="http://localhost/ShutterTale.NetTiers/MediaImageProvider_Delete" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MediaImageProvider_Find">
+      <soap:operation soapAction="http://localhost/ShutterTale.NetTiers/MediaImageProvider_Find" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MediaImageProvider_GetAll">
+      <soap:operation soapAction="http://localhost/ShutterTale.NetTiers/MediaImageProvider_GetAll" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MediaImageProvider_GetPaged">
+      <soap:operation soapAction="http://localhost/ShutterTale.NetTiers/MediaImageProvider_GetPaged" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MediaImageProvider_GetById">
+      <soap:operation soapAction="http://localhost/ShutterTale.NetTiers/MediaImageProvider_GetById" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MediaImageProvider_Insert">
+      <soap:operation soapAction="http://localhost/ShutterTale.NetTiers/MediaImageProvider_Insert" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MediaImageProvider_BulkInsert">
+      <soap:operation soapAction="http://localhost/ShutterTale.NetTiers/MediaImageProvider_BulkInsert" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MediaImageProvider_Update">
+      <soap:operation soapAction="http://localhost/ShutterTale.NetTiers/MediaImageProvider_Update" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MediaVideoProvider_Delete">
+      <soap:operation soapAction="http://localhost/ShutterTale.NetTiers/MediaVideoProvider_Delete" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MediaVideoProvider_Find">
+      <soap:operation soapAction="http://localhost/ShutterTale.NetTiers/MediaVideoProvider_Find" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MediaVideoProvider_GetAll">
+      <soap:operation soapAction="http://localhost/ShutterTale.NetTiers/MediaVideoProvider_GetAll" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MediaVideoProvider_GetPaged">
+      <soap:operation soapAction="http://localhost/ShutterTale.NetTiers/MediaVideoProvider_GetPaged" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MediaVideoProvider_GetById">
+      <soap:operation soapAction="http://localhost/ShutterTale.NetTiers/MediaVideoProvider_GetById" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MediaVideoProvider_Insert">
+      <soap:operation soapAction="http://localhost/ShutterTale.NetTiers/MediaVideoProvider_Insert" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MediaVideoProvider_BulkInsert">
+      <soap:operation soapAction="http://localhost/ShutterTale.NetTiers/MediaVideoProvider_BulkInsert" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MediaVideoProvider_Update">
+      <soap:operation soapAction="http://localhost/ShutterTale.NetTiers/MediaVideoProvider_Update" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MediaAudioProvider_Delete">
+      <soap:operation soapAction="http://localhost/ShutterTale.NetTiers/MediaAudioProvider_Delete" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MediaAudioProvider_Find">
+      <soap:operation soapAction="http://localhost/ShutterTale.NetTiers/MediaAudioProvider_Find" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MediaAudioProvider_GetAll">
+      <soap:operation soapAction="http://localhost/ShutterTale.NetTiers/MediaAudioProvider_GetAll" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MediaAudioProvider_GetPaged">
+      <soap:operation soapAction="http://localhost/ShutterTale.NetTiers/MediaAudioProvider_GetPaged" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MediaAudioProvider_GetById">
+      <soap:operation soapAction="http://localhost/ShutterTale.NetTiers/MediaAudioProvider_GetById" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MediaAudioProvider_Insert">
+      <soap:operation soapAction="http://localhost/ShutterTale.NetTiers/MediaAudioProvider_Insert" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MediaAudioProvider_BulkInsert">
+      <soap:operation soapAction="http://localhost/ShutterTale.NetTiers/MediaAudioProvider_BulkInsert" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MediaAudioProvider_Update">
+      <soap:operation soapAction="http://localhost/ShutterTale.NetTiers/MediaAudioProvider_Update" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PreviewsProvider_Delete">
+      <soap:operation soapAction="http://localhost/ShutterTale.NetTiers/PreviewsProvider_Delete" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PreviewsProvider_Find">
+      <soap:operation soapAction="http://localhost/ShutterTale.NetTiers/PreviewsProvider_Find" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PreviewsProvider_GetAll">
+      <soap:operation soapAction="http://localhost/ShutterTale.NetTiers/PreviewsProvider_GetAll" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PreviewsProvider_GetPaged">
+      <soap:operation soapAction="http://localhost/ShutterTale.NetTiers/PreviewsProvider_GetPaged" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PreviewsProvider_GetByMediumId">
+      <soap:operation soapAction="http://localhost/ShutterTale.NetTiers/PreviewsProvider_GetByMediumId" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PreviewsProvider_GetById">
+      <soap:operation soapAction="http://localhost/ShutterTale.NetTiers/PreviewsProvider_GetById" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PreviewsProvider_Insert">
+      <soap:operation soapAction="http://localhost/ShutterTale.NetTiers/PreviewsProvider_Insert" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PreviewsProvider_BulkInsert">
+      <soap:operation soapAction="http://localhost/ShutterTale.NetTiers/PreviewsProvider_BulkInsert" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PreviewsProvider_Update">
+      <soap:operation soapAction="http://localhost/ShutterTale.NetTiers/PreviewsProvider_Update" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ExecuteNonQuery">
+      <soap:operation soapAction="http://localhost/ShutterTale.NetTiers/ExecuteNonQueryPs" style="document" />
+      <wsdl:input name="ExecuteNonQueryPs">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="ExecuteNonQueryPs">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ExecuteNonQuery">
+      <soap:operation soapAction="http://localhost/ShutterTale.NetTiers/ExecuteNonQueryQry" style="document" />
+      <wsdl:input name="ExecuteNonQueryQry">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="ExecuteNonQueryQry">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ExecuteDataSet">
+      <soap:operation soapAction="http://localhost/ShutterTale.NetTiers/ExecuteDataSetPs" style="document" />
+      <wsdl:input name="ExecuteDataSetPs">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="ExecuteDataSetPs">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ExecuteDataSet">
+      <soap:operation soapAction="http://localhost/ShutterTale.NetTiers/ExecuteDataSetQry" style="document" />
+      <wsdl:input name="ExecuteDataSetQry">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="ExecuteDataSetQry">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ExecuteScalar">
+      <soap:operation soapAction="http://localhost/ShutterTale.NetTiers/ExecuteScalarPs" style="document" />
+      <wsdl:input name="ExecuteScalarPs">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="ExecuteScalarPs">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ExecuteScalar">
+      <soap:operation soapAction="http://localhost/ShutterTale.NetTiers/ExecuteScalarQry" style="document" />
+      <wsdl:input name="ExecuteScalarQry">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="ExecuteScalarQry">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="ShutterTaleServicesSoap12" type="tns:ShutterTaleServicesSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="MediaProvider_Delete">
+      <soap12:operation soapAction="http://localhost/ShutterTale.NetTiers/MediaProvider_Delete" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MediaProvider_Find">
+      <soap12:operation soapAction="http://localhost/ShutterTale.NetTiers/MediaProvider_Find" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MediaProvider_GetAll">
+      <soap12:operation soapAction="http://localhost/ShutterTale.NetTiers/MediaProvider_GetAll" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MediaProvider_GetPaged">
+      <soap12:operation soapAction="http://localhost/ShutterTale.NetTiers/MediaProvider_GetPaged" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MediaProvider_GetById">
+      <soap12:operation soapAction="http://localhost/ShutterTale.NetTiers/MediaProvider_GetById" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MediaProvider_Insert">
+      <soap12:operation soapAction="http://localhost/ShutterTale.NetTiers/MediaProvider_Insert" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MediaProvider_BulkInsert">
+      <soap12:operation soapAction="http://localhost/ShutterTale.NetTiers/MediaProvider_BulkInsert" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MediaProvider_Update">
+      <soap12:operation soapAction="http://localhost/ShutterTale.NetTiers/MediaProvider_Update" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MediaImageProvider_Delete">
+      <soap12:operation soapAction="http://localhost/ShutterTale.NetTiers/MediaImageProvider_Delete" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MediaImageProvider_Find">
+      <soap12:operation soapAction="http://localhost/ShutterTale.NetTiers/MediaImageProvider_Find" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MediaImageProvider_GetAll">
+      <soap12:operation soapAction="http://localhost/ShutterTale.NetTiers/MediaImageProvider_GetAll" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MediaImageProvider_GetPaged">
+      <soap12:operation soapAction="http://localhost/ShutterTale.NetTiers/MediaImageProvider_GetPaged" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MediaImageProvider_GetById">
+      <soap12:operation soapAction="http://localhost/ShutterTale.NetTiers/MediaImageProvider_GetById" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MediaImageProvider_Insert">
+      <soap12:operation soapAction="http://localhost/ShutterTale.NetTiers/MediaImageProvider_Insert" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MediaImageProvider_BulkInsert">
+      <soap12:operation soapAction="http://localhost/ShutterTale.NetTiers/MediaImageProvider_BulkInsert" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MediaImageProvider_Update">
+      <soap12:operation soapAction="http://localhost/ShutterTale.NetTiers/MediaImageProvider_Update" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MediaVideoProvider_Delete">
+      <soap12:operation soapAction="http://localhost/ShutterTale.NetTiers/MediaVideoProvider_Delete" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MediaVideoProvider_Find">
+      <soap12:operation soapAction="http://localhost/ShutterTale.NetTiers/MediaVideoProvider_Find" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MediaVideoProvider_GetAll">
+      <soap12:operation soapAction="http://localhost/ShutterTale.NetTiers/MediaVideoProvider_GetAll" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MediaVideoProvider_GetPaged">
+      <soap12:operation soapAction="http://localhost/ShutterTale.NetTiers/MediaVideoProvider_GetPaged" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MediaVideoProvider_GetById">
+      <soap12:operation soapAction="http://localhost/ShutterTale.NetTiers/MediaVideoProvider_GetById" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MediaVideoProvider_Insert">
+      <soap12:operation soapAction="http://localhost/ShutterTale.NetTiers/MediaVideoProvider_Insert" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MediaVideoProvider_BulkInsert">
+      <soap12:operation soapAction="http://localhost/ShutterTale.NetTiers/MediaVideoProvider_BulkInsert" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MediaVideoProvider_Update">
+      <soap12:operation soapAction="http://localhost/ShutterTale.NetTiers/MediaVideoProvider_Update" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MediaAudioProvider_Delete">
+      <soap12:operation soapAction="http://localhost/ShutterTale.NetTiers/MediaAudioProvider_Delete" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MediaAudioProvider_Find">
+      <soap12:operation soapAction="http://localhost/ShutterTale.NetTiers/MediaAudioProvider_Find" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MediaAudioProvider_GetAll">
+      <soap12:operation soapAction="http://localhost/ShutterTale.NetTiers/MediaAudioProvider_GetAll" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MediaAudioProvider_GetPaged">
+      <soap12:operation soapAction="http://localhost/ShutterTale.NetTiers/MediaAudioProvider_GetPaged" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MediaAudioProvider_GetById">
+      <soap12:operation soapAction="http://localhost/ShutterTale.NetTiers/MediaAudioProvider_GetById" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MediaAudioProvider_Insert">
+      <soap12:operation soapAction="http://localhost/ShutterTale.NetTiers/MediaAudioProvider_Insert" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MediaAudioProvider_BulkInsert">
+      <soap12:operation soapAction="http://localhost/ShutterTale.NetTiers/MediaAudioProvider_BulkInsert" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MediaAudioProvider_Update">
+      <soap12:operation soapAction="http://localhost/ShutterTale.NetTiers/MediaAudioProvider_Update" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PreviewsProvider_Delete">
+      <soap12:operation soapAction="http://localhost/ShutterTale.NetTiers/PreviewsProvider_Delete" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PreviewsProvider_Find">
+      <soap12:operation soapAction="http://localhost/ShutterTale.NetTiers/PreviewsProvider_Find" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PreviewsProvider_GetAll">
+      <soap12:operation soapAction="http://localhost/ShutterTale.NetTiers/PreviewsProvider_GetAll" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PreviewsProvider_GetPaged">
+      <soap12:operation soapAction="http://localhost/ShutterTale.NetTiers/PreviewsProvider_GetPaged" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PreviewsProvider_GetByMediumId">
+      <soap12:operation soapAction="http://localhost/ShutterTale.NetTiers/PreviewsProvider_GetByMediumId" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PreviewsProvider_GetById">
+      <soap12:operation soapAction="http://localhost/ShutterTale.NetTiers/PreviewsProvider_GetById" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PreviewsProvider_Insert">
+      <soap12:operation soapAction="http://localhost/ShutterTale.NetTiers/PreviewsProvider_Insert" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PreviewsProvider_BulkInsert">
+      <soap12:operation soapAction="http://localhost/ShutterTale.NetTiers/PreviewsProvider_BulkInsert" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PreviewsProvider_Update">
+      <soap12:operation soapAction="http://localhost/ShutterTale.NetTiers/PreviewsProvider_Update" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ExecuteNonQuery">
+      <soap12:operation soapAction="http://localhost/ShutterTale.NetTiers/ExecuteNonQueryPs" style="document" />
+      <wsdl:input name="ExecuteNonQueryPs">
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="ExecuteNonQueryPs">
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ExecuteNonQuery">
+      <soap12:operation soapAction="http://localhost/ShutterTale.NetTiers/ExecuteNonQueryQry" style="document" />
+      <wsdl:input name="ExecuteNonQueryQry">
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="ExecuteNonQueryQry">
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ExecuteDataSet">
+      <soap12:operation soapAction="http://localhost/ShutterTale.NetTiers/ExecuteDataSetPs" style="document" />
+      <wsdl:input name="ExecuteDataSetPs">
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="ExecuteDataSetPs">
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ExecuteDataSet">
+      <soap12:operation soapAction="http://localhost/ShutterTale.NetTiers/ExecuteDataSetQry" style="document" />
+      <wsdl:input name="ExecuteDataSetQry">
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="ExecuteDataSetQry">
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ExecuteScalar">
+      <soap12:operation soapAction="http://localhost/ShutterTale.NetTiers/ExecuteScalarPs" style="document" />
+      <wsdl:input name="ExecuteScalarPs">
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="ExecuteScalarPs">
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ExecuteScalar">
+      <soap12:operation soapAction="http://localhost/ShutterTale.NetTiers/ExecuteScalarQry" style="document" />
+      <wsdl:input name="ExecuteScalarQry">
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="ExecuteScalarQry">
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="ShutterTaleServices">
+    <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Exposes CRUD webmethods for the ShutterTaleServices Database.</wsdl:documentation>
+    <wsdl:port name="ShutterTaleServicesSoap" binding="tns:ShutterTaleServicesSoap">
+      <soap:address location="http://localhost/ShutterTale.NetTiers/ShutterTaleServices.asmx" />
+    </wsdl:port>
+    <wsdl:port name="ShutterTaleServicesSoap12" binding="tns:ShutterTaleServicesSoap12">
+      <soap12:address location="http://localhost/ShutterTale.NetTiers/ShutterTaleServices.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

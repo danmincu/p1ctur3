@@ -1,0 +1,18 @@
+﻿@{
+    ViewBag.Title = "FlickrAccount";
+}
+
+
+<h2>FlickrAccount</h2>
+
+<a href=@ViewBag.AuthUrl title="Authorization" target="_blank">Click here - takes you to flickr validation process. Come back with the token verifier</a>
+
+<form action="~/Home/FlickrAuthorize">
+    <table>
+        <tr>
+            <td>Put here the validator from Flick</td>
+            <td><input id="tokenVerifier" type="text" name="tokenVerifier" /></td>
+        </tr>
+    </table>
+    <input type="submit" value="Validate" />
+</form>

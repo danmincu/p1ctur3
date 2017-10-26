@@ -1,0 +1,167 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShutterTale.Entities", "ShutterTale.Entities\ShutterTale.Entities.csproj", "{1FBC6384-604B-4C78-A2BD-2C2E5A83B742}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShutterTale.Data", "ShutterTale.Data\ShutterTale.Data.csproj", "{A085DBB3-06EA-47EB-A843-517F89057825}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShutterTale.Data.SqlClient", "ShutterTale.Data.SqlClient\ShutterTale.Data.SqlClient.csproj", "{52DD78A1-B9FB-4B88-9A10-E12CE4C4E3B0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShutterTale.Web", "ShutterTale.Web\ShutterTale.Web.csproj", "{D9145DD1-76E1-44B5-8985-94808FEF9967}"
+EndProject
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "ShutterTale.Website", "ShutterTale.Website", "{4DE48278-E1AE-49B6-8820-A6B761AA6843}"
+	ProjectSection(WebsiteProperties) = preProject
+		SccProjectName = "SAK"
+		SccAuxPath = "SAK"
+		SccLocalPath = "SAK"
+		SccProvider = "SAK"
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.0"
+		ProjectReferences = "{1FBC6384-604B-4C78-A2BD-2C2E5A83B742}|ShutterTale.Entities.dll;{A085DBB3-06EA-47EB-A843-517F89057825}|ShutterTale.Data.dll;{52DD78A1-B9FB-4B88-9A10-E12CE4C4E3B0}|ShutterTale.Data.SqlClient.dll;{D9145DD1-76E1-44B5-8985-94808FEF9967}|ShutterTale.Web.dll;"
+		Debug.AspNetCompiler.VirtualPath = "/ShutterTale.Website"
+		Debug.AspNetCompiler.PhysicalPath = "ShutterTale.Website\"
+		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\ShutterTale.Website\"
+		Debug.AspNetCompiler.Updateable = "true"
+		Debug.AspNetCompiler.ForceOverwrite = "true"
+		Debug.AspNetCompiler.FixedNames = "false"
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.VirtualPath = "/ShutterTale.Website"
+		Release.AspNetCompiler.PhysicalPath = "ShutterTale.Website\"
+		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\ShutterTale.Website\"
+		Release.AspNetCompiler.Updateable = "true"
+		Release.AspNetCompiler.ForceOverwrite = "true"
+		Release.AspNetCompiler.FixedNames = "false"
+		Release.AspNetCompiler.Debug = "False"
+		VWDPort = "2005"
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShutterTale.Data.WebServiceClient", "ShutterTale.Data.WebServiceClient\ShutterTale.Data.WebServiceClient.csproj", "{DF3DA485-5CA2-4539-862E-9AD65AC320AD}"
+EndProject
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "ShutterTale.NetTiers", "http://localhost/ShutterTale.NetTiers", "{5E3CA58E-216A-4F53-BD23-5A48A6C44924}"
+	ProjectSection(WebsiteProperties) = preProject
+		SccProjectName = "SAK"
+		SccAuxPath = "SAK"
+		SccLocalPath = "SAK"
+		SccProvider = "SAK"
+		UseIISExpress = "false"
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.0"
+		ProjectReferences = "{1FBC6384-604B-4C78-A2BD-2C2E5A83B742}|ShutterTale.Entities.dll;{A085DBB3-06EA-47EB-A843-517F89057825}|ShutterTale.Data.dll;{52DD78A1-B9FB-4B88-9A10-E12CE4C4E3B0}|ShutterTale.Data.SqlClient.dll;"
+		Debug.AspNetCompiler.VirtualPath = "/ShutterTale.NetTiers"
+		Debug.AspNetCompiler.PhysicalPath = "WebServices\"
+		Debug.AspNetCompiler.TargetPath = "http:\localhost\ShutterTale.NetTiers\"
+		Debug.AspNetCompiler.Updateable = "true"
+		Debug.AspNetCompiler.ForceOverwrite = "true"
+		Debug.AspNetCompiler.FixedNames = "false"
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.VirtualPath = "/ShutterTale.NetTiers"
+		Release.AspNetCompiler.PhysicalPath = "WebServices\"
+		Release.AspNetCompiler.TargetPath = "http:\localhost\ShutterTale.NetTiers\"
+		Release.AspNetCompiler.Updateable = "true"
+		Release.AspNetCompiler.ForceOverwrite = "true"
+		Release.AspNetCompiler.FixedNames = "false"
+		Release.AspNetCompiler.Debug = "False"
+		SlnRelativePath = "WebServices\"
+		DefaultWebSiteLanguage = "Visual C#"
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShutterTale.UnitTests", "ShutterTale.UnitTests\ShutterTale.UnitTests.csproj", "{BC746F47-4B0D-41F1-A4BE-EF5E0AD7FD2F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NetTiers", "NetTiers", "{F3A10C8D-3227-449F-A2CB-014DE2D7F415}"
+	ProjectSection(SolutionItems) = preProject
+		AssemblyInfo.cs = AssemblyInfo.cs
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 9
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = http://tfs:8080/tfs/defaultcollection
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = ShutterTale.Data.SqlClient\\ShutterTale.Data.SqlClient.csproj
+		SccProjectTopLevelParentUniqueName1 = ShutterTale.sln
+		SccProjectName1 = ShutterTale.Data.SqlClient
+		SccLocalPath1 = ShutterTale.Data.SqlClient
+		SccProjectUniqueName2 = ShutterTale.Data.WebServiceClient\\ShutterTale.Data.WebServiceClient.csproj
+		SccProjectTopLevelParentUniqueName2 = ShutterTale.sln
+		SccProjectName2 = ShutterTale.Data.WebServiceClient
+		SccLocalPath2 = ShutterTale.Data.WebServiceClient
+		SccProjectUniqueName3 = ShutterTale.Data\\ShutterTale.Data.csproj
+		SccProjectTopLevelParentUniqueName3 = ShutterTale.sln
+		SccProjectName3 = ShutterTale.Data
+		SccLocalPath3 = ShutterTale.Data
+		SccProjectUniqueName4 = ShutterTale.Entities\\ShutterTale.Entities.csproj
+		SccProjectTopLevelParentUniqueName4 = ShutterTale.sln
+		SccProjectName4 = ShutterTale.Entities
+		SccLocalPath4 = ShutterTale.Entities
+		SccProjectUniqueName5 = ShutterTale.UnitTests\\ShutterTale.UnitTests.csproj
+		SccProjectTopLevelParentUniqueName5 = ShutterTale.sln
+		SccProjectName5 = ShutterTale.UnitTests
+		SccLocalPath5 = ShutterTale.UnitTests
+		SccProjectUniqueName6 = ShutterTale.Web\\ShutterTale.Web.csproj
+		SccProjectTopLevelParentUniqueName6 = ShutterTale.sln
+		SccProjectName6 = ShutterTale.Web
+		SccLocalPath6 = ShutterTale.Web
+		SccWebProject7 = true
+		SccProjectUniqueName7 = ShutterTale.Website
+		SccProjectTopLevelParentUniqueName7 = ShutterTale.sln
+		SccProjectName7 = ShutterTale.Website
+		SccLocalPath7 = ShutterTale.Website
+		SccProjectEnlistmentChoice7 = 2
+		SccWebProject8 = true
+		SccProjectUniqueName8 = http://localhost/ShutterTale.NetTiers
+		SccProjectTopLevelParentUniqueName8 = ShutterTale.sln
+		SccProjectName8 = WebServices
+		SccLocalPath8 = WebServices
+		SccProjectEnlistmentChoice8 = 2
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1FBC6384-604B-4C78-A2BD-2C2E5A83B742}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1FBC6384-604B-4C78-A2BD-2C2E5A83B742}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1FBC6384-604B-4C78-A2BD-2C2E5A83B742}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1FBC6384-604B-4C78-A2BD-2C2E5A83B742}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A085DBB3-06EA-47EB-A843-517F89057825}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A085DBB3-06EA-47EB-A843-517F89057825}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A085DBB3-06EA-47EB-A843-517F89057825}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A085DBB3-06EA-47EB-A843-517F89057825}.Release|Any CPU.Build.0 = Release|Any CPU
+		{52DD78A1-B9FB-4B88-9A10-E12CE4C4E3B0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{52DD78A1-B9FB-4B88-9A10-E12CE4C4E3B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{52DD78A1-B9FB-4B88-9A10-E12CE4C4E3B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{52DD78A1-B9FB-4B88-9A10-E12CE4C4E3B0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D9145DD1-76E1-44B5-8985-94808FEF9967}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D9145DD1-76E1-44B5-8985-94808FEF9967}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D9145DD1-76E1-44B5-8985-94808FEF9967}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D9145DD1-76E1-44B5-8985-94808FEF9967}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4DE48278-E1AE-49B6-8820-A6B761AA6843}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4DE48278-E1AE-49B6-8820-A6B761AA6843}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4DE48278-E1AE-49B6-8820-A6B761AA6843}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{4DE48278-E1AE-49B6-8820-A6B761AA6843}.Release|Any CPU.Build.0 = Debug|Any CPU
+		{DF3DA485-5CA2-4539-862E-9AD65AC320AD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DF3DA485-5CA2-4539-862E-9AD65AC320AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DF3DA485-5CA2-4539-862E-9AD65AC320AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DF3DA485-5CA2-4539-862E-9AD65AC320AD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5E3CA58E-216A-4F53-BD23-5A48A6C44924}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5E3CA58E-216A-4F53-BD23-5A48A6C44924}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5E3CA58E-216A-4F53-BD23-5A48A6C44924}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{5E3CA58E-216A-4F53-BD23-5A48A6C44924}.Release|Any CPU.Build.0 = Debug|Any CPU
+		{BC746F47-4B0D-41F1-A4BE-EF5E0AD7FD2F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BC746F47-4B0D-41F1-A4BE-EF5E0AD7FD2F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BC746F47-4B0D-41F1-A4BE-EF5E0AD7FD2F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BC746F47-4B0D-41F1-A4BE-EF5E0AD7FD2F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{A085DBB3-06EA-47EB-A843-517F89057825} = {F3A10C8D-3227-449F-A2CB-014DE2D7F415}
+		{52DD78A1-B9FB-4B88-9A10-E12CE4C4E3B0} = {F3A10C8D-3227-449F-A2CB-014DE2D7F415}
+		{D9145DD1-76E1-44B5-8985-94808FEF9967} = {F3A10C8D-3227-449F-A2CB-014DE2D7F415}
+		{4DE48278-E1AE-49B6-8820-A6B761AA6843} = {F3A10C8D-3227-449F-A2CB-014DE2D7F415}
+		{DF3DA485-5CA2-4539-862E-9AD65AC320AD} = {F3A10C8D-3227-449F-A2CB-014DE2D7F415}
+		{5E3CA58E-216A-4F53-BD23-5A48A6C44924} = {F3A10C8D-3227-449F-A2CB-014DE2D7F415}
+		{BC746F47-4B0D-41F1-A4BE-EF5E0AD7FD2F} = {F3A10C8D-3227-449F-A2CB-014DE2D7F415}
+		{1FBC6384-604B-4C78-A2BD-2C2E5A83B742} = {F3A10C8D-3227-449F-A2CB-014DE2D7F415}
+	EndGlobalSection
+EndGlobal

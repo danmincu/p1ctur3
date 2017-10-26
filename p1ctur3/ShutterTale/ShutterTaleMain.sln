@@ -1,0 +1,185 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DomainLib", "DomainLib\DomainLib.csproj", "{99F21FA1-00CB-45BC-8138-152671A04D67}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExifLibrary", "ImageLib\ExifLibrary\ExifLibrary.csproj", "{C29BA585-E27B-4AD0-9AD1-490B5E0E2A5E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SqlProvider", "SqlProvider\SqlProvider.csproj", "{F08F18BC-786F-48CB-A4D2-A6B3C0440DCD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EtlLibrary", "EtlLibrary\EtlLibrary.csproj", "{12D99C69-DE8D-4767-9CE4-7D135C8065E4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EtlUI", "EtlUI\EtlUI.csproj", "{169D56AE-C978-400D-8CF4-08A10833B187}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Telekad.Mapping", "Domain\Mapping\Telekad.Mapping.csproj", "{B2E2F7CA-F634-47CC-B2BF-3A9CCE0B5323}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MediaImport", "MediaImport\MediaImport\MediaImport\MediaImport.csproj", "{33752B63-0CAC-4B10-98CF-486783B8E973}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Ux", "Ux", "{4A2A37EE-3F5E-44F3-B4E7-5D65249B378A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Telekad.Ux", "Telekad.Ux\Telekad.Ux.csproj", "{1D33A8B6-6742-4F17-B9C7-6FFCB373014D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Utils", "Utils", "{98340462-2683-4356-8990-DFD0C0B7D549}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Telekad.Utils", "Telekad.Utils\Telekad.Utils.csproj", "{4DD816DF-CEB2-4A48-A66F-24CBE0E0C326}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleFlickrImport", "SimpleFlickrImport\SimpleFlickrImport.csproj", "{0439B45F-6F30-46A9-82F6-43B37DB3BCE8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlickrImportConsole", "FlickrImportConsole\FlickrImportConsole.csproj", "{BAD0147C-2935-4EA8-99B1-4F44A0BF6B1F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShutterTale.Data.WebServiceClient", "NetTiers\ShutterTale\ShutterTale.Data.WebServiceClient\ShutterTale.Data.WebServiceClient.csproj", "{DF3DA485-5CA2-4539-862E-9AD65AC320AD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShutterTale.Entities", "NetTiers\ShutterTale\ShutterTale.Entities\ShutterTale.Entities.csproj", "{1FBC6384-604B-4C78-A2BD-2C2E5A83B742}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShutterTale.Data", "NetTiers\ShutterTale\ShutterTale.Data\ShutterTale.Data.csproj", "{A085DBB3-06EA-47EB-A843-517F89057825}"
+EndProject
+Global
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 15
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = http://tfs:8080/tfs/defaultcollection
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = DomainLib\\DomainLib.csproj
+		SccProjectName1 = DomainLib
+		SccLocalPath1 = DomainLib
+		SccProjectUniqueName2 = ImageLib\\ExifLibrary\\ExifLibrary.csproj
+		SccProjectName2 = ImageLib/ExifLibrary
+		SccLocalPath2 = ImageLib\\ExifLibrary
+		SccProjectUniqueName3 = SqlProvider\\SqlProvider.csproj
+		SccProjectName3 = SqlProvider
+		SccLocalPath3 = SqlProvider
+		SccProjectUniqueName4 = EtlLibrary\\EtlLibrary.csproj
+		SccProjectName4 = EtlLibrary
+		SccLocalPath4 = EtlLibrary
+		SccProjectUniqueName5 = EtlUI\\EtlUI.csproj
+		SccProjectName5 = EtlUI
+		SccLocalPath5 = EtlUI
+		SccProjectUniqueName6 = Domain\\Mapping\\Telekad.Mapping.csproj
+		SccProjectName6 = Domain/Mapping
+		SccLocalPath6 = Domain\\Mapping
+		SccProjectUniqueName7 = MediaImport\\MediaImport\\MediaImport\\MediaImport.csproj
+		SccProjectName7 = MediaImport/MediaImport/MediaImport
+		SccLocalPath7 = MediaImport\\MediaImport\\MediaImport
+		SccProjectUniqueName8 = Telekad.Ux\\Telekad.Ux.csproj
+		SccProjectTopLevelParentUniqueName8 = ShutterTaleMain.sln
+		SccProjectName8 = Telekad.Ux
+		SccLocalPath8 = Telekad.Ux
+		SccProjectUniqueName9 = Telekad.Utils\\Telekad.Utils.csproj
+		SccProjectTopLevelParentUniqueName9 = ShutterTaleMain.sln
+		SccProjectName9 = Telekad.Utils
+		SccLocalPath9 = Telekad.Utils
+		SccProjectUniqueName10 = SimpleFlickrImport\\SimpleFlickrImport.csproj
+		SccProjectName10 = SimpleFlickrImport
+		SccLocalPath10 = SimpleFlickrImport
+		SccProjectUniqueName11 = FlickrImportConsole\\FlickrImportConsole.csproj
+		SccProjectName11 = FlickrImportConsole
+		SccLocalPath11 = FlickrImportConsole
+		SccProjectUniqueName12 = NetTiers\\ShutterTale\\ShutterTale.Data.WebServiceClient\\ShutterTale.Data.WebServiceClient.csproj
+		SccProjectName12 = NetTiers/ShutterTale/ShutterTale.Data.WebServiceClient
+		SccLocalPath12 = NetTiers\\ShutterTale\\ShutterTale.Data.WebServiceClient
+		SccProjectUniqueName13 = NetTiers\\ShutterTale\\ShutterTale.Entities\\ShutterTale.Entities.csproj
+		SccProjectName13 = NetTiers/ShutterTale/ShutterTale.Entities
+		SccLocalPath13 = NetTiers\\ShutterTale\\ShutterTale.Entities
+		SccProjectUniqueName14 = NetTiers\\ShutterTale\\ShutterTale.Data\\ShutterTale.Data.csproj
+		SccProjectName14 = NetTiers/ShutterTale/ShutterTale.Data
+		SccLocalPath14 = NetTiers\\ShutterTale\\ShutterTale.Data
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		GenerateDebug|Any CPU = GenerateDebug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{99F21FA1-00CB-45BC-8138-152671A04D67}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{99F21FA1-00CB-45BC-8138-152671A04D67}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{99F21FA1-00CB-45BC-8138-152671A04D67}.GenerateDebug|Any CPU.ActiveCfg = Debug|Any CPU
+		{99F21FA1-00CB-45BC-8138-152671A04D67}.GenerateDebug|Any CPU.Build.0 = Debug|Any CPU
+		{99F21FA1-00CB-45BC-8138-152671A04D67}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{99F21FA1-00CB-45BC-8138-152671A04D67}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C29BA585-E27B-4AD0-9AD1-490B5E0E2A5E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C29BA585-E27B-4AD0-9AD1-490B5E0E2A5E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C29BA585-E27B-4AD0-9AD1-490B5E0E2A5E}.GenerateDebug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C29BA585-E27B-4AD0-9AD1-490B5E0E2A5E}.GenerateDebug|Any CPU.Build.0 = Debug|Any CPU
+		{C29BA585-E27B-4AD0-9AD1-490B5E0E2A5E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C29BA585-E27B-4AD0-9AD1-490B5E0E2A5E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F08F18BC-786F-48CB-A4D2-A6B3C0440DCD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F08F18BC-786F-48CB-A4D2-A6B3C0440DCD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F08F18BC-786F-48CB-A4D2-A6B3C0440DCD}.GenerateDebug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F08F18BC-786F-48CB-A4D2-A6B3C0440DCD}.GenerateDebug|Any CPU.Build.0 = Debug|Any CPU
+		{F08F18BC-786F-48CB-A4D2-A6B3C0440DCD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F08F18BC-786F-48CB-A4D2-A6B3C0440DCD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{12D99C69-DE8D-4767-9CE4-7D135C8065E4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{12D99C69-DE8D-4767-9CE4-7D135C8065E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{12D99C69-DE8D-4767-9CE4-7D135C8065E4}.GenerateDebug|Any CPU.ActiveCfg = Debug|Any CPU
+		{12D99C69-DE8D-4767-9CE4-7D135C8065E4}.GenerateDebug|Any CPU.Build.0 = Debug|Any CPU
+		{12D99C69-DE8D-4767-9CE4-7D135C8065E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{12D99C69-DE8D-4767-9CE4-7D135C8065E4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{169D56AE-C978-400D-8CF4-08A10833B187}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{169D56AE-C978-400D-8CF4-08A10833B187}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{169D56AE-C978-400D-8CF4-08A10833B187}.GenerateDebug|Any CPU.ActiveCfg = Debug|Any CPU
+		{169D56AE-C978-400D-8CF4-08A10833B187}.GenerateDebug|Any CPU.Build.0 = Debug|Any CPU
+		{169D56AE-C978-400D-8CF4-08A10833B187}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{169D56AE-C978-400D-8CF4-08A10833B187}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B2E2F7CA-F634-47CC-B2BF-3A9CCE0B5323}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B2E2F7CA-F634-47CC-B2BF-3A9CCE0B5323}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B2E2F7CA-F634-47CC-B2BF-3A9CCE0B5323}.GenerateDebug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B2E2F7CA-F634-47CC-B2BF-3A9CCE0B5323}.GenerateDebug|Any CPU.Build.0 = Debug|Any CPU
+		{B2E2F7CA-F634-47CC-B2BF-3A9CCE0B5323}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B2E2F7CA-F634-47CC-B2BF-3A9CCE0B5323}.Release|Any CPU.Build.0 = Release|Any CPU
+		{33752B63-0CAC-4B10-98CF-486783B8E973}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{33752B63-0CAC-4B10-98CF-486783B8E973}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{33752B63-0CAC-4B10-98CF-486783B8E973}.GenerateDebug|Any CPU.ActiveCfg = Debug|Any CPU
+		{33752B63-0CAC-4B10-98CF-486783B8E973}.GenerateDebug|Any CPU.Build.0 = Debug|Any CPU
+		{33752B63-0CAC-4B10-98CF-486783B8E973}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{33752B63-0CAC-4B10-98CF-486783B8E973}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1D33A8B6-6742-4F17-B9C7-6FFCB373014D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1D33A8B6-6742-4F17-B9C7-6FFCB373014D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1D33A8B6-6742-4F17-B9C7-6FFCB373014D}.GenerateDebug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1D33A8B6-6742-4F17-B9C7-6FFCB373014D}.GenerateDebug|Any CPU.Build.0 = Debug|Any CPU
+		{1D33A8B6-6742-4F17-B9C7-6FFCB373014D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1D33A8B6-6742-4F17-B9C7-6FFCB373014D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4DD816DF-CEB2-4A48-A66F-24CBE0E0C326}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4DD816DF-CEB2-4A48-A66F-24CBE0E0C326}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4DD816DF-CEB2-4A48-A66F-24CBE0E0C326}.GenerateDebug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4DD816DF-CEB2-4A48-A66F-24CBE0E0C326}.GenerateDebug|Any CPU.Build.0 = Debug|Any CPU
+		{4DD816DF-CEB2-4A48-A66F-24CBE0E0C326}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4DD816DF-CEB2-4A48-A66F-24CBE0E0C326}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0439B45F-6F30-46A9-82F6-43B37DB3BCE8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0439B45F-6F30-46A9-82F6-43B37DB3BCE8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0439B45F-6F30-46A9-82F6-43B37DB3BCE8}.GenerateDebug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0439B45F-6F30-46A9-82F6-43B37DB3BCE8}.GenerateDebug|Any CPU.Build.0 = Debug|Any CPU
+		{0439B45F-6F30-46A9-82F6-43B37DB3BCE8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0439B45F-6F30-46A9-82F6-43B37DB3BCE8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BAD0147C-2935-4EA8-99B1-4F44A0BF6B1F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BAD0147C-2935-4EA8-99B1-4F44A0BF6B1F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BAD0147C-2935-4EA8-99B1-4F44A0BF6B1F}.GenerateDebug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BAD0147C-2935-4EA8-99B1-4F44A0BF6B1F}.GenerateDebug|Any CPU.Build.0 = Debug|Any CPU
+		{BAD0147C-2935-4EA8-99B1-4F44A0BF6B1F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BAD0147C-2935-4EA8-99B1-4F44A0BF6B1F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DF3DA485-5CA2-4539-862E-9AD65AC320AD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DF3DA485-5CA2-4539-862E-9AD65AC320AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DF3DA485-5CA2-4539-862E-9AD65AC320AD}.GenerateDebug|Any CPU.ActiveCfg = GenerateDebug|Any CPU
+		{DF3DA485-5CA2-4539-862E-9AD65AC320AD}.GenerateDebug|Any CPU.Build.0 = GenerateDebug|Any CPU
+		{DF3DA485-5CA2-4539-862E-9AD65AC320AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DF3DA485-5CA2-4539-862E-9AD65AC320AD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1FBC6384-604B-4C78-A2BD-2C2E5A83B742}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1FBC6384-604B-4C78-A2BD-2C2E5A83B742}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1FBC6384-604B-4C78-A2BD-2C2E5A83B742}.GenerateDebug|Any CPU.ActiveCfg = GenerateDebug|Any CPU
+		{1FBC6384-604B-4C78-A2BD-2C2E5A83B742}.GenerateDebug|Any CPU.Build.0 = GenerateDebug|Any CPU
+		{1FBC6384-604B-4C78-A2BD-2C2E5A83B742}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1FBC6384-604B-4C78-A2BD-2C2E5A83B742}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A085DBB3-06EA-47EB-A843-517F89057825}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A085DBB3-06EA-47EB-A843-517F89057825}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A085DBB3-06EA-47EB-A843-517F89057825}.GenerateDebug|Any CPU.ActiveCfg = GenerateDebug|Any CPU
+		{A085DBB3-06EA-47EB-A843-517F89057825}.GenerateDebug|Any CPU.Build.0 = GenerateDebug|Any CPU
+		{A085DBB3-06EA-47EB-A843-517F89057825}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A085DBB3-06EA-47EB-A843-517F89057825}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{1D33A8B6-6742-4F17-B9C7-6FFCB373014D} = {4A2A37EE-3F5E-44F3-B4E7-5D65249B378A}
+		{4DD816DF-CEB2-4A48-A66F-24CBE0E0C326} = {98340462-2683-4356-8990-DFD0C0B7D549}
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,404 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="ShutterTaleDataModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="ShutterTaleDataModelStoreContainer">
+    <EntitySet Name="Media" EntityType="ShutterTaleDataModel.Store.Media" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Previews" EntityType="ShutterTaleDataModel.Store.Previews" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Contents" EntityType="ShutterTaleDataModel.Store.Contents" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Media_Image" EntityType="ShutterTaleDataModel.Store.Media_Image" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Media_Audio" EntityType="ShutterTaleDataModel.Store.Media_Audio" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Media_Video" EntityType="ShutterTaleDataModel.Store.Media_Video" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="MediaPreview" Association="ShutterTaleDataModel.Store.MediaPreview">
+      <End Role="Media" EntitySet="Media" />
+      <End Role="Preview" EntitySet="Previews" />
+    </AssociationSet>
+    <AssociationSet Name="MediaContent" Association="ShutterTaleDataModel.Store.MediaContent">
+      <End Role="Media" EntitySet="Media" />
+      <End Role="Content" EntitySet="Contents" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Image_inherits_Media" Association="ShutterTaleDataModel.Store.FK_Image_inherits_Media">
+      <End Role="Media" EntitySet="Media" />
+      <End Role="Image" EntitySet="Media_Image" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Audio_inherits_Media" Association="ShutterTaleDataModel.Store.FK_Audio_inherits_Media">
+      <End Role="Media" EntitySet="Media" />
+      <End Role="Audio" EntitySet="Media_Audio" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Video_inherits_Audio" Association="ShutterTaleDataModel.Store.FK_Video_inherits_Audio">
+      <End Role="Audio" EntitySet="Media_Audio" />
+      <End Role="Video" EntitySet="Media_Video" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Media">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="CaptureDateTime" Type="datetime" Nullable="true" />
+    <Property Name="FileDateTime" Type="datetime" Nullable="false" />
+    <Property Name="ImportDateTime" Type="datetime" Nullable="false" />
+    <Property Name="Location" Type="geography" Nullable="true" SRID="4326" />
+    <Property Name="PixelX" Type="int" Nullable="false" />
+    <Property Name="PixelY" Type="int" Nullable="false" />
+    <Property Name="Dpi" Type="float" Nullable="false" />
+    <Property Name="ContentType" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Make" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="Model" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="SoftwareVersion" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="Origin" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Size" Type="int" Nullable="false" />
+    <Property Name="Quadkey18" Type="nvarchar" Nullable="false" MaxLength="18" />
+  </EntityType>
+  <EntityType Name="Previews">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Level0" Type="varbinary(max)" Nullable="true" />
+    <Property Name="Level1" Type="varbinary(max)" Nullable="true" />
+    <Property Name="Level2" Type="varbinary(max)" Nullable="true" />
+    <Property Name="Level3" Type="varbinary(max)" Nullable="true" />
+    <Property Name="PreviewType" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Medium_Id" Type="uniqueidentifier" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Contents">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Provider" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="ProviderKey" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Medium_Id" Type="uniqueidentifier" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Media_Image">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Orientation" Type="tinyint" Nullable="true" />
+    <Property Name="YCbCrPositioning" Type="tinyint" Nullable="true" />
+    <Property Name="ExposureTime" Type="float" Nullable="true" />
+    <Property Name="FNumber" Type="float" Nullable="true" />
+    <Property Name="ExposureProgram" Type="tinyint" Nullable="true" />
+    <Property Name="ISOSpeedRatings" Type="smallint" Nullable="true" />
+    <Property Name="ShutterSpeedValue" Type="float" Nullable="true" />
+    <Property Name="ApertureValue" Type="float" Nullable="true" />
+    <Property Name="MeteringMode" Type="tinyint" Nullable="true" />
+    <Property Name="Flash" Type="tinyint" Nullable="true" />
+    <Property Name="FocalLength" Type="float" Nullable="true" />
+    <Property Name="FlashpixVersion" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="ColorSpace" Type="tinyint" Nullable="true" />
+    <Property Name="SensingMethod" Type="tinyint" Nullable="true" />
+    <Property Name="ExposureMode" Type="tinyint" Nullable="true" />
+    <Property Name="WhiteBalance" Type="tinyint" Nullable="true" />
+    <Property Name="SceneCaptureType" Type="tinyint" Nullable="true" />
+    <Property Name="Sharpness" Type="tinyint" Nullable="true" />
+    <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Media_Audio">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="AudioChannels" Type="tinyint" Nullable="false" />
+    <Property Name="Duration" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="AudioCodec" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Media_Video">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="VideoChannels" Type="tinyint" Nullable="true" />
+    <Property Name="VideoCodec" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+  </EntityType>
+  <Association Name="MediaPreview">
+    <End Role="Media" Type="ShutterTaleDataModel.Store.Media" Multiplicity="1" />
+    <End Role="Preview" Type="ShutterTaleDataModel.Store.Previews" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Media">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Preview">
+        <PropertyRef Name="Medium_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="MediaContent">
+    <End Role="Media" Type="ShutterTaleDataModel.Store.Media" Multiplicity="1" />
+    <End Role="Content" Type="ShutterTaleDataModel.Store.Contents" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Media">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Content">
+        <PropertyRef Name="Medium_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Image_inherits_Media">
+    <End Role="Media" Type="ShutterTaleDataModel.Store.Media" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Image" Type="ShutterTaleDataModel.Store.Media_Image" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Media">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Image">
+        <PropertyRef Name="Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Audio_inherits_Media">
+    <End Role="Media" Type="ShutterTaleDataModel.Store.Media" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Audio" Type="ShutterTaleDataModel.Store.Media_Audio" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Media">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Audio">
+        <PropertyRef Name="Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Video_inherits_Audio">
+    <End Role="Audio" Type="ShutterTaleDataModel.Store.Media_Audio" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Video" Type="ShutterTaleDataModel.Store.Media_Video" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Audio">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Video">
+        <PropertyRef Name="Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="ShutterTaleDataModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
+        <EntityContainer Name="ShutterTaleDataModelContainer" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Media" EntityType="ShutterTaleDataModel.Media" />
+          <EntitySet Name="Previews" EntityType="ShutterTaleDataModel.Preview" />
+          <AssociationSet Name="MediaPreview" Association="ShutterTaleDataModel.MediaPreview">
+            <End Role="Media" EntitySet="Media" />
+            <End Role="Preview" EntitySet="Previews" />
+          </AssociationSet>
+          <EntitySet Name="Contents" EntityType="ShutterTaleDataModel.Content" />
+          <AssociationSet Name="MediaContent" Association="ShutterTaleDataModel.MediaContent">
+            <End Role="Media" EntitySet="Media" />
+            <End Role="Content" EntitySet="Contents" />
+          </AssociationSet>
+          </EntityContainer>
+        <EntityType Name="Media">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Guid" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="None" />
+          <Property Type="DateTime" Name="CaptureDateTime" />
+          <Property Type="DateTime" Name="FileDateTime" Nullable="false" />
+          <Property Type="DateTime" Name="ImportDateTime" Nullable="false" />
+          <Property Type="Geography" Name="Location" />
+          <Property Type="Int32" Name="PixelX" Nullable="false" />
+          <Property Type="Int32" Name="PixelY" Nullable="false" />
+          <Property Type="Double" Name="Dpi" Nullable="false" />
+          <Property Type="String" Name="ContentType" Nullable="false" />
+          <Property Type="String" Name="Make" />
+          <Property Type="String" Name="Model" />
+          <Property Type="String" Name="SoftwareVersion" />
+          <Property Type="String" Name="Origin" Nullable="false" />
+          <NavigationProperty Name="Preview" Relationship="ShutterTaleDataModel.MediaPreview" FromRole="Media" ToRole="Preview" />
+          <Property Type="Int32" Name="Size" Nullable="false" />
+          <Property Type="String" Name="Quadkey18" Nullable="false" MaxLength="18" />
+          <NavigationProperty Name="Content" Relationship="ShutterTaleDataModel.MediaContent" FromRole="Media" ToRole="Content" />
+        </EntityType>
+        <EntityType Name="Preview">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Guid" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="None" />
+          <Property Type="Binary" Name="Level0" Nullable="true" />
+          <Property Type="Binary" Name="Level1" Nullable="true" />
+          <Property Type="Binary" Name="Level2" Nullable="true" />
+          <Property Type="Binary" Name="Level3" Nullable="true" />
+          <Property Type="String" Name="PreviewType" Nullable="false" />
+          <NavigationProperty Name="Medium" Relationship="ShutterTaleDataModel.MediaPreview" FromRole="Preview" ToRole="Media" />
+        </EntityType>
+        <Association Name="MediaPreview">
+          <End Type="ShutterTaleDataModel.Media" Role="Media" Multiplicity="1" />
+          <End Type="ShutterTaleDataModel.Preview" Role="Preview" Multiplicity="0..1" />
+        </Association>
+        <EntityType Name="Image" BaseType="ShutterTaleDataModel.Media">
+          <Property Type="Byte" Name="Orientation" Nullable="true" />
+          <Property Type="Byte" Name="YCbCrPositioning" Nullable="true" />
+          <Property Type="Double" Name="ExposureTime" Nullable="true" />
+          <Property Type="Double" Name="FNumber" Nullable="true" />
+          <Property Type="Byte" Name="ExposureProgram" Nullable="true" />
+          <Property Type="Int16" Name="ISOSpeedRatings" Nullable="true" />
+          <Property Type="Double" Name="ShutterSpeedValue" Nullable="true" />
+          <Property Type="Double" Name="ApertureValue" Nullable="true" />
+          <Property Type="Byte" Name="MeteringMode" Nullable="true" />
+          <Property Type="Byte" Name="Flash" Nullable="true" />
+          <Property Type="Double" Name="FocalLength" Nullable="true" />
+          <Property Type="String" Name="FlashpixVersion" Nullable="true" />
+          <Property Type="Byte" Name="ColorSpace" Nullable="true" />
+          <Property Type="Byte" Name="SensingMethod" Nullable="true" />
+          <Property Type="Byte" Name="ExposureMode" Nullable="true" />
+          <Property Type="Byte" Name="WhiteBalance" Nullable="true" />
+          <Property Type="Byte" Name="SceneCaptureType" Nullable="true" />
+          <Property Type="Byte" Name="Sharpness" Nullable="true" />
+        </EntityType>
+        <EntityType Name="Video" BaseType="ShutterTaleDataModel.Audio" >
+          <Property Type="Byte" Name="VideoChannels" Nullable="false" />
+          <Property Type="String" Name="VideoCodec" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Audio" BaseType="ShutterTaleDataModel.Media">
+          <Property Type="Byte" Name="AudioChannels" Nullable="false" />
+          <Property Type="String" Name="Duration" Nullable="false" />
+          <Property Type="String" Name="AudioCodec" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Content">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Guid" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="None" />
+          <Property Type="String" Name="Provider" Nullable="false" />
+          <Property Type="String" Name="ProviderKey" Nullable="false" />
+          <NavigationProperty Name="Medium" Relationship="ShutterTaleDataModel.MediaContent" FromRole="Content" ToRole="Media" />
+        </EntityType>
+        <Association Name="MediaContent">
+          <End Type="ShutterTaleDataModel.Media" Role="Media" Multiplicity="1" />
+          <End Type="ShutterTaleDataModel.Content" Role="Content" Multiplicity="0..1" />
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="ShutterTaleDataModelStoreContainer" CdmEntityContainer="ShutterTaleDataModelContainer">
+    <EntitySetMapping Name="Media">
+      <EntityTypeMapping TypeName="IsTypeOf(ShutterTaleDataModel.Media)">
+        <MappingFragment StoreEntitySet="Media">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="CaptureDateTime" ColumnName="CaptureDateTime" />
+          <ScalarProperty Name="FileDateTime" ColumnName="FileDateTime" />
+          <ScalarProperty Name="ImportDateTime" ColumnName="ImportDateTime" />
+          <ScalarProperty Name="Location" ColumnName="Location" />
+          <ScalarProperty Name="PixelX" ColumnName="PixelX" />
+          <ScalarProperty Name="PixelY" ColumnName="PixelY" />
+          <ScalarProperty Name="Dpi" ColumnName="Dpi" />
+          <ScalarProperty Name="ContentType" ColumnName="ContentType" />
+          <ScalarProperty Name="Make" ColumnName="Make" />
+          <ScalarProperty Name="Model" ColumnName="Model" />
+          <ScalarProperty Name="SoftwareVersion" ColumnName="SoftwareVersion" />
+          <ScalarProperty Name="Origin" ColumnName="Origin" />
+          <ScalarProperty Name="Size" ColumnName="Size" />
+          <ScalarProperty Name="Quadkey18" ColumnName="Quadkey18" />
+        </MappingFragment>
+      </EntityTypeMapping>
+      <EntityTypeMapping TypeName="IsTypeOf(ShutterTaleDataModel.Image)">
+        <MappingFragment StoreEntitySet="Media_Image">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Orientation" ColumnName="Orientation" />
+          <ScalarProperty Name="YCbCrPositioning" ColumnName="YCbCrPositioning" />
+          <ScalarProperty Name="ExposureTime" ColumnName="ExposureTime" />
+          <ScalarProperty Name="FNumber" ColumnName="FNumber" />
+          <ScalarProperty Name="ExposureProgram" ColumnName="ExposureProgram" />
+          <ScalarProperty Name="ISOSpeedRatings" ColumnName="ISOSpeedRatings" />
+          <ScalarProperty Name="ShutterSpeedValue" ColumnName="ShutterSpeedValue" />
+          <ScalarProperty Name="ApertureValue" ColumnName="ApertureValue" />
+          <ScalarProperty Name="MeteringMode" ColumnName="MeteringMode" />
+          <ScalarProperty Name="Flash" ColumnName="Flash" />
+          <ScalarProperty Name="FocalLength" ColumnName="FocalLength" />
+          <ScalarProperty Name="FlashpixVersion" ColumnName="FlashpixVersion" />
+          <ScalarProperty Name="ColorSpace" ColumnName="ColorSpace" />
+          <ScalarProperty Name="SensingMethod" ColumnName="SensingMethod" />
+          <ScalarProperty Name="ExposureMode" ColumnName="ExposureMode" />
+          <ScalarProperty Name="WhiteBalance" ColumnName="WhiteBalance" />
+          <ScalarProperty Name="SceneCaptureType" ColumnName="SceneCaptureType" />
+          <ScalarProperty Name="Sharpness" ColumnName="Sharpness" />
+        </MappingFragment>
+      </EntityTypeMapping>
+      <EntityTypeMapping TypeName="IsTypeOf(ShutterTaleDataModel.Audio)">
+        <MappingFragment StoreEntitySet="Media_Audio">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="AudioChannels" ColumnName="AudioChannels" />
+          <ScalarProperty Name="Duration" ColumnName="Duration" />
+          <ScalarProperty Name="AudioCodec" ColumnName="AudioCodec" />
+        </MappingFragment>
+      </EntityTypeMapping>
+      <EntityTypeMapping TypeName="IsTypeOf(ShutterTaleDataModel.Video)">
+        <MappingFragment StoreEntitySet="Media_Video">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="VideoChannels" ColumnName="VideoChannels" />
+          <ScalarProperty Name="VideoCodec" ColumnName="VideoCodec" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Previews">
+      <EntityTypeMapping TypeName="IsTypeOf(ShutterTaleDataModel.Preview)">
+        <MappingFragment StoreEntitySet="Previews">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Level0" ColumnName="Level0" />
+          <ScalarProperty Name="Level1" ColumnName="Level1" />
+          <ScalarProperty Name="Level2" ColumnName="Level2" />
+          <ScalarProperty Name="Level3" ColumnName="Level3" />
+          <ScalarProperty Name="PreviewType" ColumnName="PreviewType" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Contents">
+      <EntityTypeMapping TypeName="IsTypeOf(ShutterTaleDataModel.Content)">
+        <MappingFragment StoreEntitySet="Contents">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Provider" ColumnName="Provider" />
+          <ScalarProperty Name="ProviderKey" ColumnName="ProviderKey" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="MediaPreview" TypeName="ShutterTaleDataModel.MediaPreview" StoreEntitySet="Previews">
+      <EndProperty Name="Media">
+        <ScalarProperty Name="Id" ColumnName="Medium_Id" />
+      </EndProperty>
+      <EndProperty Name="Preview">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="MediaContent" TypeName="ShutterTaleDataModel.MediaContent" StoreEntitySet="Contents">
+      <EndProperty Name="Media">
+        <ScalarProperty Name="Id" ColumnName="Medium_Id" />
+      </EndProperty>
+      <EndProperty Name="Content">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <edmx:Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </edmx:Connection>
+    <edmx:Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </edmx:Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

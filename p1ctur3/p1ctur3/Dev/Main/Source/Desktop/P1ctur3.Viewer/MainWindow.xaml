@@ -1,0 +1,330 @@
+﻿<Window x:Class="P1ctur3.Viewer.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"        
+        xmlns:c1maps="http://schemas.componentone.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:P1ctur3.Viewer"        
+        Title="MainWindow" Height="350" Width="525">
+    <Window.Resources>
+
+        <Color x:Key="selectionColor">#00a5e4</Color>
+        <Color x:Key="itemColor">#DD0000</Color>
+        <Color x:Key="highlightColor">#F2A100</Color>
+        <Color x:Key="selectedHighlightColor">#94E1FF</Color>
+        <SolidColorBrush x:Key="selectionBrush" Color="{StaticResource selectionColor}"/>
+        <SolidColorBrush x:Key="selectionPreviewBrush" Color="#6800a5e4"/>
+        <SolidColorBrush x:Key="itemBrush" Color="{StaticResource itemColor}"/>
+        <SolidColorBrush x:Key="itemPreviewBrush" Color="#68DD0000"/>
+        <SolidColorBrush x:Key="itemBorderBrush">Black</SolidColorBrush>
+        <SolidColorBrush x:Key="highlightBrush" Color="{StaticResource highlightColor}"/>
+        <SolidColorBrush x:Key="selectedHighlightBrush" Color="{StaticResource selectedHighlightColor}"/>
+        <!-- MAP BUCKETS -->
+        <DataTemplate x:Key="mapItemTemplate">
+            <DataTemplate.Resources>
+                <DataTemplate DataType="{x:Type local:MapBucketPresenter}">
+                    <Grid x:Name="container" Width="18" Height="18" RenderTransformOrigin="0.5,0.5">
+                        <Grid.RenderTransform>
+                            <ScaleTransform x:Name="scale" ScaleY="{Binding ScaleX, RelativeSource={RelativeSource Self}}"/>
+                        </Grid.RenderTransform>
+                        <Grid.CacheMode>
+                            <BitmapCache SnapsToDevicePixels="False"/>
+                        </Grid.CacheMode>
+                        <Grid.ToolTip>
+                            <TextBlock Text="{Binding ToolTip}" />
+                        </Grid.ToolTip>
+                        <Ellipse x:Name="ellipse" Opacity="1" Fill="{StaticResource itemBrush}" StrokeThickness="0.5" Stroke="{StaticResource itemBorderBrush}"/>
+                    </Grid>
+                </DataTemplate>
+
+
+                <DataTemplate DataType="{x:Type local:MapCardPresenter}">
+                    <Canvas x:Name="container">
+                        <Canvas.CacheMode>
+                            <BitmapCache SnapsToDevicePixels="False"/>
+                        </Canvas.CacheMode>
+                        <Border Margin="-4, -4" Canvas.Top="-18" Width="20" Height="20" BorderThickness="2" BorderBrush="LightPink">
+                        <Image Stretch="UniformToFill"  Source="{Binding ImageUri}">
+                            <Image.ToolTip>
+                                <Image Stretch="UniformToFill"  Margin="-4, -4" Canvas.Top="-18" Width="240" Height="240"  Source="{Binding ImageUri}"/>
+                            </Image.ToolTip>
+                        </Image>
+                        </Border>
+                        <!--<Path x:Name="itemEllipse" Canvas.Top="-18" StrokeThickness=".5" Stroke="{StaticResource itemBorderBrush}" StrokeMiterLimit="1.0" Fill="{StaticResource itemBrush}" Data="F1 M 12.599,6.578 C 12.567,3.083 9.834,0.250 6.424,0.250 C 3.014,0.250 0.250,3.083 0.250,6.578 C 0.250,8.323 0.940,9.904 2.055,11.048 C 2.055,11.048 6.163,14.408 6.424,21.091 C 6.551,17.013 8.230,13.405 10.798,11.048 C 10.798,11.048 12.623,9.263 12.599,6.578 Z">
+                            <Path.ToolTip>
+                                <TextBlock Text="{Binding ToolTipInfo}" />
+                            </Path.ToolTip>
+                        </Path>-->
+                    </Canvas>
+                </DataTemplate>
+
+
+
+
+                <!--     <DataTemplate DataType="{x:Type local:MapBucketPresenter}">
+                    <Grid x:Name="container" Width="18" Height="18" RenderTransformOrigin="0.5,0.5" ToolTipService.ShowDuration="{x:Static System:Int32.MaxValue}">
+                        <Grid.RenderTransform>
+                            <ScaleTransform x:Name="scale" ScaleY="{Binding ScaleX, RelativeSource={RelativeSource Self}}"/>
+                        </Grid.RenderTransform>
+                        <Grid.CacheMode>
+                            <BitmapCache SnapsToDevicePixels="False"/>
+                        </Grid.CacheMode>
+                        <Grid.ToolTip>
+                            <TextBlock Text="{Binding ToolTip}" />
+                        </Grid.ToolTip>
+                        <Ellipse x:Name="ellipse" Opacity="1" Fill="{StaticResource itemBrush}" StrokeThickness="0.5" Stroke="{StaticResource itemBorderBrush}"/>
+                    </Grid>
+                    <DataTemplate.Triggers>
+                        <DataTrigger Binding="{Binding SelectState}" Value="{x:Static Selection:SelectionState.PartiallySelected}">
+                            <Setter TargetName="ellipse" Property="Fill">
+                                <Setter.Value>
+                                    <LinearGradientBrush>
+                                        <LinearGradientBrush.GradientStops>
+                                            <GradientStopCollection>
+                                                <GradientStop Color="{StaticResource itemColor}" Offset="0.5"/>
+                                                <GradientStop Color="{StaticResource selectionColor}" Offset="0.5"/>
+                                            </GradientStopCollection>
+                                        </LinearGradientBrush.GradientStops>
+                                    </LinearGradientBrush>
+                                </Setter.Value>
+                            </Setter>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding SelectState}" Value="{x:Static Selection:SelectionState.Selected}">
+                            <Setter TargetName="ellipse" Property="Fill" Value="{StaticResource selectionBrush}"/>
+                        </DataTrigger>
+
+                        <DataTrigger Binding="{Binding IsSelectionPreview}" Value="true">
+                            <Setter TargetName="ellipse" Property="Fill" Value="{StaticResource selectionPreviewBrush}"/>
+                        </DataTrigger>
+
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding IsSelectionPreview}" Value="True"/>
+                                <Condition Binding="{Binding DataContext.SelectionMode, RelativeSource={RelativeSource AncestorType={x:Type local:MapPerspectiveView}}}" Value="{x:Static local:MapSelectionMode.Exclusive}"/>
+                            </MultiDataTrigger.Conditions>
+                            <Setter TargetName="ellipse" Property="Fill" Value="{StaticResource itemPreviewBrush}"/>
+                        </MultiDataTrigger>
+
+                        <DataTrigger Binding="{Binding IsHighlighted}" Value="True">
+                            <Setter TargetName="ellipse" Property="Fill" Value="{StaticResource highlightBrush}"/>
+                            <Setter TargetName="container" Property="Effect">
+                                <Setter.Value>
+                                    <DropShadowEffect ShadowDepth="0" BlurRadius="8"/>
+                                </Setter.Value>
+                            </Setter>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding IsExplored}" Value="True">
+                            <DataTrigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="scale" Storyboard.TargetProperty="ScaleX" To="1.3" Duration="0:0:0.1" AccelerationRatio="1"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </DataTrigger.EnterActions>
+                            <DataTrigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="scale" Storyboard.TargetProperty="ScaleX" Duration="0:0:0.1" AccelerationRatio="1"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </DataTrigger.ExitActions>
+                            <Setter TargetName="ellipse" Property="Fill" Value="{StaticResource highlightBrush}"/>
+                            <Setter TargetName="container" Property="Effect">
+                                <Setter.Value>
+                                    <DropShadowEffect ShadowDepth="0" BlurRadius="8"/>
+                                </Setter.Value>
+                            </Setter>
+                        </DataTrigger>
+
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding IsHighlighted}" Value="True"/>
+                                <Condition Binding="{Binding SelectState}" Value="{x:Static Selection:SelectionState.Selected}"/>
+                            </MultiDataTrigger.Conditions>
+                            <Setter TargetName="ellipse" Property="Fill" Value="{StaticResource selectedHighlightBrush}"/>
+                        </MultiDataTrigger>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding IsExplored}" Value="True"/>
+                                <Condition Binding="{Binding SelectState}" Value="{x:Static Selection:SelectionState.Selected}"/>
+                            </MultiDataTrigger.Conditions>
+                            <Setter TargetName="ellipse" Property="Fill" Value="{StaticResource selectedHighlightBrush}"/>
+                        </MultiDataTrigger>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding IsHighlighted}" Value="True"/>
+                                <Condition Binding="{Binding SelectState}" Value="{x:Static Selection:SelectionState.PartiallySelected}"/>
+                            </MultiDataTrigger.Conditions>
+                            <Setter TargetName="ellipse" Property="Fill" Value="{StaticResource selectedHighlightBrush}"/>
+                            <Setter TargetName="ellipse" Property="Fill">
+                                <Setter.Value>
+                                    <LinearGradientBrush>
+                                        <LinearGradientBrush.GradientStops>
+                                            <GradientStopCollection>
+                                                <GradientStop Color="{StaticResource highlightColor}" Offset="0.5"/>
+                                                <GradientStop Color="{StaticResource selectedHighlightColor}" Offset="0.5"/>
+                                            </GradientStopCollection>
+                                        </LinearGradientBrush.GradientStops>
+                                    </LinearGradientBrush>
+                                </Setter.Value>
+                            </Setter>
+                        </MultiDataTrigger>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding IsExplored}" Value="True"/>
+                                <Condition Binding="{Binding SelectState}" Value="{x:Static Selection:SelectionState.PartiallySelected}"/>
+                            </MultiDataTrigger.Conditions>
+                            <Setter TargetName="ellipse" Property="Fill" Value="{StaticResource selectedHighlightBrush}"/>
+                            <Setter TargetName="ellipse" Property="Fill">
+                                <Setter.Value>
+                                    <LinearGradientBrush>
+                                        <LinearGradientBrush.GradientStops>
+                                            <GradientStopCollection>
+                                                <GradientStop Color="{StaticResource highlightColor}" Offset="0.5"/>
+                                                <GradientStop Color="{StaticResource selectedHighlightColor}" Offset="0.5"/>
+                                            </GradientStopCollection>
+                                        </LinearGradientBrush.GradientStops>
+                                    </LinearGradientBrush>
+                                </Setter.Value>
+                            </Setter>
+                        </MultiDataTrigger>
+
+                        <DataTrigger Binding="{Binding Layers[0].Visibility, RelativeSource={RelativeSource FindAncestor, AncestorLevel=1, AncestorType={x:Type c1maps:C1Maps}}}" Value="Visible">
+                            <Setter TargetName="ellipse" Property="Opacity" Value="1"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding TargetZoom, Converter={p:GreaterThanConverter Value=14.0}, RelativeSource={RelativeSource FindAncestor, AncestorLevel=1, AncestorType={x:Type c1maps:C1Maps}}}" Value="True">
+                            <Setter TargetName="ellipse" Property="Opacity" Value="1"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding SelectedIndex, ElementName=mapViewType}" Value="1">
+                            <Setter TargetName="ellipse" Property="Visibility" Value="Collapsed"/>
+                        </DataTrigger>
+                    </DataTemplate.Triggers>
+                </DataTemplate> -->
+                <!-- MAP CARDS -->
+             <!--   <DataTemplate DataType="{x:Type Mapping:MapCardPresenter}">
+                    <Canvas x:Name="container">
+                        <Canvas.CacheMode>
+                            <BitmapCache SnapsToDevicePixels="False"/>
+                        </Canvas.CacheMode>
+                        <Ellipse x:Name="pertinentGlow" Margin="-4, -4" Canvas.Top="-18" Width="20" Height="20" Opacity=".8" Visibility="Collapsed" ToolTipService.ShowDuration="{x:Static System:Int32.MaxValue}">
+                            <Ellipse.Fill>
+                                <RadialGradientBrush>
+                                    <GradientStop Color="Red" Offset="0.5" />
+                                    <GradientStop Color="White" Offset="1" />
+                                </RadialGradientBrush>
+                            </Ellipse.Fill>
+                            <Ellipse.ToolTip>
+                                <TextBlock Text="{Binding ToolTipInfo}" />
+                            </Ellipse.ToolTip>
+                        </Ellipse>
+
+                        <Path x:Name="itemEllipse" ToolTipService.ShowDuration="{x:Static System:Int32.MaxValue}" Canvas.Top="-18" StrokeThickness=".5" Stroke="{StaticResource itemBorderBrush}" StrokeMiterLimit="1.0" Fill="{StaticResource itemBrush}" Data="F1 M 12.599,6.578 C 12.567,3.083 9.834,0.250 6.424,0.250 C 3.014,0.250 0.250,3.083 0.250,6.578 C 0.250,8.323 0.940,9.904 2.055,11.048 C 2.055,11.048 6.163,14.408 6.424,21.091 C 6.551,17.013 8.230,13.405 10.798,11.048 C 10.798,11.048 12.623,9.263 12.599,6.578 Z">
+                            <Path.ToolTip>
+                                <TextBlock Text="{Binding ToolTipInfo}" />
+                            </Path.ToolTip>
+                        </Path>
+                    </Canvas>
+                    <DataTemplate.Triggers>
+                        <DataTrigger Binding="{Binding SelectState}" Value="{x:Static Selection:SelectionState.Selected}">
+                            <Setter TargetName="itemEllipse" Property="Fill" Value="{StaticResource selectionBrush}"/>
+                        </DataTrigger>
+
+                        <DataTrigger Binding="{Binding IsSelectionPreview}" Value="true">
+                            <Setter TargetName="itemEllipse" Property="Fill" Value="{StaticResource selectionPreviewBrush}"/>
+                        </DataTrigger>
+
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding IsSelectionPreview}" Value="True"/>
+                                <Condition Binding="{Binding DataContext.SelectionMode, RelativeSource={RelativeSource AncestorType={x:Type local:MapPerspectiveView}}}" Value="{x:Static local:MapSelectionMode.Exclusive}"/>
+                            </MultiDataTrigger.Conditions>
+                            <Setter TargetName="itemEllipse" Property="Fill" Value="{StaticResource itemPreviewBrush}"/>
+                        </MultiDataTrigger>
+
+                        <DataTrigger Binding="{Binding IsGlowing}" Value="True">
+                         
+                            <Setter TargetName="pertinentGlow" Property="Visibility" Value="Visible"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding IsHighlighted}" Value="True">
+                            <Setter TargetName="itemEllipse" Property="Fill" Value="{StaticResource highlightBrush}" />
+                            <Setter TargetName="itemEllipse" Property="Effect">
+                                <Setter.Value>
+                                    <DropShadowEffect ShadowDepth="0" BlurRadius="8"/>
+                                </Setter.Value>
+                            </Setter>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding IsExplored}" Value="True">
+                            <Setter TargetName="itemEllipse" Property="Fill" Value="{StaticResource highlightBrush}" />
+                            <Setter TargetName="itemEllipse" Property="Effect">
+                                <Setter.Value>
+                                    <DropShadowEffect ShadowDepth="0" BlurRadius="8"/>
+                                </Setter.Value>
+                            </Setter>
+                        </DataTrigger>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding IsExplored}" Value="True"/>
+                                <Condition Binding="{Binding SelectState}" Value="{x:Static Selection:SelectionState.Selected}"/>
+                            </MultiDataTrigger.Conditions>
+                            <Setter TargetName="itemEllipse" Property="Fill" Value="{StaticResource selectedHighlightBrush}"/>
+                        </MultiDataTrigger>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding IsHighlighted}" Value="True"/>
+                                <Condition Binding="{Binding SelectState}" Value="{x:Static Selection:SelectionState.Selected}"/>
+                            </MultiDataTrigger.Conditions>
+                            <Setter TargetName="itemEllipse" Property="Fill" Value="{StaticResource selectedHighlightBrush}"/>
+                        </MultiDataTrigger>
+                
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding DataContext.Trackpoints.IsShowingTrackPoints, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type c1maps:C1Maps}}}" Value="true" />
+                                <Condition Binding="{Binding IsContentAuthorized}" Value="true" />
+
+                            </MultiDataTrigger.Conditions>
+                            <Setter TargetName="itemEllipse" Property="Visibility" Value="Collapsed" />
+                            <Setter TargetName="pertinentGlow" Property="Visibility" Value="Collapsed"/>
+                        </MultiDataTrigger>
+                        <DataTrigger Binding="{Binding SelectedIndex, ElementName=mapViewType}" Value="1">
+                            <Setter TargetName="itemEllipse" Property="Visibility" Value="Collapsed" />
+                            <Setter TargetName="pertinentGlow" Property="Visibility" Value="Collapsed" />
+                        </DataTrigger>
+                    </DataTemplate.Triggers>
+                </DataTemplate> -->
+            </DataTemplate.Resources>
+
+            <ContentControl c1maps:C1MapCanvas.Pinpoint ="{Binding Pinpoint}"
+                        c1maps:C1MapCanvas.LatLong="{Binding Position}"
+                        ClipToBounds="False"
+                        MouseLeftButtonDown="MapItemContentControl_MouseLeftButtonDown"
+                        MouseLeftButtonUp="MapItemContentControl_MouseLeftButtonUp"
+                        MouseEnter="MapItemContentControl_MouseEnter"
+                        MouseLeave="MapItemContentControl_MouseLeave"
+                        Content="{Binding}"
+                        HorizontalContentAlignment="Left"
+                        VerticalContentAlignment="Top" Cursor="Hand"
+                        Focusable="False" />
+        </DataTemplate>
+
+    </Window.Resources>
+    <Grid>
+        <c1maps:C1Maps x:Name="C1Map">
+            <c1maps:C1MapVirtualLayer x:Name="itemsLayer" Background="{x:Null}"/>
+
+            <c1maps:C1MapItemsLayer x:Name="itemStaticLayer" ItemTemplate="{StaticResource ResourceKey=mapItemTemplate}" ItemsSource="{Binding MapItemPresenters}" Background="{x:Null}">
+                <c1maps:C1MapItemsLayer.ItemContainerStyle>
+                    <Style TargetType="{x:Type ContentPresenter}">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsExplored}" Value="True">
+                                <Setter Property="Panel.ZIndex" Value="10" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding IsHighlighted}" Value="True">
+                                <Setter Property="Panel.ZIndex" Value="11" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </c1maps:C1MapItemsLayer.ItemContainerStyle>
+            </c1maps:C1MapItemsLayer>
+
+
+        </c1maps:C1Maps>
+    </Grid>
+</Window>

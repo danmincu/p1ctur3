@@ -1,0 +1,221 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{47266535-8012-44AE-A092-EAB314EAEA4B}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Telekad.Services.MapTilesAdapter</RootNamespace>
+    <AssemblyName>Telekad.Services.MapTilesAdapter</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <UseIISExpress>false</UseIISExpress>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>4.0</OldToolsVersion>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>CODE_ANALYSIS;DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>CODE_ANALYSIS;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>..\..\JsiCodeAnalysis.ruleset</CodeAnalysisRuleSet>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Xaml" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="WindowsBase" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Global.asax" />
+    <Content Include="Web.config" />
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ArcGIS\ArcGISBaseConfigurationElement.cs" />
+    <Compile Include="ArcGIS\ArcGISBaseMapLayer.cs" />
+    <Compile Include="ArcGIS\ArcGISWorldStreetMapConfigurationElement.cs" />
+    <Compile Include="ArcGIS\ArcGISWorldStreetMapLayer.cs" />
+    <Compile Include="ArcGIS\ArcGISWorldTopoMapConfigurationElement.cs" />
+    <Compile Include="ArcGIS\ArcGISWorldTopoMapLayer.cs" />
+    <Compile Include="Bing\BingBaseConfigurationElement.cs" />
+    <Compile Include="Bing\BingHybridConfigurationElement.cs" />
+    <Compile Include="Bing\BingRoadConfigurationElement.cs" />
+    <Compile Include="Bing\BingAerialConfigurationElement.cs" />
+    <Compile Include="DebugMap\DebugMapLayerConfigurationElement.cs" />
+    <Compile Include="DebugMap\DebugTransparentMapLayerConfigurationElement.cs" />
+    <Compile Include="GetMapTileProviders.ashx.cs">
+      <DependentUpon>GetMapTileProviders.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="GoogleServer\GoogleServerBaseConfigurationElement.cs" />
+    <Compile Include="GoogleServer\GoogleServerBaseMapLayer.cs" />
+    <Compile Include="GoogleServer\GoogleServerImageryConfigurationElement.cs" />
+    <Compile Include="GoogleServer\GoogleServerImageryLayer.cs" />
+    <Compile Include="GoogleServer\GoogleServerVectorRasterConfigurationElement.cs" />
+    <Compile Include="GoogleServer\GoogleServerVectorRasterLayer.cs" />
+    <Compile Include="Google\GoogleBaseConfigurationElement.cs" />
+    <Compile Include="Google\GoogleLabelConfigurationElement.cs" />
+    <Compile Include="Google\GoogleRoadConfigurationElement.cs" />
+    <Compile Include="Google\GoogleSatelliteConfigurationElement.cs" />
+    <Compile Include="IConfigurationElement.cs" />
+    <Compile Include="IMapProvider.cs" />
+    <Compile Include="LayersCollection.cs" />
+    <Compile Include="MapCollectionElement.cs" />
+    <Compile Include="MapLayerConfiguration.cs" />
+    <Compile Include="MapsCollection.cs" />
+    <Compile Include="MapsConfigurationSection.cs" />
+    <Compile Include="MapType.cs" />
+    <Compile Include="OpenCycleMap\OpenCycleConfigurationElement.cs" />
+    <Compile Include="OpenStreetMap\OpenStreetBaseConfigurationElement.cs" />
+    <Compile Include="OpenStreetMap\OpenStreetConfigurationElement.cs" />
+    <Compile Include="OpenStreetMap\OpenStreetOsmConfigurationElement.cs" />
+    <Compile Include="Ovi\OviBaseConfigurationElement.cs" />
+    <Compile Include="Ovi\OviBaseMapLayer.cs" />
+    <Compile Include="Ovi\OviHybridConfigurationElement.cs" />
+    <Compile Include="Ovi\OviHybridLayer.cs" />
+    <Compile Include="Ovi\OviRoadConfigurationElement.cs" />
+    <Compile Include="Ovi\OviRoadLayer.cs" />
+    <Compile Include="BaseMapLayer.cs" />
+    <Compile Include="Bing\BingAerialLayer.cs" />
+    <Compile Include="Bing\BingBaseMapLayer.cs" />
+    <Compile Include="Bing\BingHybridLayer.cs" />
+    <Compile Include="Bing\BingRoadLayer.cs" />
+    <Compile Include="DebugMap\DebugMapLayer.cs" />
+    <Compile Include="DebugMap\DebugTransparentMapLayer.cs" />
+    <Compile Include="Google\GoogleBaseMapLayer.cs" />
+    <Compile Include="Google\GoogleLabelLayer.cs" />
+    <Compile Include="Google\GoogleRoadLayer.cs" />
+    <Compile Include="Google\GoogleSatelliteLayer.cs" />
+    <Compile Include="ImageUtils.cs" />
+    <Compile Include="IMapLayer.cs" />
+    <Compile Include="MapTilesHandler.ashx.cs">
+      <DependentUpon>MapTilesHandler.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="OpenCycleMap\OpenCycleLayer.cs" />
+    <Compile Include="OpenStreetMap\OpenStreetBaseLayer.cs" />
+    <Compile Include="OpenStreetMap\OpenStreetMapLayer.cs" />
+    <Compile Include="OpenStreetMap\OpenStreetOsmLayer.cs" />
+    <Compile Include="Ovi\OviSatelliteConfigurationElement.cs" />
+    <Compile Include="Ovi\OviSatelliteLayer.cs" />
+    <Compile Include="Ovi\OviTerrainConfigurationElement.cs" />
+    <Compile Include="Ovi\OviTerrainLayer.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TileProvider.cs" />
+    <Compile Include="TileProviderSettings.cs" />
+    <Compile Include="Yahoo\YahooBaseConfigurationElement.cs" />
+    <Compile Include="Yahoo\YahooBaseMapLayer.cs" />
+    <Compile Include="Yahoo\YahooLabelConfigurationElement.cs" />
+    <Compile Include="Yahoo\YahooLabelLayer.cs" />
+    <Compile Include="Yahoo\YahooRoadConfigurationElement.cs" />
+    <Compile Include="Yahoo\YahooRoadLayer.cs" />
+    <Compile Include="Yahoo\YahooSatelliteConfigurationElement.cs" />
+    <Compile Include="Yahoo\YahooSatelliteLayer.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="MapTilesHandler.ashx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="GetMapTileProviders.ashx" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Domain\Mapping\Telekad.Mapping.csproj">
+      <Project>{b2e2f7ca-f634-47cc-b2bf-3a9cce0b5323}</Project>
+      <Name>Telekad.Mapping</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Domain\Utils\Telekad.Utils.csproj">
+      <Project>{824e41f6-fa12-4453-8c91-beb6457c4e5b}</Project>
+      <Name>Telekad.Utils</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>False</UseIIS>
+          <AutoAssignPort>False</AutoAssignPort>
+          <DevelopmentServerPort>54133</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost/Jsi.UX.MapTilesAdapter</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>http://localhost:9091/MapTilesAdapter</CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

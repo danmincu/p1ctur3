@@ -1,0 +1,2006 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml-stylesheet type='text/xsl' href="scriptsql.xsl"?>
+<root xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<database includeDrop="true">ShutterTale</database>
+<procedures>
+		
+		<procedure owner="dbo" name="Media_Get_List" >
+			<comment><![CDATA[/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: July 10, 2013
+
+-- Created By: Telekad ()
+-- Purpose: Gets all records from the Media table
+----------------------------------------------------------------------------------------------------
+*/
+]]></comment>
+			<parameters/>
+			<body><![CDATA[
+				
+				SELECT
+					[Id],
+					[CaptureDateTime],
+					[FileDateTime],
+					[ImportDateTime],
+					[Location],
+					[PixelX],
+					[PixelY],
+					[Dpi],
+					[ContentType],
+					[Make],
+					[Model],
+					[SoftwareVersion],
+					[Origin],
+					[Size],
+					[Quadkey18]
+				FROM
+					[dbo].[Media]
+					
+				SELECT @@ROWCOUNT
+			]]></body>
+		</procedure>
+		
+		
+		<procedure owner="dbo" name="Media_GetPaged" >
+			<comment><![CDATA[/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: July 10, 2013
+
+-- Created By: Telekad ()
+-- Purpose: Gets records from the Media table passing page index and page count parameters
+----------------------------------------------------------------------------------------------------
+*/
+]]></comment>
+			<parameters>
+				<parameter name="@WhereClause" type="varchar" direction="Input" size="8000" precision="0" scale="0" param="(8000)" />
+				<parameter name="@OrderBy" type="varchar" direction="Input" size="2000" precision="0" scale="0" param="(2000)"/>
+				<parameter name="@PageIndex" type="int" direction="Input" size="0" precision="10" scale="0" />
+				<parameter name="@PageSize" type="int" direction="Input" size="0" precision="10" scale="0" /> 
+			</parameters>
+			<body><![CDATA[
+				
+				BEGIN
+				DECLARE @PageLowerBound int
+				DECLARE @PageUpperBound int
+				
+				-- Set the page bounds
+				SET @PageLowerBound = @PageSize * @PageIndex
+				SET @PageUpperBound = @PageLowerBound + @PageSize
+
+				-- Create a temp table to store the select results
+				CREATE TABLE #PageIndex
+				(
+				    [IndexId] int IDENTITY (1, 1) NOT NULL,
+				    [Id] uniqueidentifier 
+				)
+				
+				-- Insert into the temp table
+				DECLARE @SQL AS nvarchar(4000)
+				SET @SQL = 'INSERT INTO #PageIndex ([Id])'
+				SET @SQL = @SQL + ' SELECT'
+				SET @SQL = @SQL + ' [Id]'
+				SET @SQL = @SQL + ' FROM [dbo].[Media]'
+				IF LEN(@WhereClause) > 0
+				BEGIN
+					SET @SQL = @SQL + ' WHERE ' + @WhereClause
+				END
+				IF LEN(@OrderBy) > 0
+				BEGIN
+					SET @SQL = @SQL + ' ORDER BY ' + @OrderBy
+				END
+				
+				-- Only get the number of rows needed here.
+				SET ROWCOUNT @PageUpperBound
+				
+				-- Populate the temp table
+				EXEC sp_executesql @SQL
+
+				-- Reset Rowcount back to all
+				SET ROWCOUNT 0
+				
+				-- Return paged results
+				SELECT O.[Id], O.[CaptureDateTime], O.[FileDateTime], O.[ImportDateTime], O.[Location], O.[PixelX], O.[PixelY], O.[Dpi], O.[ContentType], O.[Make], O.[Model], O.[SoftwareVersion], O.[Origin], O.[Size], O.[Quadkey18]
+				FROM
+				    [dbo].[Media] O,
+				    #PageIndex PageIndex
+				WHERE
+				    PageIndex.IndexId > @PageLowerBound
+					AND O.[Id] = PageIndex.[Id]
+				ORDER BY
+				    PageIndex.IndexId
+                
+				-- get row count
+				SET @SQL = 'SELECT COUNT(1) AS TotalRowCount'
+				SET @SQL = @SQL + ' FROM [dbo].[Media]'
+				IF LEN(@WhereClause) > 0
+				BEGIN
+					SET @SQL = @SQL + ' WHERE ' + @WhereClause
+				END
+				EXEC sp_executesql @SQL
+			
+				END
+			]]></body>
+		</procedure>
+		
+		<procedure owner="dbo" name="Media_Insert" grant="">
+			<comment><![CDATA[/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: July 10, 2013
+
+-- Created By: Telekad ()
+-- Purpose: Inserts a record into the Media table
+----------------------------------------------------------------------------------------------------
+*/
+]]></comment>
+			<parameters>
+				<parameter name="@Id" type="uniqueidentifier" direction="Input" size="16" precision="0" scale="0" param="" nulldefault=""/>
+				<parameter name="@CaptureDateTime" type="datetime" direction="Input" size="8" precision="23" scale="3" param="" nulldefault=""/>
+				<parameter name="@FileDateTime" type="datetime" direction="Input" size="8" precision="23" scale="3" param="" nulldefault=""/>
+				<parameter name="@ImportDateTime" type="datetime" direction="Input" size="8" precision="23" scale="3" param="" nulldefault=""/>
+				<parameter name="@Location" type="geography" direction="Input" size="-1" precision="0" scale="0" param="" nulldefault=""/>
+				<parameter name="@Pixelx" type="int" direction="Input" size="4" precision="10" scale="0" param="" nulldefault=""/>
+				<parameter name="@Pixely" type="int" direction="Input" size="4" precision="10" scale="0" param="" nulldefault=""/>
+				<parameter name="@Dpi" type="float" direction="Input" size="8" precision="53" scale="0" param="" nulldefault=""/>
+				<parameter name="@ContentType" type="nvarchar" direction="Input" size="-1" precision="0" scale="0" param="(MAX)" nulldefault=""/>
+				<parameter name="@Make" type="nvarchar" direction="Input" size="-1" precision="0" scale="0" param="(MAX)" nulldefault=""/>
+				<parameter name="@Model" type="nvarchar" direction="Input" size="-1" precision="0" scale="0" param="(MAX)" nulldefault=""/>
+				<parameter name="@SoftwareVersion" type="nvarchar" direction="Input" size="-1" precision="0" scale="0" param="(MAX)" nulldefault=""/>
+				<parameter name="@Origin" type="nvarchar" direction="Input" size="-1" precision="0" scale="0" param="(MAX)" nulldefault=""/>
+				<parameter name="@Size" type="int" direction="Input" size="4" precision="10" scale="0" param="" nulldefault=""/>
+				<parameter name="@Quadkey18" type="nvarchar" direction="Input" size="18" precision="0" scale="0" param="(18)" nulldefault=""/>
+			</parameters>
+			<body><![CDATA[
+				
+				INSERT INTO [dbo].[Media]
+					(
+					[Id]
+					,[CaptureDateTime]
+					,[FileDateTime]
+					,[ImportDateTime]
+					,[Location]
+					,[PixelX]
+					,[PixelY]
+					,[Dpi]
+					,[ContentType]
+					,[Make]
+					,[Model]
+					,[SoftwareVersion]
+					,[Origin]
+					,[Size]
+					,[Quadkey18]
+					)
+				VALUES
+					(
+					@Id
+					,@CaptureDateTime
+					,@FileDateTime
+					,@ImportDateTime
+					,@Location
+					,@Pixelx
+					,@Pixely
+					,@Dpi
+					,@ContentType
+					,@Make
+					,@Model
+					,@SoftwareVersion
+					,@Origin
+					,@Size
+					,@Quadkey18
+					)
+									
+							
+			]]></body>
+		</procedure>
+		<procedure owner="dbo" name="Media_Update" grant="">
+			<comment><![CDATA[/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: July 10, 2013
+
+-- Created By: Telekad ()
+-- Purpose: Updates a record in the Media table
+----------------------------------------------------------------------------------------------------
+*/
+]]></comment>
+			<parameters>
+				<parameter name="@Id" type="uniqueidentifier" direction="Input" size="16" precision="0" scale="0" param="" nulldefault=""/>
+				<parameter name="@OriginalId" type="uniqueidentifier" direction="Input" size="16" precision="0" scale="0" param="" nulldefault=""/>
+				<parameter name="@CaptureDateTime" type="datetime" direction="Input" size="8" precision="23" scale="3" param="" nulldefault=""/>
+				<parameter name="@FileDateTime" type="datetime" direction="Input" size="8" precision="23" scale="3" param="" nulldefault=""/>
+				<parameter name="@ImportDateTime" type="datetime" direction="Input" size="8" precision="23" scale="3" param="" nulldefault=""/>
+				<parameter name="@Location" type="geography" direction="Input" size="-1" precision="0" scale="0" param="" nulldefault=""/>
+				<parameter name="@Pixelx" type="int" direction="Input" size="4" precision="10" scale="0" param="" nulldefault=""/>
+				<parameter name="@Pixely" type="int" direction="Input" size="4" precision="10" scale="0" param="" nulldefault=""/>
+				<parameter name="@Dpi" type="float" direction="Input" size="8" precision="53" scale="0" param="" nulldefault=""/>
+				<parameter name="@ContentType" type="nvarchar" direction="Input" size="-1" precision="0" scale="0" param="(MAX)" nulldefault=""/>
+				<parameter name="@Make" type="nvarchar" direction="Input" size="-1" precision="0" scale="0" param="(MAX)" nulldefault=""/>
+				<parameter name="@Model" type="nvarchar" direction="Input" size="-1" precision="0" scale="0" param="(MAX)" nulldefault=""/>
+				<parameter name="@SoftwareVersion" type="nvarchar" direction="Input" size="-1" precision="0" scale="0" param="(MAX)" nulldefault=""/>
+				<parameter name="@Origin" type="nvarchar" direction="Input" size="-1" precision="0" scale="0" param="(MAX)" nulldefault=""/>
+				<parameter name="@Size" type="int" direction="Input" size="4" precision="10" scale="0" param="" nulldefault=""/>
+				<parameter name="@Quadkey18" type="nvarchar" direction="Input" size="18" precision="0" scale="0" param="(18)" nulldefault=""/>
+			</parameters>
+			<body><![CDATA[
+				
+				
+				-- Modify the updatable columns
+				UPDATE
+					[dbo].[Media]
+				SET
+					[Id] = @Id
+					,[CaptureDateTime] = @CaptureDateTime
+					,[FileDateTime] = @FileDateTime
+					,[ImportDateTime] = @ImportDateTime
+					,[Location] = @Location
+					,[PixelX] = @Pixelx
+					,[PixelY] = @Pixely
+					,[Dpi] = @Dpi
+					,[ContentType] = @ContentType
+					,[Make] = @Make
+					,[Model] = @Model
+					,[SoftwareVersion] = @SoftwareVersion
+					,[Origin] = @Origin
+					,[Size] = @Size
+					,[Quadkey18] = @Quadkey18
+				WHERE
+[Id] = @OriginalId 
+				
+			]]></body>
+		</procedure>
+		<procedure owner="dbo" name="Media_Delete" grant="">
+			<comment><![CDATA[/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: July 10, 2013
+
+-- Created By: Telekad ()
+-- Purpose: Deletes a record in the Media table
+----------------------------------------------------------------------------------------------------
+*/
+]]></comment>
+			<parameters>
+				<parameter name="@Id" type="uniqueidentifier" direction="Input" size="16" precision="0" scale="0" param="" nulldefault=""/>
+			</parameters>
+			<body><![CDATA[
+				DELETE FROM [dbo].[Media] WITH (ROWLOCK) 
+				WHERE
+					[Id] = @Id
+					
+			]]></body>
+		</procedure>
+		<procedure owner="dbo" name="Media_GetById" >
+			<comment><![CDATA[/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: July 10, 2013
+
+-- Created By: Telekad ()
+-- Purpose: Select records from the Media table through an index
+----------------------------------------------------------------------------------------------------
+*/
+]]></comment>
+			<parameters>
+				<parameter name="@Id" type="uniqueidentifier" direction="Input" size="16" precision="0" scale="0" param="" nulldefault=""/>
+			</parameters>
+			<body><![CDATA[
+				SELECT
+					[Id],
+					[CaptureDateTime],
+					[FileDateTime],
+					[ImportDateTime],
+					[Location],
+					[PixelX],
+					[PixelY],
+					[Dpi],
+					[ContentType],
+					[Make],
+					[Model],
+					[SoftwareVersion],
+					[Origin],
+					[Size],
+					[Quadkey18]
+				FROM
+					[dbo].[Media]
+				WHERE
+					[Id] = @Id
+				SELECT @@ROWCOUNT
+					
+			]]></body>
+			
+		</procedure>
+		<procedure owner="dbo" name="Media_Find" >
+			<comment><![CDATA[/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: July 10, 2013
+
+-- Created By: Telekad ()
+-- Purpose: Finds records in the Media table passing nullable parameters
+----------------------------------------------------------------------------------------------------
+*/
+]]></comment>
+			<parameters>
+				<parameter name="@SearchUsingOR" type="bit" direction="Input" size="0" precision="1" scale="0" param="" nulldefault="null"/>
+				<parameter name="@Id" type="uniqueidentifier" direction="Input" size="16" precision="0" scale="0" param="" nulldefault="null"/>
+				<parameter name="@CaptureDateTime" type="datetime" direction="Input" size="8" precision="23" scale="3" param="" nulldefault="null"/>
+				<parameter name="@FileDateTime" type="datetime" direction="Input" size="8" precision="23" scale="3" param="" nulldefault="null"/>
+				<parameter name="@ImportDateTime" type="datetime" direction="Input" size="8" precision="23" scale="3" param="" nulldefault="null"/>
+				<parameter name="@Location" type="geography" direction="Input" size="-1" precision="0" scale="0" param="" nulldefault="null"/>
+				<parameter name="@Pixelx" type="int" direction="Input" size="4" precision="10" scale="0" param="" nulldefault="null"/>
+				<parameter name="@Pixely" type="int" direction="Input" size="4" precision="10" scale="0" param="" nulldefault="null"/>
+				<parameter name="@Dpi" type="float" direction="Input" size="8" precision="53" scale="0" param="" nulldefault="null"/>
+				<parameter name="@ContentType" type="nvarchar" direction="Input" size="-1" precision="0" scale="0" param="(MAX)" nulldefault="null"/>
+				<parameter name="@Make" type="nvarchar" direction="Input" size="-1" precision="0" scale="0" param="(MAX)" nulldefault="null"/>
+				<parameter name="@Model" type="nvarchar" direction="Input" size="-1" precision="0" scale="0" param="(MAX)" nulldefault="null"/>
+				<parameter name="@SoftwareVersion" type="nvarchar" direction="Input" size="-1" precision="0" scale="0" param="(MAX)" nulldefault="null"/>
+				<parameter name="@Origin" type="nvarchar" direction="Input" size="-1" precision="0" scale="0" param="(MAX)" nulldefault="null"/>
+				<parameter name="@Size" type="int" direction="Input" size="4" precision="10" scale="0" param="" nulldefault="null"/>
+				<parameter name="@Quadkey18" type="nvarchar" direction="Input" size="18" precision="0" scale="0" param="(18)" nulldefault="null"/>
+			</parameters>
+			<body><![CDATA[
+				
+  IF ISNULL(@SearchUsingOR, 0) <> 1
+  BEGIN
+    SELECT
+	  [Id]
+	, [CaptureDateTime]
+	, [FileDateTime]
+	, [ImportDateTime]
+	, [Location]
+	, [PixelX]
+	, [PixelY]
+	, [Dpi]
+	, [ContentType]
+	, [Make]
+	, [Model]
+	, [SoftwareVersion]
+	, [Origin]
+	, [Size]
+	, [Quadkey18]
+    FROM
+	[dbo].[Media]
+    WHERE 
+	 ([Id] = @Id OR @Id IS NULL)
+	AND ([CaptureDateTime] = @CaptureDateTime OR @CaptureDateTime IS NULL)
+	AND ([FileDateTime] = @FileDateTime OR @FileDateTime IS NULL)
+	AND ([ImportDateTime] = @ImportDateTime OR @ImportDateTime IS NULL)
+	AND ([Location] = @Location OR @Location IS NULL)
+	AND ([PixelX] = @Pixelx OR @Pixelx IS NULL)
+	AND ([PixelY] = @Pixely OR @Pixely IS NULL)
+	AND ([Dpi] = @Dpi OR @Dpi IS NULL)
+	AND ([ContentType] = @ContentType OR @ContentType IS NULL)
+	AND ([Make] = @Make OR @Make IS NULL)
+	AND ([Model] = @Model OR @Model IS NULL)
+	AND ([SoftwareVersion] = @SoftwareVersion OR @SoftwareVersion IS NULL)
+	AND ([Origin] = @Origin OR @Origin IS NULL)
+	AND ([Size] = @Size OR @Size IS NULL)
+	AND ([Quadkey18] = @Quadkey18 OR @Quadkey18 IS NULL)
+						
+  END
+  ELSE
+  BEGIN
+    SELECT
+	  [Id]
+	, [CaptureDateTime]
+	, [FileDateTime]
+	, [ImportDateTime]
+	, [Location]
+	, [PixelX]
+	, [PixelY]
+	, [Dpi]
+	, [ContentType]
+	, [Make]
+	, [Model]
+	, [SoftwareVersion]
+	, [Origin]
+	, [Size]
+	, [Quadkey18]
+    FROM
+	[dbo].[Media]
+    WHERE 
+	 ([Id] = @Id AND @Id is not null)
+	OR ([CaptureDateTime] = @CaptureDateTime AND @CaptureDateTime is not null)
+	OR ([FileDateTime] = @FileDateTime AND @FileDateTime is not null)
+	OR ([ImportDateTime] = @ImportDateTime AND @ImportDateTime is not null)
+	OR ([Location] = @Location AND @Location is not null)
+	OR ([PixelX] = @Pixelx AND @Pixelx is not null)
+	OR ([PixelY] = @Pixely AND @Pixely is not null)
+	OR ([Dpi] = @Dpi AND @Dpi is not null)
+	OR ([ContentType] = @ContentType AND @ContentType is not null)
+	OR ([Make] = @Make AND @Make is not null)
+	OR ([Model] = @Model AND @Model is not null)
+	OR ([SoftwareVersion] = @SoftwareVersion AND @SoftwareVersion is not null)
+	OR ([Origin] = @Origin AND @Origin is not null)
+	OR ([Size] = @Size AND @Size is not null)
+	OR ([Quadkey18] = @Quadkey18 AND @Quadkey18 is not null)
+	SELECT @@ROWCOUNT			
+  END
+				]]></body>
+		</procedure>
+
+		
+		<procedure owner="dbo" name="Media_Find_Dynamic"  skip="true">
+			<comment><![CDATA[/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: July 10, 2013
+
+-- Created By: Telekad ()
+-- Purpose: Gets records from the Media table using a dynamically generated query.
+----------------------------------------------------------------------------------------------------
+*/
+]]></comment>
+			<parameters/>
+			<body><![CDATA[
+				
+				BEGIN
+				
+				-- Create a temp table to store the select results
+				CREATE TABLE #PageIndex
+				(
+				    [IndexId] int IDENTITY (1, 1) NOT NULL,
+				    [Id] uniqueidentifier 
+				)
+				
+				-- Insert into the temp table
+				INSERT INTO #PageIndex ( [Id] )
+				SELECT TOP {3} [Id]
+				FROM [dbo].[Media] {0}
+				ORDER BY {1}
+				
+				-- Return paged results
+				SELECT O.[Id], O.[CaptureDateTime], O.[FileDateTime], O.[ImportDateTime], O.[Location], O.[PixelX], O.[PixelY], O.[Dpi], O.[ContentType], O.[Make], O.[Model], O.[SoftwareVersion], O.[Origin], O.[Size], O.[Quadkey18]
+				FROM
+				    [dbo].[Media] O,
+				    #PageIndex PageIndex
+				WHERE
+				    PageIndex.IndexId > {2}
+				    AND O.[Id] = PageIndex.[Id]
+				ORDER BY
+				    PageIndex.IndexId
+				
+
+				-- get total count
+				SELECT COUNT(*) AS TotalRowCount FROM [dbo].[Media] {0};
+				
+				DROP TABLE #PageIndex
+				END
+			]]></body>
+		</procedure>
+		
+		
+		<procedure owner="dbo" name="Media_Image_Get_List" >
+			<comment><![CDATA[/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: July 10, 2013
+
+-- Created By: Telekad ()
+-- Purpose: Gets all records from the Media_Image table
+----------------------------------------------------------------------------------------------------
+*/
+]]></comment>
+			<parameters/>
+			<body><![CDATA[
+				
+				SELECT
+					[Orientation],
+					[YCbCrPositioning],
+					[ExposureTime],
+					[FNumber],
+					[ExposureProgram],
+					[ISOSpeedRatings],
+					[ShutterSpeedValue],
+					[ApertureValue],
+					[MeteringMode],
+					[Flash],
+					[FocalLength],
+					[FlashpixVersion],
+					[ColorSpace],
+					[SensingMethod],
+					[ExposureMode],
+					[WhiteBalance],
+					[SceneCaptureType],
+					[Sharpness],
+					[Id]
+				FROM
+					[dbo].[Media_Image]
+					
+				SELECT @@ROWCOUNT
+			]]></body>
+		</procedure>
+		
+		
+		<procedure owner="dbo" name="Media_Image_GetPaged" >
+			<comment><![CDATA[/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: July 10, 2013
+
+-- Created By: Telekad ()
+-- Purpose: Gets records from the Media_Image table passing page index and page count parameters
+----------------------------------------------------------------------------------------------------
+*/
+]]></comment>
+			<parameters>
+				<parameter name="@WhereClause" type="varchar" direction="Input" size="8000" precision="0" scale="0" param="(8000)" />
+				<parameter name="@OrderBy" type="varchar" direction="Input" size="2000" precision="0" scale="0" param="(2000)"/>
+				<parameter name="@PageIndex" type="int" direction="Input" size="0" precision="10" scale="0" />
+				<parameter name="@PageSize" type="int" direction="Input" size="0" precision="10" scale="0" /> 
+			</parameters>
+			<body><![CDATA[
+				
+				BEGIN
+				DECLARE @PageLowerBound int
+				DECLARE @PageUpperBound int
+				
+				-- Set the page bounds
+				SET @PageLowerBound = @PageSize * @PageIndex
+				SET @PageUpperBound = @PageLowerBound + @PageSize
+
+				-- Create a temp table to store the select results
+				CREATE TABLE #PageIndex
+				(
+				    [IndexId] int IDENTITY (1, 1) NOT NULL,
+				    [Id] uniqueidentifier 
+				)
+				
+				-- Insert into the temp table
+				DECLARE @SQL AS nvarchar(4000)
+				SET @SQL = 'INSERT INTO #PageIndex ([Id])'
+				SET @SQL = @SQL + ' SELECT'
+				SET @SQL = @SQL + ' [Id]'
+				SET @SQL = @SQL + ' FROM [dbo].[Media_Image]'
+				IF LEN(@WhereClause) > 0
+				BEGIN
+					SET @SQL = @SQL + ' WHERE ' + @WhereClause
+				END
+				IF LEN(@OrderBy) > 0
+				BEGIN
+					SET @SQL = @SQL + ' ORDER BY ' + @OrderBy
+				END
+				
+				-- Only get the number of rows needed here.
+				SET ROWCOUNT @PageUpperBound
+				
+				-- Populate the temp table
+				EXEC sp_executesql @SQL
+
+				-- Reset Rowcount back to all
+				SET ROWCOUNT 0
+				
+				-- Return paged results
+				SELECT O.[Orientation], O.[YCbCrPositioning], O.[ExposureTime], O.[FNumber], O.[ExposureProgram], O.[ISOSpeedRatings], O.[ShutterSpeedValue], O.[ApertureValue], O.[MeteringMode], O.[Flash], O.[FocalLength], O.[FlashpixVersion], O.[ColorSpace], O.[SensingMethod], O.[ExposureMode], O.[WhiteBalance], O.[SceneCaptureType], O.[Sharpness], O.[Id]
+				FROM
+				    [dbo].[Media_Image] O,
+				    #PageIndex PageIndex
+				WHERE
+				    PageIndex.IndexId > @PageLowerBound
+					AND O.[Id] = PageIndex.[Id]
+				ORDER BY
+				    PageIndex.IndexId
+                
+				-- get row count
+				SET @SQL = 'SELECT COUNT(1) AS TotalRowCount'
+				SET @SQL = @SQL + ' FROM [dbo].[Media_Image]'
+				IF LEN(@WhereClause) > 0
+				BEGIN
+					SET @SQL = @SQL + ' WHERE ' + @WhereClause
+				END
+				EXEC sp_executesql @SQL
+			
+				END
+			]]></body>
+		</procedure>
+		
+		<procedure owner="dbo" name="Media_Image_Insert" grant="">
+			<comment><![CDATA[/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: July 10, 2013
+
+-- Created By: Telekad ()
+-- Purpose: Inserts a record into the Media_Image table
+----------------------------------------------------------------------------------------------------
+*/
+]]></comment>
+			<parameters>
+				<parameter name="@Orientation" type="tinyint" direction="Input" size="1" precision="3" scale="0" param="" nulldefault=""/>
+				<parameter name="@YcbCrPositioning" type="tinyint" direction="Input" size="1" precision="3" scale="0" param="" nulldefault=""/>
+				<parameter name="@ExposureTime" type="float" direction="Input" size="8" precision="53" scale="0" param="" nulldefault=""/>
+				<parameter name="@Fnumber" type="float" direction="Input" size="8" precision="53" scale="0" param="" nulldefault=""/>
+				<parameter name="@ExposureProgram" type="tinyint" direction="Input" size="1" precision="3" scale="0" param="" nulldefault=""/>
+				<parameter name="@IsoSpeedRatings" type="smallint" direction="Input" size="2" precision="5" scale="0" param="" nulldefault=""/>
+				<parameter name="@ShutterSpeedValue" type="float" direction="Input" size="8" precision="53" scale="0" param="" nulldefault=""/>
+				<parameter name="@ApertureValue" type="float" direction="Input" size="8" precision="53" scale="0" param="" nulldefault=""/>
+				<parameter name="@MeteringMode" type="tinyint" direction="Input" size="1" precision="3" scale="0" param="" nulldefault=""/>
+				<parameter name="@Flash" type="tinyint" direction="Input" size="1" precision="3" scale="0" param="" nulldefault=""/>
+				<parameter name="@FocalLength" type="float" direction="Input" size="8" precision="53" scale="0" param="" nulldefault=""/>
+				<parameter name="@FlashpixVersion" type="nvarchar" direction="Input" size="-1" precision="0" scale="0" param="(MAX)" nulldefault=""/>
+				<parameter name="@ColorSpace" type="tinyint" direction="Input" size="1" precision="3" scale="0" param="" nulldefault=""/>
+				<parameter name="@SensingMethod" type="tinyint" direction="Input" size="1" precision="3" scale="0" param="" nulldefault=""/>
+				<parameter name="@ExposureMode" type="tinyint" direction="Input" size="1" precision="3" scale="0" param="" nulldefault=""/>
+				<parameter name="@WhiteBalance" type="tinyint" direction="Input" size="1" precision="3" scale="0" param="" nulldefault=""/>
+				<parameter name="@SceneCaptureType" type="tinyint" direction="Input" size="1" precision="3" scale="0" param="" nulldefault=""/>
+				<parameter name="@Sharpness" type="tinyint" direction="Input" size="1" precision="3" scale="0" param="" nulldefault=""/>
+				<parameter name="@Id" type="uniqueidentifier" direction="Input" size="16" precision="0" scale="0" param="" nulldefault=""/>
+			</parameters>
+			<body><![CDATA[
+				
+				INSERT INTO [dbo].[Media_Image]
+					(
+					[Orientation]
+					,[YCbCrPositioning]
+					,[ExposureTime]
+					,[FNumber]
+					,[ExposureProgram]
+					,[ISOSpeedRatings]
+					,[ShutterSpeedValue]
+					,[ApertureValue]
+					,[MeteringMode]
+					,[Flash]
+					,[FocalLength]
+					,[FlashpixVersion]
+					,[ColorSpace]
+					,[SensingMethod]
+					,[ExposureMode]
+					,[WhiteBalance]
+					,[SceneCaptureType]
+					,[Sharpness]
+					,[Id]
+					)
+				VALUES
+					(
+					@Orientation
+					,@YcbCrPositioning
+					,@ExposureTime
+					,@Fnumber
+					,@ExposureProgram
+					,@IsoSpeedRatings
+					,@ShutterSpeedValue
+					,@ApertureValue
+					,@MeteringMode
+					,@Flash
+					,@FocalLength
+					,@FlashpixVersion
+					,@ColorSpace
+					,@SensingMethod
+					,@ExposureMode
+					,@WhiteBalance
+					,@SceneCaptureType
+					,@Sharpness
+					,@Id
+					)
+									
+							
+			]]></body>
+		</procedure>
+		<procedure owner="dbo" name="Media_Image_Update" grant="">
+			<comment><![CDATA[/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: July 10, 2013
+
+-- Created By: Telekad ()
+-- Purpose: Updates a record in the Media_Image table
+----------------------------------------------------------------------------------------------------
+*/
+]]></comment>
+			<parameters>
+				<parameter name="@Orientation" type="tinyint" direction="Input" size="1" precision="3" scale="0" param="" nulldefault=""/>
+				<parameter name="@YcbCrPositioning" type="tinyint" direction="Input" size="1" precision="3" scale="0" param="" nulldefault=""/>
+				<parameter name="@ExposureTime" type="float" direction="Input" size="8" precision="53" scale="0" param="" nulldefault=""/>
+				<parameter name="@Fnumber" type="float" direction="Input" size="8" precision="53" scale="0" param="" nulldefault=""/>
+				<parameter name="@ExposureProgram" type="tinyint" direction="Input" size="1" precision="3" scale="0" param="" nulldefault=""/>
+				<parameter name="@IsoSpeedRatings" type="smallint" direction="Input" size="2" precision="5" scale="0" param="" nulldefault=""/>
+				<parameter name="@ShutterSpeedValue" type="float" direction="Input" size="8" precision="53" scale="0" param="" nulldefault=""/>
+				<parameter name="@ApertureValue" type="float" direction="Input" size="8" precision="53" scale="0" param="" nulldefault=""/>
+				<parameter name="@MeteringMode" type="tinyint" direction="Input" size="1" precision="3" scale="0" param="" nulldefault=""/>
+				<parameter name="@Flash" type="tinyint" direction="Input" size="1" precision="3" scale="0" param="" nulldefault=""/>
+				<parameter name="@FocalLength" type="float" direction="Input" size="8" precision="53" scale="0" param="" nulldefault=""/>
+				<parameter name="@FlashpixVersion" type="nvarchar" direction="Input" size="-1" precision="0" scale="0" param="(MAX)" nulldefault=""/>
+				<parameter name="@ColorSpace" type="tinyint" direction="Input" size="1" precision="3" scale="0" param="" nulldefault=""/>
+				<parameter name="@SensingMethod" type="tinyint" direction="Input" size="1" precision="3" scale="0" param="" nulldefault=""/>
+				<parameter name="@ExposureMode" type="tinyint" direction="Input" size="1" precision="3" scale="0" param="" nulldefault=""/>
+				<parameter name="@WhiteBalance" type="tinyint" direction="Input" size="1" precision="3" scale="0" param="" nulldefault=""/>
+				<parameter name="@SceneCaptureType" type="tinyint" direction="Input" size="1" precision="3" scale="0" param="" nulldefault=""/>
+				<parameter name="@Sharpness" type="tinyint" direction="Input" size="1" precision="3" scale="0" param="" nulldefault=""/>
+				<parameter name="@Id" type="uniqueidentifier" direction="Input" size="16" precision="0" scale="0" param="" nulldefault=""/>
+				<parameter name="@OriginalId" type="uniqueidentifier" direction="Input" size="16" precision="0" scale="0" param="" nulldefault=""/>
+			</parameters>
+			<body><![CDATA[
+				
+				
+				-- Modify the updatable columns
+				UPDATE
+					[dbo].[Media_Image]
+				SET
+					[Orientation] = @Orientation
+					,[YCbCrPositioning] = @YcbCrPositioning
+					,[ExposureTime] = @ExposureTime
+					,[FNumber] = @Fnumber
+					,[ExposureProgram] = @ExposureProgram
+					,[ISOSpeedRatings] = @IsoSpeedRatings
+					,[ShutterSpeedValue] = @ShutterSpeedValue
+					,[ApertureValue] = @ApertureValue
+					,[MeteringMode] = @MeteringMode
+					,[Flash] = @Flash
+					,[FocalLength] = @FocalLength
+					,[FlashpixVersion] = @FlashpixVersion
+					,[ColorSpace] = @ColorSpace
+					,[SensingMethod] = @SensingMethod
+					,[ExposureMode] = @ExposureMode
+					,[WhiteBalance] = @WhiteBalance
+					,[SceneCaptureType] = @SceneCaptureType
+					,[Sharpness] = @Sharpness
+					,[Id] = @Id
+				WHERE
+[Id] = @OriginalId 
+				
+			]]></body>
+		</procedure>
+		<procedure owner="dbo" name="Media_Image_Delete" grant="">
+			<comment><![CDATA[/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: July 10, 2013
+
+-- Created By: Telekad ()
+-- Purpose: Deletes a record in the Media_Image table
+----------------------------------------------------------------------------------------------------
+*/
+]]></comment>
+			<parameters>
+				<parameter name="@Id" type="uniqueidentifier" direction="Input" size="16" precision="0" scale="0" param="" nulldefault=""/>
+			</parameters>
+			<body><![CDATA[
+				DELETE FROM [dbo].[Media_Image] WITH (ROWLOCK) 
+				WHERE
+					[Id] = @Id
+					
+			]]></body>
+		</procedure>
+		<procedure owner="dbo" name="Media_Image_GetById" >
+			<comment><![CDATA[/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: July 10, 2013
+
+-- Created By: Telekad ()
+-- Purpose: Select records from the Media_Image table through an index
+----------------------------------------------------------------------------------------------------
+*/
+]]></comment>
+			<parameters>
+				<parameter name="@Id" type="uniqueidentifier" direction="Input" size="16" precision="0" scale="0" param="" nulldefault=""/>
+			</parameters>
+			<body><![CDATA[
+				SELECT
+					[Orientation],
+					[YCbCrPositioning],
+					[ExposureTime],
+					[FNumber],
+					[ExposureProgram],
+					[ISOSpeedRatings],
+					[ShutterSpeedValue],
+					[ApertureValue],
+					[MeteringMode],
+					[Flash],
+					[FocalLength],
+					[FlashpixVersion],
+					[ColorSpace],
+					[SensingMethod],
+					[ExposureMode],
+					[WhiteBalance],
+					[SceneCaptureType],
+					[Sharpness],
+					[Id]
+				FROM
+					[dbo].[Media_Image]
+				WHERE
+					[Id] = @Id
+				SELECT @@ROWCOUNT
+					
+			]]></body>
+			
+		</procedure>
+		<procedure owner="dbo" name="Media_Image_Find" >
+			<comment><![CDATA[/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: July 10, 2013
+
+-- Created By: Telekad ()
+-- Purpose: Finds records in the Media_Image table passing nullable parameters
+----------------------------------------------------------------------------------------------------
+*/
+]]></comment>
+			<parameters>
+				<parameter name="@SearchUsingOR" type="bit" direction="Input" size="0" precision="1" scale="0" param="" nulldefault="null"/>
+				<parameter name="@Orientation" type="tinyint" direction="Input" size="1" precision="3" scale="0" param="" nulldefault="null"/>
+				<parameter name="@YcbCrPositioning" type="tinyint" direction="Input" size="1" precision="3" scale="0" param="" nulldefault="null"/>
+				<parameter name="@ExposureTime" type="float" direction="Input" size="8" precision="53" scale="0" param="" nulldefault="null"/>
+				<parameter name="@Fnumber" type="float" direction="Input" size="8" precision="53" scale="0" param="" nulldefault="null"/>
+				<parameter name="@ExposureProgram" type="tinyint" direction="Input" size="1" precision="3" scale="0" param="" nulldefault="null"/>
+				<parameter name="@IsoSpeedRatings" type="smallint" direction="Input" size="2" precision="5" scale="0" param="" nulldefault="null"/>
+				<parameter name="@ShutterSpeedValue" type="float" direction="Input" size="8" precision="53" scale="0" param="" nulldefault="null"/>
+				<parameter name="@ApertureValue" type="float" direction="Input" size="8" precision="53" scale="0" param="" nulldefault="null"/>
+				<parameter name="@MeteringMode" type="tinyint" direction="Input" size="1" precision="3" scale="0" param="" nulldefault="null"/>
+				<parameter name="@Flash" type="tinyint" direction="Input" size="1" precision="3" scale="0" param="" nulldefault="null"/>
+				<parameter name="@FocalLength" type="float" direction="Input" size="8" precision="53" scale="0" param="" nulldefault="null"/>
+				<parameter name="@FlashpixVersion" type="nvarchar" direction="Input" size="-1" precision="0" scale="0" param="(MAX)" nulldefault="null"/>
+				<parameter name="@ColorSpace" type="tinyint" direction="Input" size="1" precision="3" scale="0" param="" nulldefault="null"/>
+				<parameter name="@SensingMethod" type="tinyint" direction="Input" size="1" precision="3" scale="0" param="" nulldefault="null"/>
+				<parameter name="@ExposureMode" type="tinyint" direction="Input" size="1" precision="3" scale="0" param="" nulldefault="null"/>
+				<parameter name="@WhiteBalance" type="tinyint" direction="Input" size="1" precision="3" scale="0" param="" nulldefault="null"/>
+				<parameter name="@SceneCaptureType" type="tinyint" direction="Input" size="1" precision="3" scale="0" param="" nulldefault="null"/>
+				<parameter name="@Sharpness" type="tinyint" direction="Input" size="1" precision="3" scale="0" param="" nulldefault="null"/>
+				<parameter name="@Id" type="uniqueidentifier" direction="Input" size="16" precision="0" scale="0" param="" nulldefault="null"/>
+			</parameters>
+			<body><![CDATA[
+				
+  IF ISNULL(@SearchUsingOR, 0) <> 1
+  BEGIN
+    SELECT
+	  [Orientation]
+	, [YCbCrPositioning]
+	, [ExposureTime]
+	, [FNumber]
+	, [ExposureProgram]
+	, [ISOSpeedRatings]
+	, [ShutterSpeedValue]
+	, [ApertureValue]
+	, [MeteringMode]
+	, [Flash]
+	, [FocalLength]
+	, [FlashpixVersion]
+	, [ColorSpace]
+	, [SensingMethod]
+	, [ExposureMode]
+	, [WhiteBalance]
+	, [SceneCaptureType]
+	, [Sharpness]
+	, [Id]
+    FROM
+	[dbo].[Media_Image]
+    WHERE 
+	 ([Orientation] = @Orientation OR @Orientation IS NULL)
+	AND ([YCbCrPositioning] = @YcbCrPositioning OR @YcbCrPositioning IS NULL)
+	AND ([ExposureTime] = @ExposureTime OR @ExposureTime IS NULL)
+	AND ([FNumber] = @Fnumber OR @Fnumber IS NULL)
+	AND ([ExposureProgram] = @ExposureProgram OR @ExposureProgram IS NULL)
+	AND ([ISOSpeedRatings] = @IsoSpeedRatings OR @IsoSpeedRatings IS NULL)
+	AND ([ShutterSpeedValue] = @ShutterSpeedValue OR @ShutterSpeedValue IS NULL)
+	AND ([ApertureValue] = @ApertureValue OR @ApertureValue IS NULL)
+	AND ([MeteringMode] = @MeteringMode OR @MeteringMode IS NULL)
+	AND ([Flash] = @Flash OR @Flash IS NULL)
+	AND ([FocalLength] = @FocalLength OR @FocalLength IS NULL)
+	AND ([FlashpixVersion] = @FlashpixVersion OR @FlashpixVersion IS NULL)
+	AND ([ColorSpace] = @ColorSpace OR @ColorSpace IS NULL)
+	AND ([SensingMethod] = @SensingMethod OR @SensingMethod IS NULL)
+	AND ([ExposureMode] = @ExposureMode OR @ExposureMode IS NULL)
+	AND ([WhiteBalance] = @WhiteBalance OR @WhiteBalance IS NULL)
+	AND ([SceneCaptureType] = @SceneCaptureType OR @SceneCaptureType IS NULL)
+	AND ([Sharpness] = @Sharpness OR @Sharpness IS NULL)
+	AND ([Id] = @Id OR @Id IS NULL)
+						
+  END
+  ELSE
+  BEGIN
+    SELECT
+	  [Orientation]
+	, [YCbCrPositioning]
+	, [ExposureTime]
+	, [FNumber]
+	, [ExposureProgram]
+	, [ISOSpeedRatings]
+	, [ShutterSpeedValue]
+	, [ApertureValue]
+	, [MeteringMode]
+	, [Flash]
+	, [FocalLength]
+	, [FlashpixVersion]
+	, [ColorSpace]
+	, [SensingMethod]
+	, [ExposureMode]
+	, [WhiteBalance]
+	, [SceneCaptureType]
+	, [Sharpness]
+	, [Id]
+    FROM
+	[dbo].[Media_Image]
+    WHERE 
+	 ([Orientation] = @Orientation AND @Orientation is not null)
+	OR ([YCbCrPositioning] = @YcbCrPositioning AND @YcbCrPositioning is not null)
+	OR ([ExposureTime] = @ExposureTime AND @ExposureTime is not null)
+	OR ([FNumber] = @Fnumber AND @Fnumber is not null)
+	OR ([ExposureProgram] = @ExposureProgram AND @ExposureProgram is not null)
+	OR ([ISOSpeedRatings] = @IsoSpeedRatings AND @IsoSpeedRatings is not null)
+	OR ([ShutterSpeedValue] = @ShutterSpeedValue AND @ShutterSpeedValue is not null)
+	OR ([ApertureValue] = @ApertureValue AND @ApertureValue is not null)
+	OR ([MeteringMode] = @MeteringMode AND @MeteringMode is not null)
+	OR ([Flash] = @Flash AND @Flash is not null)
+	OR ([FocalLength] = @FocalLength AND @FocalLength is not null)
+	OR ([FlashpixVersion] = @FlashpixVersion AND @FlashpixVersion is not null)
+	OR ([ColorSpace] = @ColorSpace AND @ColorSpace is not null)
+	OR ([SensingMethod] = @SensingMethod AND @SensingMethod is not null)
+	OR ([ExposureMode] = @ExposureMode AND @ExposureMode is not null)
+	OR ([WhiteBalance] = @WhiteBalance AND @WhiteBalance is not null)
+	OR ([SceneCaptureType] = @SceneCaptureType AND @SceneCaptureType is not null)
+	OR ([Sharpness] = @Sharpness AND @Sharpness is not null)
+	OR ([Id] = @Id AND @Id is not null)
+	SELECT @@ROWCOUNT			
+  END
+				]]></body>
+		</procedure>
+
+		
+		<procedure owner="dbo" name="Media_Image_Find_Dynamic"  skip="true">
+			<comment><![CDATA[/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: July 10, 2013
+
+-- Created By: Telekad ()
+-- Purpose: Gets records from the Media_Image table using a dynamically generated query.
+----------------------------------------------------------------------------------------------------
+*/
+]]></comment>
+			<parameters/>
+			<body><![CDATA[
+				
+				BEGIN
+				
+				-- Create a temp table to store the select results
+				CREATE TABLE #PageIndex
+				(
+				    [IndexId] int IDENTITY (1, 1) NOT NULL,
+				    [Id] uniqueidentifier 
+				)
+				
+				-- Insert into the temp table
+				INSERT INTO #PageIndex ( [Id] )
+				SELECT TOP {3} [Id]
+				FROM [dbo].[Media_Image] {0}
+				ORDER BY {1}
+				
+				-- Return paged results
+				SELECT O.[Orientation], O.[YCbCrPositioning], O.[ExposureTime], O.[FNumber], O.[ExposureProgram], O.[ISOSpeedRatings], O.[ShutterSpeedValue], O.[ApertureValue], O.[MeteringMode], O.[Flash], O.[FocalLength], O.[FlashpixVersion], O.[ColorSpace], O.[SensingMethod], O.[ExposureMode], O.[WhiteBalance], O.[SceneCaptureType], O.[Sharpness], O.[Id]
+				FROM
+				    [dbo].[Media_Image] O,
+				    #PageIndex PageIndex
+				WHERE
+				    PageIndex.IndexId > {2}
+				    AND O.[Id] = PageIndex.[Id]
+				ORDER BY
+				    PageIndex.IndexId
+				
+
+				-- get total count
+				SELECT COUNT(*) AS TotalRowCount FROM [dbo].[Media_Image] {0};
+				
+				DROP TABLE #PageIndex
+				END
+			]]></body>
+		</procedure>
+		
+		
+		<procedure owner="dbo" name="Media_Video_Get_List" >
+			<comment><![CDATA[/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: July 10, 2013
+
+-- Created By: Telekad ()
+-- Purpose: Gets all records from the Media_Video table
+----------------------------------------------------------------------------------------------------
+*/
+]]></comment>
+			<parameters/>
+			<body><![CDATA[
+				
+				SELECT
+					[VideoChannels],
+					[VideoCodec],
+					[Id]
+				FROM
+					[dbo].[Media_Video]
+					
+				SELECT @@ROWCOUNT
+			]]></body>
+		</procedure>
+		
+		
+		<procedure owner="dbo" name="Media_Video_GetPaged" >
+			<comment><![CDATA[/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: July 10, 2013
+
+-- Created By: Telekad ()
+-- Purpose: Gets records from the Media_Video table passing page index and page count parameters
+----------------------------------------------------------------------------------------------------
+*/
+]]></comment>
+			<parameters>
+				<parameter name="@WhereClause" type="varchar" direction="Input" size="8000" precision="0" scale="0" param="(8000)" />
+				<parameter name="@OrderBy" type="varchar" direction="Input" size="2000" precision="0" scale="0" param="(2000)"/>
+				<parameter name="@PageIndex" type="int" direction="Input" size="0" precision="10" scale="0" />
+				<parameter name="@PageSize" type="int" direction="Input" size="0" precision="10" scale="0" /> 
+			</parameters>
+			<body><![CDATA[
+				
+				BEGIN
+				DECLARE @PageLowerBound int
+				DECLARE @PageUpperBound int
+				
+				-- Set the page bounds
+				SET @PageLowerBound = @PageSize * @PageIndex
+				SET @PageUpperBound = @PageLowerBound + @PageSize
+
+				-- Create a temp table to store the select results
+				CREATE TABLE #PageIndex
+				(
+				    [IndexId] int IDENTITY (1, 1) NOT NULL,
+				    [Id] uniqueidentifier 
+				)
+				
+				-- Insert into the temp table
+				DECLARE @SQL AS nvarchar(4000)
+				SET @SQL = 'INSERT INTO #PageIndex ([Id])'
+				SET @SQL = @SQL + ' SELECT'
+				SET @SQL = @SQL + ' [Id]'
+				SET @SQL = @SQL + ' FROM [dbo].[Media_Video]'
+				IF LEN(@WhereClause) > 0
+				BEGIN
+					SET @SQL = @SQL + ' WHERE ' + @WhereClause
+				END
+				IF LEN(@OrderBy) > 0
+				BEGIN
+					SET @SQL = @SQL + ' ORDER BY ' + @OrderBy
+				END
+				
+				-- Only get the number of rows needed here.
+				SET ROWCOUNT @PageUpperBound
+				
+				-- Populate the temp table
+				EXEC sp_executesql @SQL
+
+				-- Reset Rowcount back to all
+				SET ROWCOUNT 0
+				
+				-- Return paged results
+				SELECT O.[VideoChannels], O.[VideoCodec], O.[Id]
+				FROM
+				    [dbo].[Media_Video] O,
+				    #PageIndex PageIndex
+				WHERE
+				    PageIndex.IndexId > @PageLowerBound
+					AND O.[Id] = PageIndex.[Id]
+				ORDER BY
+				    PageIndex.IndexId
+                
+				-- get row count
+				SET @SQL = 'SELECT COUNT(1) AS TotalRowCount'
+				SET @SQL = @SQL + ' FROM [dbo].[Media_Video]'
+				IF LEN(@WhereClause) > 0
+				BEGIN
+					SET @SQL = @SQL + ' WHERE ' + @WhereClause
+				END
+				EXEC sp_executesql @SQL
+			
+				END
+			]]></body>
+		</procedure>
+		
+		<procedure owner="dbo" name="Media_Video_Insert" grant="">
+			<comment><![CDATA[/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: July 10, 2013
+
+-- Created By: Telekad ()
+-- Purpose: Inserts a record into the Media_Video table
+----------------------------------------------------------------------------------------------------
+*/
+]]></comment>
+			<parameters>
+				<parameter name="@VideoChannels" type="tinyint" direction="Input" size="1" precision="3" scale="0" param="" nulldefault=""/>
+				<parameter name="@VideoCodec" type="nvarchar" direction="Input" size="-1" precision="0" scale="0" param="(MAX)" nulldefault=""/>
+				<parameter name="@Id" type="uniqueidentifier" direction="Input" size="16" precision="0" scale="0" param="" nulldefault=""/>
+			</parameters>
+			<body><![CDATA[
+				
+				INSERT INTO [dbo].[Media_Video]
+					(
+					[VideoChannels]
+					,[VideoCodec]
+					,[Id]
+					)
+				VALUES
+					(
+					@VideoChannels
+					,@VideoCodec
+					,@Id
+					)
+									
+							
+			]]></body>
+		</procedure>
+		<procedure owner="dbo" name="Media_Video_Update" grant="">
+			<comment><![CDATA[/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: July 10, 2013
+
+-- Created By: Telekad ()
+-- Purpose: Updates a record in the Media_Video table
+----------------------------------------------------------------------------------------------------
+*/
+]]></comment>
+			<parameters>
+				<parameter name="@VideoChannels" type="tinyint" direction="Input" size="1" precision="3" scale="0" param="" nulldefault=""/>
+				<parameter name="@VideoCodec" type="nvarchar" direction="Input" size="-1" precision="0" scale="0" param="(MAX)" nulldefault=""/>
+				<parameter name="@Id" type="uniqueidentifier" direction="Input" size="16" precision="0" scale="0" param="" nulldefault=""/>
+				<parameter name="@OriginalId" type="uniqueidentifier" direction="Input" size="16" precision="0" scale="0" param="" nulldefault=""/>
+			</parameters>
+			<body><![CDATA[
+				
+				
+				-- Modify the updatable columns
+				UPDATE
+					[dbo].[Media_Video]
+				SET
+					[VideoChannels] = @VideoChannels
+					,[VideoCodec] = @VideoCodec
+					,[Id] = @Id
+				WHERE
+[Id] = @OriginalId 
+				
+			]]></body>
+		</procedure>
+		<procedure owner="dbo" name="Media_Video_Delete" grant="">
+			<comment><![CDATA[/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: July 10, 2013
+
+-- Created By: Telekad ()
+-- Purpose: Deletes a record in the Media_Video table
+----------------------------------------------------------------------------------------------------
+*/
+]]></comment>
+			<parameters>
+				<parameter name="@Id" type="uniqueidentifier" direction="Input" size="16" precision="0" scale="0" param="" nulldefault=""/>
+			</parameters>
+			<body><![CDATA[
+				DELETE FROM [dbo].[Media_Video] WITH (ROWLOCK) 
+				WHERE
+					[Id] = @Id
+					
+			]]></body>
+		</procedure>
+		<procedure owner="dbo" name="Media_Video_GetById" >
+			<comment><![CDATA[/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: July 10, 2013
+
+-- Created By: Telekad ()
+-- Purpose: Select records from the Media_Video table through an index
+----------------------------------------------------------------------------------------------------
+*/
+]]></comment>
+			<parameters>
+				<parameter name="@Id" type="uniqueidentifier" direction="Input" size="16" precision="0" scale="0" param="" nulldefault=""/>
+			</parameters>
+			<body><![CDATA[
+				SELECT
+					[VideoChannels],
+					[VideoCodec],
+					[Id]
+				FROM
+					[dbo].[Media_Video]
+				WHERE
+					[Id] = @Id
+				SELECT @@ROWCOUNT
+					
+			]]></body>
+			
+		</procedure>
+		<procedure owner="dbo" name="Media_Video_Find" >
+			<comment><![CDATA[/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: July 10, 2013
+
+-- Created By: Telekad ()
+-- Purpose: Finds records in the Media_Video table passing nullable parameters
+----------------------------------------------------------------------------------------------------
+*/
+]]></comment>
+			<parameters>
+				<parameter name="@SearchUsingOR" type="bit" direction="Input" size="0" precision="1" scale="0" param="" nulldefault="null"/>
+				<parameter name="@VideoChannels" type="tinyint" direction="Input" size="1" precision="3" scale="0" param="" nulldefault="null"/>
+				<parameter name="@VideoCodec" type="nvarchar" direction="Input" size="-1" precision="0" scale="0" param="(MAX)" nulldefault="null"/>
+				<parameter name="@Id" type="uniqueidentifier" direction="Input" size="16" precision="0" scale="0" param="" nulldefault="null"/>
+			</parameters>
+			<body><![CDATA[
+				
+  IF ISNULL(@SearchUsingOR, 0) <> 1
+  BEGIN
+    SELECT
+	  [VideoChannels]
+	, [VideoCodec]
+	, [Id]
+    FROM
+	[dbo].[Media_Video]
+    WHERE 
+	 ([VideoChannels] = @VideoChannels OR @VideoChannels IS NULL)
+	AND ([VideoCodec] = @VideoCodec OR @VideoCodec IS NULL)
+	AND ([Id] = @Id OR @Id IS NULL)
+						
+  END
+  ELSE
+  BEGIN
+    SELECT
+	  [VideoChannels]
+	, [VideoCodec]
+	, [Id]
+    FROM
+	[dbo].[Media_Video]
+    WHERE 
+	 ([VideoChannels] = @VideoChannels AND @VideoChannels is not null)
+	OR ([VideoCodec] = @VideoCodec AND @VideoCodec is not null)
+	OR ([Id] = @Id AND @Id is not null)
+	SELECT @@ROWCOUNT			
+  END
+				]]></body>
+		</procedure>
+
+		
+		<procedure owner="dbo" name="Media_Video_Find_Dynamic"  skip="true">
+			<comment><![CDATA[/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: July 10, 2013
+
+-- Created By: Telekad ()
+-- Purpose: Gets records from the Media_Video table using a dynamically generated query.
+----------------------------------------------------------------------------------------------------
+*/
+]]></comment>
+			<parameters/>
+			<body><![CDATA[
+				
+				BEGIN
+				
+				-- Create a temp table to store the select results
+				CREATE TABLE #PageIndex
+				(
+				    [IndexId] int IDENTITY (1, 1) NOT NULL,
+				    [Id] uniqueidentifier 
+				)
+				
+				-- Insert into the temp table
+				INSERT INTO #PageIndex ( [Id] )
+				SELECT TOP {3} [Id]
+				FROM [dbo].[Media_Video] {0}
+				ORDER BY {1}
+				
+				-- Return paged results
+				SELECT O.[VideoChannels], O.[VideoCodec], O.[Id]
+				FROM
+				    [dbo].[Media_Video] O,
+				    #PageIndex PageIndex
+				WHERE
+				    PageIndex.IndexId > {2}
+				    AND O.[Id] = PageIndex.[Id]
+				ORDER BY
+				    PageIndex.IndexId
+				
+
+				-- get total count
+				SELECT COUNT(*) AS TotalRowCount FROM [dbo].[Media_Video] {0};
+				
+				DROP TABLE #PageIndex
+				END
+			]]></body>
+		</procedure>
+		
+		
+		<procedure owner="dbo" name="Media_Audio_Get_List" >
+			<comment><![CDATA[/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: July 10, 2013
+
+-- Created By: Telekad ()
+-- Purpose: Gets all records from the Media_Audio table
+----------------------------------------------------------------------------------------------------
+*/
+]]></comment>
+			<parameters/>
+			<body><![CDATA[
+				
+				SELECT
+					[AudioChannels],
+					[Duration],
+					[AudioCodec],
+					[Id]
+				FROM
+					[dbo].[Media_Audio]
+					
+				SELECT @@ROWCOUNT
+			]]></body>
+		</procedure>
+		
+		
+		<procedure owner="dbo" name="Media_Audio_GetPaged" >
+			<comment><![CDATA[/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: July 10, 2013
+
+-- Created By: Telekad ()
+-- Purpose: Gets records from the Media_Audio table passing page index and page count parameters
+----------------------------------------------------------------------------------------------------
+*/
+]]></comment>
+			<parameters>
+				<parameter name="@WhereClause" type="varchar" direction="Input" size="8000" precision="0" scale="0" param="(8000)" />
+				<parameter name="@OrderBy" type="varchar" direction="Input" size="2000" precision="0" scale="0" param="(2000)"/>
+				<parameter name="@PageIndex" type="int" direction="Input" size="0" precision="10" scale="0" />
+				<parameter name="@PageSize" type="int" direction="Input" size="0" precision="10" scale="0" /> 
+			</parameters>
+			<body><![CDATA[
+				
+				BEGIN
+				DECLARE @PageLowerBound int
+				DECLARE @PageUpperBound int
+				
+				-- Set the page bounds
+				SET @PageLowerBound = @PageSize * @PageIndex
+				SET @PageUpperBound = @PageLowerBound + @PageSize
+
+				-- Create a temp table to store the select results
+				CREATE TABLE #PageIndex
+				(
+				    [IndexId] int IDENTITY (1, 1) NOT NULL,
+				    [Id] uniqueidentifier 
+				)
+				
+				-- Insert into the temp table
+				DECLARE @SQL AS nvarchar(4000)
+				SET @SQL = 'INSERT INTO #PageIndex ([Id])'
+				SET @SQL = @SQL + ' SELECT'
+				SET @SQL = @SQL + ' [Id]'
+				SET @SQL = @SQL + ' FROM [dbo].[Media_Audio]'
+				IF LEN(@WhereClause) > 0
+				BEGIN
+					SET @SQL = @SQL + ' WHERE ' + @WhereClause
+				END
+				IF LEN(@OrderBy) > 0
+				BEGIN
+					SET @SQL = @SQL + ' ORDER BY ' + @OrderBy
+				END
+				
+				-- Only get the number of rows needed here.
+				SET ROWCOUNT @PageUpperBound
+				
+				-- Populate the temp table
+				EXEC sp_executesql @SQL
+
+				-- Reset Rowcount back to all
+				SET ROWCOUNT 0
+				
+				-- Return paged results
+				SELECT O.[AudioChannels], O.[Duration], O.[AudioCodec], O.[Id]
+				FROM
+				    [dbo].[Media_Audio] O,
+				    #PageIndex PageIndex
+				WHERE
+				    PageIndex.IndexId > @PageLowerBound
+					AND O.[Id] = PageIndex.[Id]
+				ORDER BY
+				    PageIndex.IndexId
+                
+				-- get row count
+				SET @SQL = 'SELECT COUNT(1) AS TotalRowCount'
+				SET @SQL = @SQL + ' FROM [dbo].[Media_Audio]'
+				IF LEN(@WhereClause) > 0
+				BEGIN
+					SET @SQL = @SQL + ' WHERE ' + @WhereClause
+				END
+				EXEC sp_executesql @SQL
+			
+				END
+			]]></body>
+		</procedure>
+		
+		<procedure owner="dbo" name="Media_Audio_Insert" grant="">
+			<comment><![CDATA[/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: July 10, 2013
+
+-- Created By: Telekad ()
+-- Purpose: Inserts a record into the Media_Audio table
+----------------------------------------------------------------------------------------------------
+*/
+]]></comment>
+			<parameters>
+				<parameter name="@AudioChannels" type="tinyint" direction="Input" size="1" precision="3" scale="0" param="" nulldefault=""/>
+				<parameter name="@Duration" type="nvarchar" direction="Input" size="-1" precision="0" scale="0" param="(MAX)" nulldefault=""/>
+				<parameter name="@AudioCodec" type="nvarchar" direction="Input" size="-1" precision="0" scale="0" param="(MAX)" nulldefault=""/>
+				<parameter name="@Id" type="uniqueidentifier" direction="Input" size="16" precision="0" scale="0" param="" nulldefault=""/>
+			</parameters>
+			<body><![CDATA[
+				
+				INSERT INTO [dbo].[Media_Audio]
+					(
+					[AudioChannels]
+					,[Duration]
+					,[AudioCodec]
+					,[Id]
+					)
+				VALUES
+					(
+					@AudioChannels
+					,@Duration
+					,@AudioCodec
+					,@Id
+					)
+									
+							
+			]]></body>
+		</procedure>
+		<procedure owner="dbo" name="Media_Audio_Update" grant="">
+			<comment><![CDATA[/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: July 10, 2013
+
+-- Created By: Telekad ()
+-- Purpose: Updates a record in the Media_Audio table
+----------------------------------------------------------------------------------------------------
+*/
+]]></comment>
+			<parameters>
+				<parameter name="@AudioChannels" type="tinyint" direction="Input" size="1" precision="3" scale="0" param="" nulldefault=""/>
+				<parameter name="@Duration" type="nvarchar" direction="Input" size="-1" precision="0" scale="0" param="(MAX)" nulldefault=""/>
+				<parameter name="@AudioCodec" type="nvarchar" direction="Input" size="-1" precision="0" scale="0" param="(MAX)" nulldefault=""/>
+				<parameter name="@Id" type="uniqueidentifier" direction="Input" size="16" precision="0" scale="0" param="" nulldefault=""/>
+				<parameter name="@OriginalId" type="uniqueidentifier" direction="Input" size="16" precision="0" scale="0" param="" nulldefault=""/>
+			</parameters>
+			<body><![CDATA[
+				
+				
+				-- Modify the updatable columns
+				UPDATE
+					[dbo].[Media_Audio]
+				SET
+					[AudioChannels] = @AudioChannels
+					,[Duration] = @Duration
+					,[AudioCodec] = @AudioCodec
+					,[Id] = @Id
+				WHERE
+[Id] = @OriginalId 
+				
+			]]></body>
+		</procedure>
+		<procedure owner="dbo" name="Media_Audio_Delete" grant="">
+			<comment><![CDATA[/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: July 10, 2013
+
+-- Created By: Telekad ()
+-- Purpose: Deletes a record in the Media_Audio table
+----------------------------------------------------------------------------------------------------
+*/
+]]></comment>
+			<parameters>
+				<parameter name="@Id" type="uniqueidentifier" direction="Input" size="16" precision="0" scale="0" param="" nulldefault=""/>
+			</parameters>
+			<body><![CDATA[
+				DELETE FROM [dbo].[Media_Audio] WITH (ROWLOCK) 
+				WHERE
+					[Id] = @Id
+					
+			]]></body>
+		</procedure>
+		<procedure owner="dbo" name="Media_Audio_GetById" >
+			<comment><![CDATA[/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: July 10, 2013
+
+-- Created By: Telekad ()
+-- Purpose: Select records from the Media_Audio table through an index
+----------------------------------------------------------------------------------------------------
+*/
+]]></comment>
+			<parameters>
+				<parameter name="@Id" type="uniqueidentifier" direction="Input" size="16" precision="0" scale="0" param="" nulldefault=""/>
+			</parameters>
+			<body><![CDATA[
+				SELECT
+					[AudioChannels],
+					[Duration],
+					[AudioCodec],
+					[Id]
+				FROM
+					[dbo].[Media_Audio]
+				WHERE
+					[Id] = @Id
+				SELECT @@ROWCOUNT
+					
+			]]></body>
+			
+		</procedure>
+		<procedure owner="dbo" name="Media_Audio_Find" >
+			<comment><![CDATA[/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: July 10, 2013
+
+-- Created By: Telekad ()
+-- Purpose: Finds records in the Media_Audio table passing nullable parameters
+----------------------------------------------------------------------------------------------------
+*/
+]]></comment>
+			<parameters>
+				<parameter name="@SearchUsingOR" type="bit" direction="Input" size="0" precision="1" scale="0" param="" nulldefault="null"/>
+				<parameter name="@AudioChannels" type="tinyint" direction="Input" size="1" precision="3" scale="0" param="" nulldefault="null"/>
+				<parameter name="@Duration" type="nvarchar" direction="Input" size="-1" precision="0" scale="0" param="(MAX)" nulldefault="null"/>
+				<parameter name="@AudioCodec" type="nvarchar" direction="Input" size="-1" precision="0" scale="0" param="(MAX)" nulldefault="null"/>
+				<parameter name="@Id" type="uniqueidentifier" direction="Input" size="16" precision="0" scale="0" param="" nulldefault="null"/>
+			</parameters>
+			<body><![CDATA[
+				
+  IF ISNULL(@SearchUsingOR, 0) <> 1
+  BEGIN
+    SELECT
+	  [AudioChannels]
+	, [Duration]
+	, [AudioCodec]
+	, [Id]
+    FROM
+	[dbo].[Media_Audio]
+    WHERE 
+	 ([AudioChannels] = @AudioChannels OR @AudioChannels IS NULL)
+	AND ([Duration] = @Duration OR @Duration IS NULL)
+	AND ([AudioCodec] = @AudioCodec OR @AudioCodec IS NULL)
+	AND ([Id] = @Id OR @Id IS NULL)
+						
+  END
+  ELSE
+  BEGIN
+    SELECT
+	  [AudioChannels]
+	, [Duration]
+	, [AudioCodec]
+	, [Id]
+    FROM
+	[dbo].[Media_Audio]
+    WHERE 
+	 ([AudioChannels] = @AudioChannels AND @AudioChannels is not null)
+	OR ([Duration] = @Duration AND @Duration is not null)
+	OR ([AudioCodec] = @AudioCodec AND @AudioCodec is not null)
+	OR ([Id] = @Id AND @Id is not null)
+	SELECT @@ROWCOUNT			
+  END
+				]]></body>
+		</procedure>
+
+		
+		<procedure owner="dbo" name="Media_Audio_Find_Dynamic"  skip="true">
+			<comment><![CDATA[/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: July 10, 2013
+
+-- Created By: Telekad ()
+-- Purpose: Gets records from the Media_Audio table using a dynamically generated query.
+----------------------------------------------------------------------------------------------------
+*/
+]]></comment>
+			<parameters/>
+			<body><![CDATA[
+				
+				BEGIN
+				
+				-- Create a temp table to store the select results
+				CREATE TABLE #PageIndex
+				(
+				    [IndexId] int IDENTITY (1, 1) NOT NULL,
+				    [Id] uniqueidentifier 
+				)
+				
+				-- Insert into the temp table
+				INSERT INTO #PageIndex ( [Id] )
+				SELECT TOP {3} [Id]
+				FROM [dbo].[Media_Audio] {0}
+				ORDER BY {1}
+				
+				-- Return paged results
+				SELECT O.[AudioChannels], O.[Duration], O.[AudioCodec], O.[Id]
+				FROM
+				    [dbo].[Media_Audio] O,
+				    #PageIndex PageIndex
+				WHERE
+				    PageIndex.IndexId > {2}
+				    AND O.[Id] = PageIndex.[Id]
+				ORDER BY
+				    PageIndex.IndexId
+				
+
+				-- get total count
+				SELECT COUNT(*) AS TotalRowCount FROM [dbo].[Media_Audio] {0};
+				
+				DROP TABLE #PageIndex
+				END
+			]]></body>
+		</procedure>
+		
+		
+		<procedure owner="dbo" name="Previews_Get_List" >
+			<comment><![CDATA[/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: July 10, 2013
+
+-- Created By: Telekad ()
+-- Purpose: Gets all records from the Previews table
+----------------------------------------------------------------------------------------------------
+*/
+]]></comment>
+			<parameters/>
+			<body><![CDATA[
+				
+				SELECT
+					[Id],
+					[Level0],
+					[Level1],
+					[Level2],
+					[Level3],
+					[PreviewType],
+					[Medium_Id]
+				FROM
+					[dbo].[Previews]
+					
+				SELECT @@ROWCOUNT
+			]]></body>
+		</procedure>
+		
+		
+		<procedure owner="dbo" name="Previews_GetPaged" >
+			<comment><![CDATA[/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: July 10, 2013
+
+-- Created By: Telekad ()
+-- Purpose: Gets records from the Previews table passing page index and page count parameters
+----------------------------------------------------------------------------------------------------
+*/
+]]></comment>
+			<parameters>
+				<parameter name="@WhereClause" type="varchar" direction="Input" size="8000" precision="0" scale="0" param="(8000)" />
+				<parameter name="@OrderBy" type="varchar" direction="Input" size="2000" precision="0" scale="0" param="(2000)"/>
+				<parameter name="@PageIndex" type="int" direction="Input" size="0" precision="10" scale="0" />
+				<parameter name="@PageSize" type="int" direction="Input" size="0" precision="10" scale="0" /> 
+			</parameters>
+			<body><![CDATA[
+				
+				BEGIN
+				DECLARE @PageLowerBound int
+				DECLARE @PageUpperBound int
+				
+				-- Set the page bounds
+				SET @PageLowerBound = @PageSize * @PageIndex
+				SET @PageUpperBound = @PageLowerBound + @PageSize
+
+				-- Create a temp table to store the select results
+				CREATE TABLE #PageIndex
+				(
+				    [IndexId] int IDENTITY (1, 1) NOT NULL,
+				    [Id] uniqueidentifier 
+				)
+				
+				-- Insert into the temp table
+				DECLARE @SQL AS nvarchar(4000)
+				SET @SQL = 'INSERT INTO #PageIndex ([Id])'
+				SET @SQL = @SQL + ' SELECT'
+				SET @SQL = @SQL + ' [Id]'
+				SET @SQL = @SQL + ' FROM [dbo].[Previews]'
+				IF LEN(@WhereClause) > 0
+				BEGIN
+					SET @SQL = @SQL + ' WHERE ' + @WhereClause
+				END
+				IF LEN(@OrderBy) > 0
+				BEGIN
+					SET @SQL = @SQL + ' ORDER BY ' + @OrderBy
+				END
+				
+				-- Only get the number of rows needed here.
+				SET ROWCOUNT @PageUpperBound
+				
+				-- Populate the temp table
+				EXEC sp_executesql @SQL
+
+				-- Reset Rowcount back to all
+				SET ROWCOUNT 0
+				
+				-- Return paged results
+				SELECT O.[Id], O.[Level0], O.[Level1], O.[Level2], O.[Level3], O.[PreviewType], O.[Medium_Id]
+				FROM
+				    [dbo].[Previews] O,
+				    #PageIndex PageIndex
+				WHERE
+				    PageIndex.IndexId > @PageLowerBound
+					AND O.[Id] = PageIndex.[Id]
+				ORDER BY
+				    PageIndex.IndexId
+                
+				-- get row count
+				SET @SQL = 'SELECT COUNT(1) AS TotalRowCount'
+				SET @SQL = @SQL + ' FROM [dbo].[Previews]'
+				IF LEN(@WhereClause) > 0
+				BEGIN
+					SET @SQL = @SQL + ' WHERE ' + @WhereClause
+				END
+				EXEC sp_executesql @SQL
+			
+				END
+			]]></body>
+		</procedure>
+		
+		<procedure owner="dbo" name="Previews_Insert" grant="">
+			<comment><![CDATA[/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: July 10, 2013
+
+-- Created By: Telekad ()
+-- Purpose: Inserts a record into the Previews table
+----------------------------------------------------------------------------------------------------
+*/
+]]></comment>
+			<parameters>
+				<parameter name="@Id" type="uniqueidentifier" direction="Input" size="16" precision="0" scale="0" param="" nulldefault=""/>
+				<parameter name="@Level0" type="varbinary" direction="Input" size="-1" precision="0" scale="0" param="(MAX)" nulldefault=""/>
+				<parameter name="@Level1" type="varbinary" direction="Input" size="-1" precision="0" scale="0" param="(MAX)" nulldefault=""/>
+				<parameter name="@Level2" type="varbinary" direction="Input" size="-1" precision="0" scale="0" param="(MAX)" nulldefault=""/>
+				<parameter name="@Level3" type="varbinary" direction="Input" size="-1" precision="0" scale="0" param="(MAX)" nulldefault=""/>
+				<parameter name="@PreviewType" type="nvarchar" direction="Input" size="-1" precision="0" scale="0" param="(MAX)" nulldefault=""/>
+				<parameter name="@MediumId" type="uniqueidentifier" direction="Input" size="16" precision="0" scale="0" param="" nulldefault=""/>
+			</parameters>
+			<body><![CDATA[
+				
+				INSERT INTO [dbo].[Previews]
+					(
+					[Id]
+					,[Level0]
+					,[Level1]
+					,[Level2]
+					,[Level3]
+					,[PreviewType]
+					,[Medium_Id]
+					)
+				VALUES
+					(
+					@Id
+					,@Level0
+					,@Level1
+					,@Level2
+					,@Level3
+					,@PreviewType
+					,@MediumId
+					)
+									
+							
+			]]></body>
+		</procedure>
+		<procedure owner="dbo" name="Previews_Update" grant="">
+			<comment><![CDATA[/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: July 10, 2013
+
+-- Created By: Telekad ()
+-- Purpose: Updates a record in the Previews table
+----------------------------------------------------------------------------------------------------
+*/
+]]></comment>
+			<parameters>
+				<parameter name="@Id" type="uniqueidentifier" direction="Input" size="16" precision="0" scale="0" param="" nulldefault=""/>
+				<parameter name="@OriginalId" type="uniqueidentifier" direction="Input" size="16" precision="0" scale="0" param="" nulldefault=""/>
+				<parameter name="@Level0" type="varbinary" direction="Input" size="-1" precision="0" scale="0" param="(MAX)" nulldefault=""/>
+				<parameter name="@Level1" type="varbinary" direction="Input" size="-1" precision="0" scale="0" param="(MAX)" nulldefault=""/>
+				<parameter name="@Level2" type="varbinary" direction="Input" size="-1" precision="0" scale="0" param="(MAX)" nulldefault=""/>
+				<parameter name="@Level3" type="varbinary" direction="Input" size="-1" precision="0" scale="0" param="(MAX)" nulldefault=""/>
+				<parameter name="@PreviewType" type="nvarchar" direction="Input" size="-1" precision="0" scale="0" param="(MAX)" nulldefault=""/>
+				<parameter name="@MediumId" type="uniqueidentifier" direction="Input" size="16" precision="0" scale="0" param="" nulldefault=""/>
+			</parameters>
+			<body><![CDATA[
+				
+				
+				-- Modify the updatable columns
+				UPDATE
+					[dbo].[Previews]
+				SET
+					[Id] = @Id
+					,[Level0] = @Level0
+					,[Level1] = @Level1
+					,[Level2] = @Level2
+					,[Level3] = @Level3
+					,[PreviewType] = @PreviewType
+					,[Medium_Id] = @MediumId
+				WHERE
+[Id] = @OriginalId 
+				
+			]]></body>
+		</procedure>
+		<procedure owner="dbo" name="Previews_Delete" grant="">
+			<comment><![CDATA[/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: July 10, 2013
+
+-- Created By: Telekad ()
+-- Purpose: Deletes a record in the Previews table
+----------------------------------------------------------------------------------------------------
+*/
+]]></comment>
+			<parameters>
+				<parameter name="@Id" type="uniqueidentifier" direction="Input" size="16" precision="0" scale="0" param="" nulldefault=""/>
+			</parameters>
+			<body><![CDATA[
+				DELETE FROM [dbo].[Previews] WITH (ROWLOCK) 
+				WHERE
+					[Id] = @Id
+					
+			]]></body>
+		</procedure>
+		<procedure owner="dbo" name="Previews_GetByMediumId" >
+			<comment><![CDATA[/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: July 10, 2013
+
+-- Created By: Telekad ()
+-- Purpose: Select records from the Previews table through an index
+----------------------------------------------------------------------------------------------------
+*/
+]]></comment>
+			<parameters>
+				<parameter name="@MediumId" type="uniqueidentifier" direction="Input" size="16" precision="0" scale="0" param="" nulldefault=""/>
+			</parameters>
+			<body><![CDATA[
+				SELECT
+					[Id],
+					[Level0],
+					[Level1],
+					[Level2],
+					[Level3],
+					[PreviewType],
+					[Medium_Id]
+				FROM
+					[dbo].[Previews]
+				WHERE
+					[Medium_Id] = @MediumId
+				SELECT @@ROWCOUNT
+					
+			]]></body>
+			
+		</procedure>
+		<procedure owner="dbo" name="Previews_GetById" >
+			<comment><![CDATA[/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: July 10, 2013
+
+-- Created By: Telekad ()
+-- Purpose: Select records from the Previews table through an index
+----------------------------------------------------------------------------------------------------
+*/
+]]></comment>
+			<parameters>
+				<parameter name="@Id" type="uniqueidentifier" direction="Input" size="16" precision="0" scale="0" param="" nulldefault=""/>
+			</parameters>
+			<body><![CDATA[
+				SELECT
+					[Id],
+					[Level0],
+					[Level1],
+					[Level2],
+					[Level3],
+					[PreviewType],
+					[Medium_Id]
+				FROM
+					[dbo].[Previews]
+				WHERE
+					[Id] = @Id
+				SELECT @@ROWCOUNT
+					
+			]]></body>
+			
+		</procedure>
+		<procedure owner="dbo" name="Previews_Find" >
+			<comment><![CDATA[/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: July 10, 2013
+
+-- Created By: Telekad ()
+-- Purpose: Finds records in the Previews table passing nullable parameters
+----------------------------------------------------------------------------------------------------
+*/
+]]></comment>
+			<parameters>
+				<parameter name="@SearchUsingOR" type="bit" direction="Input" size="0" precision="1" scale="0" param="" nulldefault="null"/>
+				<parameter name="@Id" type="uniqueidentifier" direction="Input" size="16" precision="0" scale="0" param="" nulldefault="null"/>
+				<parameter name="@Level0" type="varbinary" direction="Input" size="-1" precision="0" scale="0" param="(MAX)" nulldefault="null"/>
+				<parameter name="@Level1" type="varbinary" direction="Input" size="-1" precision="0" scale="0" param="(MAX)" nulldefault="null"/>
+				<parameter name="@Level2" type="varbinary" direction="Input" size="-1" precision="0" scale="0" param="(MAX)" nulldefault="null"/>
+				<parameter name="@Level3" type="varbinary" direction="Input" size="-1" precision="0" scale="0" param="(MAX)" nulldefault="null"/>
+				<parameter name="@PreviewType" type="nvarchar" direction="Input" size="-1" precision="0" scale="0" param="(MAX)" nulldefault="null"/>
+				<parameter name="@MediumId" type="uniqueidentifier" direction="Input" size="16" precision="0" scale="0" param="" nulldefault="null"/>
+			</parameters>
+			<body><![CDATA[
+				
+  IF ISNULL(@SearchUsingOR, 0) <> 1
+  BEGIN
+    SELECT
+	  [Id]
+	, [Level0]
+	, [Level1]
+	, [Level2]
+	, [Level3]
+	, [PreviewType]
+	, [Medium_Id]
+    FROM
+	[dbo].[Previews]
+    WHERE 
+	 ([Id] = @Id OR @Id IS NULL)
+	AND ([PreviewType] = @PreviewType OR @PreviewType IS NULL)
+	AND ([Medium_Id] = @MediumId OR @MediumId IS NULL)
+						
+  END
+  ELSE
+  BEGIN
+    SELECT
+	  [Id]
+	, [Level0]
+	, [Level1]
+	, [Level2]
+	, [Level3]
+	, [PreviewType]
+	, [Medium_Id]
+    FROM
+	[dbo].[Previews]
+    WHERE 
+	 ([Id] = @Id AND @Id is not null)
+	OR ([PreviewType] = @PreviewType AND @PreviewType is not null)
+	OR ([Medium_Id] = @MediumId AND @MediumId is not null)
+	SELECT @@ROWCOUNT			
+  END
+				]]></body>
+		</procedure>
+
+		
+		<procedure owner="dbo" name="Previews_Find_Dynamic"  skip="true">
+			<comment><![CDATA[/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: July 10, 2013
+
+-- Created By: Telekad ()
+-- Purpose: Gets records from the Previews table using a dynamically generated query.
+----------------------------------------------------------------------------------------------------
+*/
+]]></comment>
+			<parameters/>
+			<body><![CDATA[
+				
+				BEGIN
+				
+				-- Create a temp table to store the select results
+				CREATE TABLE #PageIndex
+				(
+				    [IndexId] int IDENTITY (1, 1) NOT NULL,
+				    [Id] uniqueidentifier 
+				)
+				
+				-- Insert into the temp table
+				INSERT INTO #PageIndex ( [Id] )
+				SELECT TOP {3} [Id]
+				FROM [dbo].[Previews] {0}
+				ORDER BY {1}
+				
+				-- Return paged results
+				SELECT O.[Id], O.[Level0], O.[Level1], O.[Level2], O.[Level3], O.[PreviewType], O.[Medium_Id]
+				FROM
+				    [dbo].[Previews] O,
+				    #PageIndex PageIndex
+				WHERE
+				    PageIndex.IndexId > {2}
+				    AND O.[Id] = PageIndex.[Id]
+				ORDER BY
+				    PageIndex.IndexId
+				
+
+				-- get total count
+				SELECT COUNT(*) AS TotalRowCount FROM [dbo].[Previews] {0};
+				
+				DROP TABLE #PageIndex
+				END
+			]]></body>
+		</procedure>
+		
+</procedures>
+</root>

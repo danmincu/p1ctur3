@@ -1,0 +1,29 @@
+﻿<Window x:Class="P1ctur3.Uploader.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="MainWindow" Height="350" Width="525">
+    <StackPanel>
+        
+        <StackPanel>
+            <ItemsControl ItemsSource="{Binding Drives}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Orientation="Vertical"></StackPanel>
+                    </ItemsPanelTemplate>
+                        
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>                    
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Margin="10" Text="{Binding DriveLetter}"></TextBlock>
+                            <TextBlock Margin="10" Text="{Binding PhotoDirectoriesCount}"></TextBlock>
+                            <TextBlock Margin="10" Text="{Binding PhotoCount}"></TextBlock>
+                        </StackPanel>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>    
+        </StackPanel>
+        <Button Height="20" Width="100" Click="Button_Click_1" >Scan drives</Button>
+        <Button Height="20" Width="100" Click="Button_Click">Upload photo.jpg</Button>
+    </StackPanel>
+</Window>

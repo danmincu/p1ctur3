@@ -1,0 +1,179 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.21005.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "P1ctur3.Web", "Site\P1ctur3.Web\P1ctur3.Web\P1ctur3.Web.csproj", "{12BACE03-10CC-48A4-8703-B6E79F08F7B4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "P1ctur3.Web.Tests", "Site\P1ctur3.Web\P1ctur3.Web.Tests\P1ctur3.Web.Tests.csproj", "{7061830B-B0EB-48FA-A037-8200C94A7EC0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "P1ctur3.Exif", "Common\P1ctur3.Exif\P1ctur3.Exif.csproj", "{E866553D-47C6-48F7-9FAF-D48BB5B7E19A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Telekad.Mapping", "Common\Mapping\Telekad.Mapping.csproj", "{B2E2F7CA-F634-47CC-B2BF-3A9CCE0B5323}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Telekad.Utils", "Common\Utils\Telekad.Utils.csproj", "{824E41F6-FA12-4453-8C91-BEB6457C4E5B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "P1ctur3.Types", "Domain\P1ctur3.Types\P1ctur3.Types.csproj", "{A88A9D44-D78F-4FD1-9158-A19D5CA70C13}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "P1ctur3.Storage", "Common\P1ctur3.Storage\P1ctur3.Storage.csproj", "{2AF76F91-208B-44C9-BCB2-99DFD19ECB3C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "P1ctur3.Storage.Sql", "Common\P1ctur3.Storage.Sql\P1ctur3.Storage.Sql.csproj", "{10CC5EBB-D6B7-4C9F-8668-CF498B87EBC1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "P1ctur3.Storage.Flickr", "Common\P1ctur3.Storage.Flickr\P1ctur3.Storage.Flickr.csproj", "{8D444311-2FA0-4EE8-BE30-4B833221E728}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "P1ctur3.Uploader", "Desktop\P1ctur3.Uploader\P1ctur3.Uploader.csproj", "{A408C255-5815-449A-9F68-8BEE5B87BE74}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Telekad.Ux", "Common\Telekad.Ux\Telekad.Ux.csproj", "{7CC66A38-155E-48B9-9CAE-BB1C1CD1BD64}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "P1ctur3.Standalone", "Desktop\P1ctur3.Standalone\P1ctur3.Standalone.csproj", "{0F893AE0-AB44-4C63-9372-6BE5FCE734CB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "P1ctur3.Storage.DataService", "Common\P1ctur3.Storage.DataService\P1ctur3.Storage.DataService.csproj", "{F9EE5524-8535-42E1-AAB9-6267BD1CAD6D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Evasearch", "Common\Evasearch\Evasearch\Evasearch.csproj", "{966697FC-DEE4-419C-A3EB-6FFE6E5EFB36}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Evasearch.Tests", "Common\Evasearch.Tests\Evasearch.Tests.csproj", "{DE3E4BF5-9EEF-42C9-8065-19C772AE0FD6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Telekad.Types", "Domain\Telekad.Types\Telekad.Types.csproj", "{FBA41F13-BD06-4BDA-9164-44CC044C4167}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "P1ctur3.Viewer", "Desktop\P1ctur3.Viewer\P1ctur3.Viewer.csproj", "{792A6D0F-A505-48E5-93DB-42337F2B5F52}"
+EndProject
+Global
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 18
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = http://tfs:8080/tfs/defaultcollection
+		SccLocalPath0 = Site\\P1ctur3.Web
+		SccProjectFilePathRelativizedFromConnection0 = ..\\..\\
+		SccProjectUniqueName1 = Site\\P1ctur3.Web\\P1ctur3.Web.Tests\\P1ctur3.Web.Tests.csproj
+		SccProjectName1 = Site/P1ctur3.Web/P1ctur3.Web.Tests
+		SccLocalPath1 = Site\\P1ctur3.Web\\P1ctur3.Web.Tests
+		SccProjectUniqueName2 = Common\\P1ctur3.Exif\\P1ctur3.Exif.csproj
+		SccProjectName2 = Common/P1ctur3.Exif
+		SccLocalPath2 = Common\\P1ctur3.Exif
+		SccProjectUniqueName3 = Common\\Mapping\\Telekad.Mapping.csproj
+		SccProjectName3 = Common/Mapping
+		SccLocalPath3 = Common\\Mapping
+		SccProjectUniqueName4 = Common\\Utils\\Telekad.Utils.csproj
+		SccProjectName4 = Common/Utils
+		SccLocalPath4 = Common\\Utils
+		SccProjectUniqueName5 = Domain\\P1ctur3.Types\\P1ctur3.Types.csproj
+		SccProjectName5 = Domain/P1ctur3.Types
+		SccLocalPath5 = Domain\\P1ctur3.Types
+		SccProjectUniqueName6 = Common\\P1ctur3.Storage\\P1ctur3.Storage.csproj
+		SccProjectName6 = Common/P1ctur3.Storage
+		SccLocalPath6 = Common\\P1ctur3.Storage
+		SccProjectUniqueName7 = Common\\P1ctur3.Storage.Sql\\P1ctur3.Storage.Sql.csproj
+		SccProjectName7 = Common/P1ctur3.Storage.Sql
+		SccLocalPath7 = Common\\P1ctur3.Storage.Sql
+		SccProjectUniqueName8 = Common\\P1ctur3.Storage.Flickr\\P1ctur3.Storage.Flickr.csproj
+		SccProjectName8 = Common/P1ctur3.Storage.Flickr
+		SccLocalPath8 = Common\\P1ctur3.Storage.Flickr
+		SccProjectUniqueName9 = Desktop\\P1ctur3.Uploader\\P1ctur3.Uploader.csproj
+		SccProjectName9 = Desktop/P1ctur3.Uploader
+		SccLocalPath9 = Desktop\\P1ctur3.Uploader
+		SccProjectUniqueName10 = Common\\Telekad.Ux\\Telekad.Ux.csproj
+		SccProjectName10 = Common/Telekad.Ux
+		SccLocalPath10 = Common\\Telekad.Ux
+		SccProjectUniqueName11 = Desktop\\P1ctur3.Standalone\\P1ctur3.Standalone.csproj
+		SccProjectName11 = Desktop/P1ctur3.Standalone
+		SccLocalPath11 = Desktop\\P1ctur3.Standalone
+		SccProjectUniqueName12 = Site\\P1ctur3.Web\\P1ctur3.Web\\P1ctur3.Web.csproj
+		SccProjectName12 = Site/P1ctur3.Web/P1ctur3.Web
+		SccLocalPath12 = Site\\P1ctur3.Web\\P1ctur3.Web
+		SccProjectUniqueName13 = Common\\P1ctur3.Storage.DataService\\P1ctur3.Storage.DataService.csproj
+		SccProjectName13 = Common/P1ctur3.Storage.DataService
+		SccLocalPath13 = Common\\P1ctur3.Storage.DataService
+		SccProjectUniqueName14 = Common\\Evasearch\\Evasearch\\Evasearch.csproj
+		SccProjectName14 = Common/Evasearch/Evasearch
+		SccLocalPath14 = Common\\Evasearch\\Evasearch
+		SccProjectUniqueName15 = Common\\Evasearch.Tests\\Evasearch.Tests.csproj
+		SccProjectName15 = Common/Evasearch.Tests
+		SccLocalPath15 = Common\\Evasearch.Tests
+		SccProjectUniqueName16 = Domain\\Telekad.Types\\Telekad.Types.csproj
+		SccProjectName16 = Domain/Telekad.Types
+		SccLocalPath16 = Domain\\Telekad.Types
+		SccProjectUniqueName17 = Desktop\\P1ctur3.Viewer\\P1ctur3.Viewer.csproj
+		SccProjectName17 = Desktop/P1ctur3.Viewer
+		SccLocalPath17 = Desktop\\P1ctur3.Viewer
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{12BACE03-10CC-48A4-8703-B6E79F08F7B4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{12BACE03-10CC-48A4-8703-B6E79F08F7B4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{12BACE03-10CC-48A4-8703-B6E79F08F7B4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{12BACE03-10CC-48A4-8703-B6E79F08F7B4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7061830B-B0EB-48FA-A037-8200C94A7EC0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7061830B-B0EB-48FA-A037-8200C94A7EC0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7061830B-B0EB-48FA-A037-8200C94A7EC0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7061830B-B0EB-48FA-A037-8200C94A7EC0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E866553D-47C6-48F7-9FAF-D48BB5B7E19A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E866553D-47C6-48F7-9FAF-D48BB5B7E19A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E866553D-47C6-48F7-9FAF-D48BB5B7E19A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E866553D-47C6-48F7-9FAF-D48BB5B7E19A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B2E2F7CA-F634-47CC-B2BF-3A9CCE0B5323}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B2E2F7CA-F634-47CC-B2BF-3A9CCE0B5323}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B2E2F7CA-F634-47CC-B2BF-3A9CCE0B5323}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B2E2F7CA-F634-47CC-B2BF-3A9CCE0B5323}.Release|Any CPU.Build.0 = Release|Any CPU
+		{824E41F6-FA12-4453-8C91-BEB6457C4E5B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{824E41F6-FA12-4453-8C91-BEB6457C4E5B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{824E41F6-FA12-4453-8C91-BEB6457C4E5B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{824E41F6-FA12-4453-8C91-BEB6457C4E5B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A88A9D44-D78F-4FD1-9158-A19D5CA70C13}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A88A9D44-D78F-4FD1-9158-A19D5CA70C13}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A88A9D44-D78F-4FD1-9158-A19D5CA70C13}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A88A9D44-D78F-4FD1-9158-A19D5CA70C13}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2AF76F91-208B-44C9-BCB2-99DFD19ECB3C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2AF76F91-208B-44C9-BCB2-99DFD19ECB3C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2AF76F91-208B-44C9-BCB2-99DFD19ECB3C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2AF76F91-208B-44C9-BCB2-99DFD19ECB3C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{10CC5EBB-D6B7-4C9F-8668-CF498B87EBC1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{10CC5EBB-D6B7-4C9F-8668-CF498B87EBC1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{10CC5EBB-D6B7-4C9F-8668-CF498B87EBC1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{10CC5EBB-D6B7-4C9F-8668-CF498B87EBC1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8D444311-2FA0-4EE8-BE30-4B833221E728}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8D444311-2FA0-4EE8-BE30-4B833221E728}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8D444311-2FA0-4EE8-BE30-4B833221E728}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8D444311-2FA0-4EE8-BE30-4B833221E728}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A408C255-5815-449A-9F68-8BEE5B87BE74}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A408C255-5815-449A-9F68-8BEE5B87BE74}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A408C255-5815-449A-9F68-8BEE5B87BE74}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A408C255-5815-449A-9F68-8BEE5B87BE74}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7CC66A38-155E-48B9-9CAE-BB1C1CD1BD64}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7CC66A38-155E-48B9-9CAE-BB1C1CD1BD64}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7CC66A38-155E-48B9-9CAE-BB1C1CD1BD64}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7CC66A38-155E-48B9-9CAE-BB1C1CD1BD64}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0F893AE0-AB44-4C63-9372-6BE5FCE734CB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0F893AE0-AB44-4C63-9372-6BE5FCE734CB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0F893AE0-AB44-4C63-9372-6BE5FCE734CB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0F893AE0-AB44-4C63-9372-6BE5FCE734CB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F9EE5524-8535-42E1-AAB9-6267BD1CAD6D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F9EE5524-8535-42E1-AAB9-6267BD1CAD6D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F9EE5524-8535-42E1-AAB9-6267BD1CAD6D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F9EE5524-8535-42E1-AAB9-6267BD1CAD6D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{966697FC-DEE4-419C-A3EB-6FFE6E5EFB36}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{966697FC-DEE4-419C-A3EB-6FFE6E5EFB36}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{966697FC-DEE4-419C-A3EB-6FFE6E5EFB36}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{966697FC-DEE4-419C-A3EB-6FFE6E5EFB36}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DE3E4BF5-9EEF-42C9-8065-19C772AE0FD6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DE3E4BF5-9EEF-42C9-8065-19C772AE0FD6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DE3E4BF5-9EEF-42C9-8065-19C772AE0FD6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DE3E4BF5-9EEF-42C9-8065-19C772AE0FD6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FBA41F13-BD06-4BDA-9164-44CC044C4167}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FBA41F13-BD06-4BDA-9164-44CC044C4167}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FBA41F13-BD06-4BDA-9164-44CC044C4167}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FBA41F13-BD06-4BDA-9164-44CC044C4167}.Release|Any CPU.Build.0 = Release|Any CPU
+		{792A6D0F-A505-48E5-93DB-42337F2B5F52}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{792A6D0F-A505-48E5-93DB-42337F2B5F52}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{792A6D0F-A505-48E5-93DB-42337F2B5F52}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{792A6D0F-A505-48E5-93DB-42337F2B5F52}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		EnterpriseLibraryConfigurationToolBinariesPathV6 = packages\EnterpriseLibrary.Common.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.Logging.6.0.1304.0\lib\NET45
+	EndGlobalSection
+EndGlobal

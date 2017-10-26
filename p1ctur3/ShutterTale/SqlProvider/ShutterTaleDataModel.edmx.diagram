@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="9bbbbebaeee94dd7a5ec0ae3019c987a" Name="Diagram1" ZoomLevel="121" >
+        <EntityTypeShape EntityType="ShutterTaleDataModel.Media" Width="2.25" PointX="0.625" PointY="0.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ShutterTaleDataModel.Preview" Width="1.5" PointX="4.375" PointY="0.5" />
+        <AssociationConnector Association="ShutterTaleDataModel.MediaPreview" />
+        <EntityTypeShape EntityType="ShutterTaleDataModel.Image" Width="1.5" PointX="4.25" PointY="3.375" />
+        <InheritanceConnector EntityType="ShutterTaleDataModel.Image" />
+        <EntityTypeShape EntityType="ShutterTaleDataModel.Video" Width="1.5" PointX="7.625" PointY="4.5" />
+        <EntityTypeShape EntityType="ShutterTaleDataModel.Audio" Width="1.5" PointX="10" PointY="4.125" />
+        <InheritanceConnector EntityType="ShutterTaleDataModel.Audio" />
+        <InheritanceConnector EntityType="ShutterTaleDataModel.Video" />
+        <InheritanceConnector EntityType="ShutterTaleDataModel.Video" />
+        <EntityTypeShape EntityType="ShutterTaleDataModel.Content" Width="1.5" PointX="7" PointY="0.875" />
+        <AssociationConnector Association="ShutterTaleDataModel.MediaContent" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<siteMap xmlns="http://schemas.microsoft.com/AspNet/SiteMap-File-1.0" >
+  
+    <siteMapNode url="" title="Admin"  description="">
+        <siteMapNode url="~/Admin/Default.aspx" title="Admin"  description="Admin" />  
+	<siteMapNode url="~/Admin/Media.aspx" title="Media"  description="" />
+	<siteMapNode url="~/Admin/MediaAudio.aspx" title="Media Audio"  description="" />
+	<siteMapNode url="~/Admin/MediaImage.aspx" title="Media Image"  description="" />
+	<siteMapNode url="~/Admin/MediaVideo.aspx" title="Media Video"  description="" />
+	<siteMapNode url="~/Admin/Previews.aspx" title="Previews"  description="" />
+        </siteMapNode>              
+</siteMap>

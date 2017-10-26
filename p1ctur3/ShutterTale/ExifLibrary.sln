@@ -1,0 +1,47 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExifLibrary", "ImageLib\ExifLibrary\ExifLibrary.csproj", "{C29BA585-E27B-4AD0-9AD1-490B5E0E2A5E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExifTest", "ImageLib\ExifTest\ExifTest.csproj", "{9F04C806-6BB9-449D-AF51-63E004162C1C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExifLibraryTest", "ImageLib\Test\ExifLibraryTest\ExifLibraryTest.csproj", "{82F43ECE-8C4D-4961-95FF-000F7498041A}"
+EndProject
+Global
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 4
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = http://localhost:18080/tfs/defaultcollection
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = ImageLib\\ExifLibrary\\ExifLibrary.csproj
+		SccProjectName1 = ImageLib/ExifLibrary
+		SccLocalPath1 = ImageLib\\ExifLibrary
+		SccProjectUniqueName2 = ImageLib\\ExifTest\\ExifTest.csproj
+		SccProjectName2 = ImageLib/ExifTest
+		SccLocalPath2 = ImageLib\\ExifTest
+		SccProjectUniqueName3 = ImageLib\\Test\\ExifLibraryTest\\ExifLibraryTest.csproj
+		SccProjectName3 = ImageLib/Test/ExifLibraryTest
+		SccLocalPath3 = ImageLib\\Test\\ExifLibraryTest
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C29BA585-E27B-4AD0-9AD1-490B5E0E2A5E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C29BA585-E27B-4AD0-9AD1-490B5E0E2A5E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C29BA585-E27B-4AD0-9AD1-490B5E0E2A5E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C29BA585-E27B-4AD0-9AD1-490B5E0E2A5E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9F04C806-6BB9-449D-AF51-63E004162C1C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9F04C806-6BB9-449D-AF51-63E004162C1C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9F04C806-6BB9-449D-AF51-63E004162C1C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9F04C806-6BB9-449D-AF51-63E004162C1C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{82F43ECE-8C4D-4961-95FF-000F7498041A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{82F43ECE-8C4D-4961-95FF-000F7498041A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{82F43ECE-8C4D-4961-95FF-000F7498041A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{82F43ECE-8C4D-4961-95FF-000F7498041A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

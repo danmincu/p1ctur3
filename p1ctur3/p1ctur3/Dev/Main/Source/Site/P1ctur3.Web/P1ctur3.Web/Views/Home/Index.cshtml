@@ -1,0 +1,42 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<h2>@ViewBag.Message</h2>
+@*<p>
+    To learn more about ASP.NET MVC visit <a href="http://asp.net/mvc" title="ASP.NET MVC Website">http://asp.net/mvc</a>.
+</p>*@
+
+@*<ul data-role="listview" data-inset="true">
+    <li data-role="list-divider">Navigation</li>
+    <li>@Html.ActionLink("About", "About", "Home")</li>
+    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+</ul>*@
+
+<ul data-role="listview" data-inset="true">    
+    <li>@Html.ActionLink("Wizard to register your email for Flickr Uploader", "Index", "FlickrRegistration")</li>
+    <li>
+        <a href="http://ownmeca0.w15.wh-2.com/ownmeca0/FlickrUploader/publish.htm" title="ASP.NET MVC Website" target="_blank">Go to Flickr Uploader download page...</a>
+    </li>
+</ul>
+
+
+@*<p>
+    Go to Flickr and apply for a non-commercial API Key. Then copy the two values in the boxes below
+</p>
+
+
+<form action="~/Home/FlickrAccount">
+    <table>
+        <tr>
+            <td>Flickr Key</td>
+            <td><input id="key" type="text" name="key" /></td>
+        </tr>
+
+        <tr>
+            <td>Flickr Key Secret</td>
+            <td><input id="keySecret" type="text" name="keySecret" /></td>
+        </tr>
+    </table>
+    <input type="submit" value="Continue to validation" />
+</form>*@

@@ -1,0 +1,48 @@
+﻿<edmx:Edmx Version="1.0" xmlns:edmx="http://schemas.microsoft.com/ado/2007/06/edmx">
+  <edmx:DataServices m:DataServiceVersion="1.0" m:MaxDataServiceVersion="3.0" xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata">
+    <Schema Namespace="P1ctur3.Storage.Sql" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <EntityType Name="ImageMetadata">
+        <Key>
+          <PropertyRef Name="Id" />
+        </Key>
+        <Property Name="Id" Type="Edm.Guid" Nullable="false" />
+        <Property Name="RemoteInfoId" Type="Edm.Guid" Nullable="false" />
+        <Property Name="CollectionId" Type="Edm.Guid" />
+        <Property Name="DateTime" Type="Edm.DateTime" />
+        <Property Name="ImportDateTime" Type="Edm.DateTime" Nullable="false" />
+        <Property Name="FileDateTime" Type="Edm.DateTime" />
+        <Property Name="OriginalFileName" Type="Edm.String" />
+        <Property Name="FullPath" Type="Edm.String" />
+        <Property Name="TagsAsJson" Type="Edm.String" />
+        <Property Name="Latitude" Type="Edm.Double" />
+        <Property Name="Longitude" Type="Edm.Double" />
+        <Property Name="Thumb" Type="Edm.Binary" />
+        <Property Name="StorageInfoAsJson" Type="Edm.String" />
+        <NavigationProperty Name="RemoteInfo" Relationship="P1ctur3.Storage.Sql.ImageMetadata_RemoteInfo_RemoteInfo_ImageMetadatas" ToRole="RemoteInfo_ImageMetadatas" FromRole="ImageMetadata_RemoteInfo" />
+      </EntityType>
+      <EntityType Name="RemoteInfo">
+        <Key>
+          <PropertyRef Name="RemoteInfoId" />
+        </Key>
+        <Property Name="RemoteInfoId" Type="Edm.Guid" Nullable="false" />
+        <Property Name="Email" Type="Edm.String" />
+        <Property Name="Type" Type="Edm.String" />
+        <Property Name="Version" Type="Edm.String" />
+        <Property Name="PropertiesAsJson" Type="Edm.String" />
+        <NavigationProperty Name="ImageMetadatas" Relationship="P1ctur3.Storage.Sql.ImageMetadata_RemoteInfo_RemoteInfo_ImageMetadatas" ToRole="ImageMetadata_RemoteInfo" FromRole="RemoteInfo_ImageMetadatas" />
+      </EntityType>
+      <Association Name="ImageMetadata_RemoteInfo_RemoteInfo_ImageMetadatas">
+        <End Type="P1ctur3.Storage.Sql.RemoteInfo" Role="RemoteInfo_ImageMetadatas" Multiplicity="0..1" />
+        <End Type="P1ctur3.Storage.Sql.ImageMetadata" Role="ImageMetadata_RemoteInfo" Multiplicity="*" />
+      </Association>
+      <EntityContainer Name="ImageMetadataContext" m:IsDefaultEntityContainer="true">
+        <EntitySet Name="Images" EntityType="P1ctur3.Storage.Sql.ImageMetadata" />
+        <EntitySet Name="RemoteInfos" EntityType="P1ctur3.Storage.Sql.RemoteInfo" />
+        <AssociationSet Name="RemoteInfo_ImageMetadatas" Association="P1ctur3.Storage.Sql.ImageMetadata_RemoteInfo_RemoteInfo_ImageMetadatas">
+          <End Role="ImageMetadata_RemoteInfo" EntitySet="Images" />
+          <End Role="RemoteInfo_ImageMetadatas" EntitySet="RemoteInfos" />
+        </AssociationSet>
+      </EntityContainer>
+    </Schema>
+  </edmx:DataServices>
+</edmx:Edmx>

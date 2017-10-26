@@ -1,0 +1,28 @@
+﻿<Window x:Class="MediaImport.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="MainWindow" Height="350" Width="525">
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="32*"/>
+            <RowDefinition Height="39*"/>
+            <RowDefinition Height="41*"/>
+            <RowDefinition Height="207*"/>
+        </Grid.RowDefinitions>
+        <StackPanel Orientation="Horizontal" FlowDirection="RightToLeft">
+            <Button MaxWidth="50" HorizontalContentAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" VerticalContentAlignment="Center" Command="{Binding ChooseFolderCommand}"></Button>
+            <TextBlock Text="{Binding ImportFolder}" HorizontalAlignment="Center"></TextBlock>
+        </StackPanel>
+        <StackPanel Grid.Row="1" Orientation="Horizontal" FlowDirection="RightToLeft">        
+            <Button HorizontalAlignment="Center" HorizontalContentAlignment="Center" VerticalAlignment="Center" VerticalContentAlignment="Center" Command="{Binding Import}"></Button>
+            <CheckBox IsChecked="{Binding UseFlickrToStorePictures}" Content="Use Flickr" HorizontalContentAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
+        </StackPanel>
+        <StackPanel Grid.Row="2" Orientation="Horizontal" >
+            <TextBox Text="{Binding Key}"></TextBox>
+            <TextBox Text="{Binding Secret}"></TextBox>
+            <TextBox Text="{Binding Validation}"></TextBox>            
+        </StackPanel>
+
+
+    </Grid>
+</Window>
